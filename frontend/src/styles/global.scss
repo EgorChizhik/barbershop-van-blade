@@ -10,3 +10,44 @@ body { background: $color-bg; color: $color-text; font-family: $font-body; }
 .nav a { margin-left: 1.5rem; color: $color-text; text-decoration: none; }
 .nav a:hover { color: $color-accent; }
 .logo { color: $color-accent; font-family: $font-heading; font-size: 1.5rem; text-decoration: none; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.service-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  &:hover { transform: translateY(-4px); }
+  &__image { height: 180px; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+  &__content { padding: 1.5rem; }
+  &__title { color: $color-accent; margin-bottom: 0.5rem; font-family: $font-heading; }
+  &__description { color: lighten($color-text, 10%); font-size: 0.95rem; margin-bottom: 1rem; }
+  &__meta { display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 500; }
+  .duration { color: lighten($color-text, 20%); }
+  .price { color: $color-accent; }
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: $color-accent;
+  color: $color-bg;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  &:hover { opacity: 0.9; }
+  &--primary { background: $color-accent; }
+}
+
+.loading, .error {
+  text-align: center; padding: 3rem; color: $color-text;
+}
+
+.error { color: #ff6b6b; }
