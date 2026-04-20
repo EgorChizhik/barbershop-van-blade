@@ -1,2 +1,11 @@
-const Home = () => <h1>Главная страница (В разработке)</h1>;
+import Hero from '../components/hero/Hero';
+import ServicesPreview from '../components/services-preview/ServicesPreview';
+
+const Home = () => (
+  <>
+    <Hero />
+    <ServicesPreview />
+  </>
+);
+
 export default Home;

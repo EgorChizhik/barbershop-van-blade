@@ -14,6 +14,11 @@ class Category(models.Model):
 
 class Service(models.Model):
     """Конкретная услуга в рамках категории"""
+    BARBER_LEVELS = [
+        ('ranger', 'Рейнджер'),
+        ('skipper', 'Шкипер'),
+        ('captain', 'Капитан'),
+    ]
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="services")
     name = models.CharField(max_length=150)
     slug = models.SlugField(unique=True)
@@ -22,6 +27,7 @@ class Service(models.Model):
     duration_minutes = models.PositiveIntegerField()
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    barber_level = models.CharField(max_length=20, choices=BARBER_LEVELS, default='ranger')
 
     class Meta:
         ordering = ['category', 'name']

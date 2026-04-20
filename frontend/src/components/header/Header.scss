@@ -1,0 +1,90 @@
+@use '../../styles/variables' as *;
+
+
+.header {
+  background: $color-bg;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border: none;
+  
+  &__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  &__logo {
+    .logo-placeholder {
+      width: 120px;
+      height: 60px;
+      background: rgba(201, 169, 97, 0.2);
+      border: 2px solid $color-accent;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-accent;
+      font-family: $font-heading;
+      font-size: 0.9rem;
+    }
+  }
+  
+  &__nav {
+    a {
+      margin-left: 2.5rem;
+      color: $color-text;
+      text-decoration: none;
+      font-family: $font-body;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      
+      &:hover {
+        color: $color-accent;
+      }
+    }
+  }
+}
+.marquee {
+  background: #000;
+  overflow: hidden;
+  width: 100%;
+  padding: 0.5rem 0;
+  display: flex;
+
+  &__track {
+    display: flex;
+    width: max-content; 
+    animation: marquee-loop 10s linear infinite; 
+  }
+
+  &__group {
+    display: flex;
+    flex-shrink: 0; 
+    min-width: 100%;
+    justify-content: space-around;
+  }
+
+  &__text {
+    font-size: 3.5rem;
+    font-style: italic;
+    color: #f5f1e6;
+    font-weight: 600;
+    padding: 0 3rem;
+    white-space: nowrap;
+  }
+}
+
+@keyframes marquee-loop {
+  from {
+    transform: translateX(0);
+  }
+  to {
+
+    transform: translateX(-50%);
+  }
+}

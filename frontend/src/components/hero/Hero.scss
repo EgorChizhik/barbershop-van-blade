@@ -1,0 +1,74 @@
+@use '../../styles/variables' as *;
+
+.hero {
+  background: $color-bg;
+  padding: 4rem 0;
+  
+  &__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  &__title {
+    font-family: $font-heading;
+    font-size: 3rem;
+    color: $color-text;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+  
+  &__info {
+    p {
+      color: lighten($color-text, 10%);
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+  }
+  
+  &__cta {
+    margin-top: 2rem;
+    padding: 1rem 2.5rem;
+    background: $color-accent;
+    color: $color-bg;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  
+  &__image {
+    .image-placeholder {
+      width: 100%;
+      height: 500px;
+      background: rgba(255,255,255,0.05);
+      border: 2px dashed $color-accent;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: $color-text;
+      
+      span {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      small {
+        color: lighten($color-text, 20%);
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
