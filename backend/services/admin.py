@@ -8,7 +8,12 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price', 'duration_minutes', 'is_active')
-    list_filter = ('category', 'is_active')
+    list_display = ('name', 'barber', 'barber_level', 'price', 'duration_range', 'is_active')
+    list_filter = ('barber_level', 'is_active', 'category')
+    search_fields = ('name', 'subtitle', 'description')
     prepopulated_fields = {'slug': ('name',)}
-    search_fields = ('name', 'description')
+    fieldsets = (
+        ('Основное', {'fields': ('name', 'slug', 'category', 'barber', 'barber_level')}),
+        ('Контент', {'fields': ('subtitle', 'description', 'image')}),
+        ('Детали', {'fields': ('price', 'duration_range', 'is_active')}),
+    )
