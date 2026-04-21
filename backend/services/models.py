@@ -1,6 +1,17 @@
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, FileExtensionValidator
+from django.core.exceptions import ValidationError
 from barbers.models import Barber
+
+
+def validate_image_size(value):
+    """Проверка размера изображения (макс. 5MB)"""
+    max_size = 5 * 1024 * 1024  # 5MB в байтах
+    if value.size > max_size:
+        raise ValidationError('Размер изображения не должен превышать 5MB')
+    return value
+
+
 class Category(models.Model):
     """Категория услуги"""
     name = models.CharField(max_length=100, verbose_name="Name")
@@ -15,11 +26,6 @@ class Category(models.Model):
 
 
 class Service(models.Model):
-    DURATION_CHOICES = [
-        ('15', '10–30 минут'),
-        ('30', '30–60 минут'),
-        ('60', '60+ минут'),
-    ]
     BARBER_LEVELS = [
         ('ranger', 'Рейнджер'),
         ('skipper', 'Шкипер'),
@@ -32,9 +38,20 @@ class Service(models.Model):
     slug = models.SlugField(unique=True, verbose_name="URL-идентификатор")
     subtitle = models.CharField(max_length=120, blank=True, help_text="Креативный подзаголовок (1-2 предложения)", verbose_name="Подзаголовок")
     description = models.TextField(max_length=600, help_text="Описание услуги (до 600 символов)", verbose_name="Описание")
-    duration_range = models.CharField(max_length=10, choices=DURATION_CHOICES, default='30', verbose_name="Длительность (интервал)")
+    duration_minutes = models.PositiveIntegerField(
+        default=30,
+        validators=[MinValueValidator(15), MaxValueValidator(120)],
+        verbose_name="Длительность (минуты)",
+        help_text="От 15 до 120 минут"
+    )
     price = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(0)], verbose_name="Цена (₽)")
-    image = models.ImageField(upload_to='services/', blank=True, null=True, verbose_name="Фото услуги")
+    image = models.ImageField(
+        upload_to='services/',
+        blank=True,
+        null=True,
+        verbose_name="Фото услуги",
+        validators=[validate_image_size, FileExtensionValidator(['jpg', 'jpeg', 'png', 'webp'])]
+    )
     barber_level = models.CharField(max_length=20, choices=BARBER_LEVELS, default='ranger', verbose_name="Уровень квалификации")
     is_active = models.BooleanField(default=True, verbose_name="Активна?")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,4 +63,3 @@ class Service(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.barber_level})"
-    
