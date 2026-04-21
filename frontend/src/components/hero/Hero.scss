@@ -3,6 +3,8 @@
 .hero {
   background: $color-bg;
   padding: 4rem 0;
+  min-height: 800px;
+  overflow: hidden;
   
   &__container {
     max-width: 1400px;
@@ -12,24 +14,35 @@
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+    position: relative;
   }
-  
+
+  &__content {
+    position: relative;
+    z-index: 10;
+  }
+
   &__title {
     font-family: $font-heading;
     font-size: 3rem;
     color: $color-text;
     margin-bottom: 2rem;
     line-height: 1.2;
+    max-width: 500px;
   }
   
   &__info {
     p {
-      color: lighten($color-text, 10%);
+      color: $color-text;
       margin-bottom: 0.75rem;
       font-size: 1.1rem;
+      
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
     }
   }
-  
+
   &__cta {
     margin-top: 2rem;
     padding: 1rem 2.5rem;
@@ -40,35 +53,214 @@
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba($color-accent, 0.3);
     
     &:hover {
-      opacity: 0.9;
+      background: lighten($color-accent, 8%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba($color-accent, 0.4);
+    }
+    
+    &:active {
+      transform: translateY(0);
     }
   }
-  
-  &__image {
-    .image-placeholder {
-      width: 100%;
-      height: 500px;
-      background: rgba(255,255,255,0.05);
-      border: 2px dashed $color-accent;
+
+  &__slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__flag-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__flag {
+    pointer-events: none;
+    width: 195%;
+    height: 140%;
+    object-fit: contain;
+    opacity: 0.7;
+    filter: saturate(0.85) brightness(0.9);
+  }
+
+  &__model-container {
+    position: relative;
+    z-index: 3;
+    width: 370px;
+    height: 370px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 80px 30px rgba($color-accent, 0.25);
+    background: #000;
+  }
+
+  &__model-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+    
+    opacity: 0;
+    transform: scale(1.05);
+    z-index: 1;
+    
+    transition: 
+      opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &.prev {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 2;
+    }
+
+    &.active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 3;
+    }
+  }
+
+  &__controls {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    background: rgba($color-bg, 0.7);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba($color-accent, 0.1);
+    
+    button {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
+      background: rgba($color-accent, 0.95);
+      border: none;
+      color: $color-bg;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: $color-text;
       
-      span {
-        font-size: 1.2rem;
-        margin-bottom: 0.5rem;
+      &:hover:not(:disabled) {
+        background: $color-accent;
+        transform: scale(1.1);
       }
       
-      small {
-        color: lighten($color-text, 20%);
-        font-size: 0.85rem;
+      &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
       }
+    }
+    
+    .hero__dots {
+      display: flex;
+      gap: 0.8rem;
+      
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba($color-text, 0.4);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        
+        &:hover:not(:disabled) {
+          background: rgba($color-text, 0.7);
+        }
+        
+        &.active {
+          background: $color-accent;
+          transform: scale(1.4);
+        }
+        
+        &:disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 968px) {
+  .hero {
+    padding: 3rem 0;
+    
+    &__container {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+    
+    &__title {
+      font-size: 2.2rem;
+      margin: 0 auto 2rem;
+    }
+    
+    &__slider-wrapper {
+      height: 500px;
+    }
+    
+    &__model-container {
+      width: 320px;
+      height: 320px;
+    }
+    
+    &__flag {
+      width: 160%;
+      opacity: 0.6;
+    }
+    
+    &__controls {
+      bottom: 1.5rem;
+      
+      button {
+        width: 44px;
+        height: 44px;
+      }
+      
+      .hero__dots .dot {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    &__title {
+      font-size: 1.8rem;
+    }
+    &__model-container {
+      width: 280px;
+      height: 280px;
     }
   }
 }

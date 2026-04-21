@@ -1,5 +1,4 @@
-// frontend/src/services/apiService.js
-const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your DRF API base URL
+const API_BASE_URL = 'http://localhost:8000/api';
 
 export const fetchData = async (endpoint) => {
   try {
@@ -60,7 +59,7 @@ export const deleteData = async (endpoint) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return await response.json(); // Or handle as needed, e.g., return true for success
+    return await response.json();
   } catch (error) {
     console.error("Error deleting data:", error);
     throw error;
