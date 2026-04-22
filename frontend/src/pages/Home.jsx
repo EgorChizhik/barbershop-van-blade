@@ -1,10 +1,10 @@
 import Hero from '../components/hero/Hero';
-import ServicesPreview from '../components/services-preview/ServicesPreview';
+import ServicesCatalog from '../components/services-catalog/ServicesCatalog';
 
 const Home = () => (
   <>
     <Hero />
-    <ServicesPreview />
+    <ServicesCatalog initialLevel="ranger" limit={6} showViewAllBtn={true} />
   </>
 );
 

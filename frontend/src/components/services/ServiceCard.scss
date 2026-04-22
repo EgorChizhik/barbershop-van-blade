@@ -56,19 +56,17 @@
 
   &__title {
     font-family: $font-heading;
+    font-size: 1.25rem; 
+    margin: 0 0 8px;
     color: $color-text;
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    line-height: 1.2;
-    margin: 0;
   }
 
   &__subtitle {
-    color: color.adjust($color-text, $lightness: 20%);
+    font-family: $font-body;
     font-size: 0.9rem;
-    margin: 0;
-    font-style: italic;
+    color: color.adjust($color-text, $lightness: -20%);
+    margin: 0 0 16px;
+    line-height: 1.4;
   }
 
   &__meta {

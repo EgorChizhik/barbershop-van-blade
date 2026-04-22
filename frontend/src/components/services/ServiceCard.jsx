@@ -24,7 +24,7 @@ const ServiceCard = ({ service }) => {
         )}
         
         <div className="service-card__meta">
-          <span className="service-card__price">{service.price} ₽</span>
+          <span className="service-card__price">{Math.floor(service.price)} ₽</span>
           <span className="service-card__duration">{service.duration_minutes} мин</span>
         </div>
         

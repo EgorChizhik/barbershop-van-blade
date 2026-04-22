@@ -1,0 +1,21 @@
+@use '../../styles/variables' as vars;
+
+.service-category-group {
+  margin-bottom: 80px;
+
+  &__title {
+    font-family: vars.$font-heading;
+    font-size: 2rem;
+    color: vars.$color-text;
+    margin: 0 0 32px;
+    border-left: 4px solid vars.$color-accent;
+    padding-left: 16px;
+    font-weight: 700;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 32px;
+  }
+}

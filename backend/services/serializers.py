@@ -5,7 +5,7 @@ from .models import Category, Service
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'slug', 'icon']
+        fields = ['id', 'name', 'slug', 'image', 'description']
 
 
 class ServiceSerializer(serializers.ModelSerializer):

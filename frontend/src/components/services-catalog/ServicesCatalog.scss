@@ -1,0 +1,53 @@
+@use '../../styles/variables' as vars;
+
+.services-catalog {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  &__title {
+    font-family: vars.$font-heading;
+    font-size: 2.5rem;
+    color: vars.$color-text;
+    margin: 0;
+  }
+
+  &__content {
+    margin-top: 24px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+    padding-bottom: 40px;
+  }
+
+  &__view-all {
+    display: inline-block;
+    padding: 14px 36px;
+    font-family: vars.$font-body;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: vars.$color-accent;
+    background: transparent;
+    border: 2px solid vars.$color-accent;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+      background: vars.$color-accent;
+      color: vars.$color-bg;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(201, 169, 97, 0.3);
+    }
+  }
+}
