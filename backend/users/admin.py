@@ -10,3 +10,6 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
         ('Дополнительно', {'fields': ('phone', 'avatar', 'is_barber')}),
     )
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ('Дополнительно', {'fields': ('phone', 'avatar', 'is_barber')}),
+    )

@@ -1,4 +1,5 @@
 @use '../../styles/variables' as *;
+@use "sass:color";
 
 .hero {
   background: $color-bg;
@@ -57,7 +58,7 @@
     box-shadow: 0 4px 15px rgba($color-accent, 0.3);
     
     &:hover {
-      background: lighten($color-accent, 8%);
+      background: color.adjust($color-accent, $lightness: 8%);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba($color-accent, 0.4);
     }
@@ -215,12 +216,10 @@
       grid-template-columns: 1fr;
       gap: 3rem;
       padding: 0 1.5rem;
-      text-align: center;
     }
     
     &__title {
       font-size: 2.2rem;
-      margin: 0 auto 2rem;
     }
     
     &__slider-wrapper {
@@ -249,18 +248,6 @@
         width: 10px;
         height: 10px;
       }
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .hero {
-    &__title {
-      font-size: 1.8rem;
-    }
-    &__model-container {
-      width: 280px;
-      height: 280px;
     }
   }
 }

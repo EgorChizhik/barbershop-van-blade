@@ -5,21 +5,21 @@ from barbers.models import Barber
 
 
 def validate_image_size(value):
-    """Проверка размера изображения (макс. 5MB)"""
-    max_size = 5 * 1024 * 1024  # 5MB в байтах
+    max_size = 5 * 1024 * 1024
     if value.size > max_size:
         raise ValidationError('Размер изображения не должен превышать 5MB')
     return value
 
 
 class Category(models.Model):
-    """Категория услуги"""
-    name = models.CharField(max_length=100, verbose_name="Name")
-    slug = models.SlugField(unique=True, verbose_name="Slug")
-    icon = models.CharField(max_length=50, blank=True, help_text="Icon identifier")
+    name = models.CharField(max_length=100, verbose_name="Название категории")
+    slug = models.SlugField(unique=True, verbose_name="URL-идентификатор")
+    icon = models.CharField(max_length=50, blank=True, help_text="Идентификатор иконки", verbose_name="Иконка")
 
     class Meta:
         ordering = ['name']
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
 
     def __str__(self):
         return self.name
@@ -33,11 +33,11 @@ class Service(models.Model):
     ]
 
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='services', verbose_name="Категория")
-    barber = models.ForeignKey(Barber, on_delete=models.SET_NULL, null=True, blank=True, related_name='services', verbose_name="Исполнитель (Барбер)")
-    name = models.CharField(max_length=150, verbose_name="Название")
+    barber = models.ForeignKey(Barber, on_delete=models.SET_NULL, null=True, blank=True, related_name='services', verbose_name="Исполнитель")
+    name = models.CharField(max_length=150, verbose_name="Название услуги")
     slug = models.SlugField(unique=True, verbose_name="URL-идентификатор")
-    subtitle = models.CharField(max_length=120, blank=True, help_text="Креативный подзаголовок (1-2 предложения)", verbose_name="Подзаголовок")
-    description = models.TextField(max_length=600, help_text="Описание услуги (до 600 символов)", verbose_name="Описание")
+    subtitle = models.CharField(max_length=120, blank=True, help_text="Креативный подзаголовок", verbose_name="Подзаголовок")
+    description = models.TextField(max_length=600, help_text="Описание услуги", verbose_name="Описание")
     duration_minutes = models.PositiveIntegerField(
         default=30,
         validators=[MinValueValidator(15), MaxValueValidator(120)],
@@ -53,8 +53,8 @@ class Service(models.Model):
         validators=[validate_image_size, FileExtensionValidator(['jpg', 'jpeg', 'png', 'webp'])]
     )
     barber_level = models.CharField(max_length=20, choices=BARBER_LEVELS, default='ranger', verbose_name="Уровень квалификации")
-    is_active = models.BooleanField(default=True, verbose_name="Активна?")
-    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True, verbose_name="Активна")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     class Meta:
         ordering = ['barber_level', 'name']

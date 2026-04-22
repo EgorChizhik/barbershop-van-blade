@@ -1,6 +1,7 @@
 import { useState } from 'react';
+
 import { useServices } from '../../hooks/useServices';
-import ServiceCard from '../ServiceCard';
+import ServiceCard from '../services/ServiceCard';
 import './ServicesPreview.scss';
 
 const ServicesPreview = () => {

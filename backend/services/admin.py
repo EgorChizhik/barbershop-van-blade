@@ -7,6 +7,7 @@ from .models import Category, Service
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
+    search_fields = ('name',)
 
 
 class ServiceAdminForm(forms.ModelForm):
@@ -28,11 +29,9 @@ class ServiceAdmin(admin.ModelAdmin):
         }),
         ('Контент', {
             'fields': ('subtitle', 'description', 'image'),
-            'description': 'Подзаголовок: до 120 символов. Описание: до 600 символов.'
         }),
         ('Детали', {
             'fields': ('price', 'duration_minutes', 'is_active'),
-            'description': 'Длительность: 15-120 минут. Цена: не отрицательная.'
         }),
     )
     
