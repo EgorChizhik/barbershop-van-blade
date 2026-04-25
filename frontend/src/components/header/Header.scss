@@ -23,7 +23,7 @@
     .logo-placeholder {
       width: 120px;
       height: 60px;
-      background: rgba(201, 169, 97, 0.2);
+      background: rgba($color-accent, 0.2);
       border: 2px solid $color-accent;
       border-radius: 8px;
       display: flex;
@@ -51,7 +51,7 @@
   }
 }
 .marquee {
-  background: #000;
+  background: $color-bg;
   overflow: hidden;
   width: 100%;
   padding: 0.5rem 0;
@@ -59,13 +59,13 @@
 
   &__track {
     display: flex;
-    width: max-content; 
-    animation: marquee-loop 10s linear infinite; 
+    width: max-content;
+    animation: marquee-loop 10s linear infinite;
   }
 
   &__group {
     display: flex;
-    flex-shrink: 0; 
+    flex-shrink: 0;
     min-width: 100%;
     justify-content: space-around;
   }
@@ -73,7 +73,7 @@
   &__text {
     font-size: 3.5rem;
     font-style: italic;
-    color: #f5f1e6;
+    color: $color-text;
     font-weight: 600;
     padding: 0 3rem;
     white-space: nowrap;

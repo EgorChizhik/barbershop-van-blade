@@ -47,7 +47,7 @@
       background: vars.$color-accent;
       color: vars.$color-bg;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(201, 169, 97, 0.3);
+      box-shadow: 0 4px 12px rgba(vars.$color-accent, 0.3);
     }
   }
 }

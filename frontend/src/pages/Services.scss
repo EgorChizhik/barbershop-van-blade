@@ -37,7 +37,7 @@
 }
 
 .skeleton-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: $color-bg-secondary;
   border-radius: 12px;
   height: 450px;
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;

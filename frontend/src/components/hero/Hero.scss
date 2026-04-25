@@ -103,7 +103,7 @@
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 0 80px 30px rgba($color-accent, 0.25);
-    background: #000;
+    background: $color-bg;
   }
 
   &__model-photo {
@@ -120,7 +120,7 @@
     transform: scale(1.05);
     z-index: 1;
     
-    transition: 
+    transition:
       opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
       transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     
