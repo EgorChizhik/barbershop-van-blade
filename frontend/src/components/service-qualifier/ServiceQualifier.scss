@@ -1,0 +1,51 @@
+@use '../../styles/variables' as vars;
+
+.service-qualifier {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__card {
+    padding: 20px;
+    border: 1px solid vars.$color-border;
+    border-radius: 8px;
+    background: vars.$color-bg-secondary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(.is-active) {
+      opacity: 0.8;
+    }
+
+    &.is-active {
+      border-color: vars.$color-accent;
+      background: color.adjust(vars.$color-bg-secondary, $lightness: 5%);
+    }
+  }
+
+  &__title {
+    font-family: vars.$font-heading;
+    margin: 0 0 8px 0;
+  }
+
+  &__slogan {
+    font-family: vars.$font-body;
+    color: vars.$color-text-muted;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .service-qualifier {
+    &__list {
+      gap: 12px;
+    }
+
+    &__card {
+      padding: 16px;
+    }
+  }
+}

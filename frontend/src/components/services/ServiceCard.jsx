@@ -7,6 +7,8 @@ const ServiceCard = ({ service }) => {
     ? (service.image.startsWith('http') ? service.image : `${BASE_URL}/media/${service.image}`)
     : null;
 
+  const variant = service.defaultVariant || service.variants?.[0];
+
   return (
     <article className="service-card">
       <div className="service-card__image-wrapper">
@@ -24,8 +26,12 @@ const ServiceCard = ({ service }) => {
         )}
         
         <div className="service-card__meta">
-          <span className="service-card__price">{Math.floor(service.price)} ₽</span>
-          <span className="service-card__duration">{service.duration_minutes} мин</span>
+          {variant && (
+            <>
+              <span className="service-card__price">{Math.floor(variant.price)} ₽</span>
+              <span className="service-card__duration">{variant.duration_minutes} мин</span>
+            </>
+          )}
         </div>
         
         <Link to={`/services/${service.slug}`} className="service-card__btn">

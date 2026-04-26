@@ -1,12 +1,14 @@
 import './ServicesFilterBar.scss';
 
 const LEVELS = [
-  { id: 'ranger', title: 'Рейнджер', desc: 'Первый на абордаж. Базовые стрижки без промаха.' },
-  { id: 'skipper', title: 'Шкипер', desc: 'Уверенно ведёт к идеальному фейду.' },
-  { id: 'captain', title: 'Капитан', desc: 'Опасное лезвие в надёжных руках.' },
+  { id: 'Рейнджер', title: 'Рейнджер', desc: 'Первый на абордаж. Базовые стрижки без промаха.' },
+  { id: 'Шкипер', title: 'Шкипер', desc: 'Уверенно ведёт к идеальному фейду.' },
+  { id: 'Капитан', title: 'Капитан', desc: 'Опасное лезвие в надёжных руках.' },
 ];
 
 const ServicesFilterBar = ({ activeLevel, onLevelChange }) => {
+  const activeIndex = LEVELS.findIndex(level => level.id === activeLevel);
+
   return (
     <div className="services-filter">
       <div className="services-filter__container">
@@ -23,7 +25,8 @@ const ServicesFilterBar = ({ activeLevel, onLevelChange }) => {
         <div 
           className="filter-line"
           style={{
-            left: activeLevel === 'ranger' ? '0%' : activeLevel === 'skipper' ? '33.33%' : '66.66%',
+            left: `${activeIndex * 33.33}%`,
+            transition: 'left 0.3s ease'
           }}
         />
       </div>

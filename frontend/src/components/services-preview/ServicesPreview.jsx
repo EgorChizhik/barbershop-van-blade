@@ -1,20 +1,24 @@
 import { useState } from 'react';
-
 import { useServices } from '../../hooks/useServices';
 import ServiceCard from '../services/ServiceCard';
 import './ServicesPreview.scss';
 
 const ServicesPreview = () => {
-  const [activeLevel, setActiveLevel] = useState('ranger');
-  const { data: services, isLoading } = useServices();
+  const [activeLevel, setActiveLevel] = useState('Рейнджер');
+  const {  services, isLoading } = useServices();
 
   const levels = [
-    { id: 'ranger', title: 'Рейнджер', desc: 'Первый на абордаж. Базовые стрижки без промаха.' },
-    { id: 'skipper', title: 'Шкипер', desc: 'Уверенно ведёт к идеальному фейду.' },
-    { id: 'captain', title: 'Капитан', desc: 'Опасное лезвие в надёжных руках.' },
+    { id: 'Рейнджер', title: 'Рейнджер', desc: 'Первый на абордаж. Базовые стрижки без промаха.' },
+    { id: 'Шкипер', title: 'Шкипер', desc: 'Уверенно ведёт к идеальному фейду.' },
+    { id: 'Капитан', title: 'Капитан', desc: 'Опасное лезвие в надёжных руках.' },
   ];
 
-  const filteredServices = services?.filter(s => s.barber_level === activeLevel) || [];
+  const processedServices = services?.map(service => {
+    const variant = service.variants?.find(v => v.barber_level === activeLevel) || service.defaultVariant;
+    return { ...service, defaultVariant: variant };
+  }) || [];
+
+  const filteredServices = processedServices.filter(s => s.defaultVariant?.barber_level === activeLevel);
 
   return (
     <section className="services-preview">
@@ -38,7 +42,7 @@ const ServicesPreview = () => {
           <div 
             className="services-preview__line-active"
             style={{ 
-              left: activeLevel === 'ranger' ? '0%' : activeLevel === 'skipper' ? '33.33%' : '66.66%',
+              left: activeLevel === 'Рейнджер' ? '0%' : activeLevel === 'Шкипер' ? '33.33%' : '66.66%',
               width: '33.33%'
             }}
           />

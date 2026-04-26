@@ -1,0 +1,193 @@
+@use "sass:color";
+@use '../styles/variables' as vars;
+
+.service-detail-page {
+  background: vars.$color-bg;
+}
+
+.service-hero {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(12, 21, 25, 1) 100%); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__label {
+    display: block;
+    color: vars.$color-accent;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-family: vars.$font-heading;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    color: vars.$color-text;
+    line-height: 1.1;
+    text-transform: uppercase;
+    max-width: 900px;
+    margin: 0;
+  }
+
+  &__arrow {
+    margin-top: 60px;
+    cursor: pointer;
+    color: vars.$color-accent;
+    display: flex;
+    justify-content: center;
+
+    svg {
+      width: 50px;
+      height: 50px;
+      filter: drop-shadow(0 0 10px rgba(vars.$color-accent, 0.5));
+    }
+  }
+}
+
+.qualifiers-section {
+  padding: 0 0 100px 0;
+  max-width: 100%;
+}
+
+.qualifiers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid vars.$color-border;
+  border-bottom: 1px solid vars.$color-border;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.variant-card {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid vars.$color-border;
+
+  &:last-child {
+    border-right: none;
+  }
+
+  &__top {
+    padding: 40px 20px;
+    text-align: center;
+    background: color.adjust(vars.$color-bg, $lightness: 2%);
+  }
+
+  &__main {
+    height: 650px;
+    position: relative;
+    overflow: hidden;
+    background: vars.$color-bg-secondary;
+  }
+
+  &__preview {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  &__image-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  &__image-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+  }
+
+  &__image-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 2;
+  }
+
+  &__more-btn {
+    z-index: 3;
+    background: transparent;
+    border: 1px solid vars.$color-accent;
+    color: vars.$color-accent;
+    padding: 15px 35px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: vars.$color-accent;
+      color: vars.$color-bg;
+    }
+  }
+
+  &__info {
+    height: 100%;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__description {
+    color: vars.$color-text-muted;
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: auto;
+    max-width: 450px;
+  }
+
+  &__price {
+    font-family: vars.$font-heading;
+    font-size: 3rem;
+    color: vars.$color-text;
+    margin: 40px 0;
+  }
+
+  &__book-btn {
+    width: 100%;
+    background: vars.$color-accent;
+    color: vars.$color-bg;
+    border: none;
+    padding: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    &:hover {
+        background: color.adjust(vars.$color-accent, $lightness: 10%);
+    }
+  }
+}

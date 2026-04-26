@@ -26,25 +26,12 @@ class Category(models.Model):
 
 
 class Service(models.Model):
-    BARBER_LEVELS = [
-        ('ranger', 'Рейнджер'),
-        ('skipper', 'Шкипер'),
-        ('captain', 'Капитан'),
-    ]
-
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='services', verbose_name="Категория")
     barber = models.ForeignKey(Barber, on_delete=models.SET_NULL, null=True, blank=True, related_name='services', verbose_name="Исполнитель")
     name = models.CharField(max_length=150, verbose_name="Название услуги")
     slug = models.SlugField(unique=True, verbose_name="URL-идентификатор")
     subtitle = models.CharField(max_length=120, blank=True, help_text="Креативный подзаголовок", verbose_name="Подзаголовок")
     description = models.TextField(max_length=600, help_text="Описание услуги", verbose_name="Описание")
-    duration_minutes = models.PositiveIntegerField(
-        default=30,
-        validators=[MinValueValidator(15), MaxValueValidator(120)],
-        verbose_name="Длительность (минуты)",
-        help_text="От 15 до 120 минут"
-    )
-    price = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(0)], verbose_name="Цена (₽)")
     image = models.ImageField(
         upload_to='services/',
         blank=True,
@@ -52,14 +39,58 @@ class Service(models.Model):
         verbose_name="Фото услуги",
         validators=[validate_image_size, FileExtensionValidator(['jpg', 'jpeg', 'png', 'webp'])]
     )
-    barber_level = models.CharField(max_length=20, choices=BARBER_LEVELS, default='ranger', verbose_name="Уровень квалификации")
     is_active = models.BooleanField(default=True, verbose_name="Активна")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     class Meta:
-        ordering = ['barber_level', 'name']
+        ordering = ['name']
         verbose_name = "Услуга"
         verbose_name_plural = "Услуги"
 
     def __str__(self):
-        return f"{self.name} ({self.barber_level})"
+        return self.name
+
+
+class ServiceVariant(models.Model):
+    SERVICE_LEVELS = [
+        ('Рейнджер', 'Рейнджер'),
+        ('Шкипер', 'Шкипер'),
+        ('Капитан', 'Капитан'),
+    ]
+
+    service = models.ForeignKey(
+        'Service', 
+        related_name='variants', 
+        on_delete=models.CASCADE,
+        verbose_name="Основная услуга"
+    )
+    barber_level = models.CharField(
+        max_length=20, 
+        choices=SERVICE_LEVELS,
+        verbose_name="Квалификация барбера"
+    )
+    price = models.DecimalField(
+        max_digits=7, 
+        decimal_places=2, 
+        validators=[MinValueValidator(0)],
+        verbose_name="Стоимость"
+    )
+    duration_minutes = models.PositiveIntegerField(
+        validators=[MaxValueValidator(120)],
+        verbose_name="Длительность (мин.)"
+    )
+    description = models.TextField(
+        max_length=550, 
+        blank=True, 
+        verbose_name="Описание для этого уровня",
+        help_text="Расскажите, чем отличается услуга у этого мастера"
+    )
+
+    class Meta:
+        unique_together = ('service', 'barber_level')
+        verbose_name = "Вариант услуги"
+        verbose_name_plural = "Варианты услуг"
+        ordering = ['price'] 
+
+    def __str__(self):
+        return f"{self.service.name} — {self.barber_level}"

@@ -4,7 +4,7 @@ import ServicesCatalog from '../components/services-catalog/ServicesCatalog';
 const Home = () => (
   <>
     <Hero />
-    <ServicesCatalog initialLevel="ranger" limit={6} showViewAllBtn={true} />
+    <ServicesCatalog initialLevel="Рейнджер" limit={6} showViewAllBtn={true} />
   </>
 );
 
