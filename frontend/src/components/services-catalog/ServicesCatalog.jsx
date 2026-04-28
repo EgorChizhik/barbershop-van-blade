@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
+import PageTitle from "../PageTitle/PageTitle";
 import { useServices } from '../../hooks/useServices';
 import ServicesFilterBar from '../services/ServicesFilterBar';
 import ServiceCategoryGroup from '../services/ServiceCategoryGroup';
+
 import './ServicesCatalog.scss';
 
 const ServicesCatalog = ({ initialLevel = 'Рейнджер', limit = Infinity }) => {
   const [activeLevel, setActiveLevel] = useState(initialLevel);
   
-  // Используем только useServices для получения всего списка
   const { data, isLoading, isError, error, isSuccess, isFetching } = useServices(null);
   
-  // Безопасное получение массива данных
   const servicesData = data || [];
 
   useEffect(() => {
@@ -37,13 +37,11 @@ const ServicesCatalog = ({ initialLevel = 'Рейнджер', limit = Infinity }
     );
   }
 
-  // Фильтрация по уровню барбера (если структура API предполагает наличие вариантов)
   const filteredServices = servicesData.filter(s => {
     if (!s.variants || s.variants.length === 0) return false;
     return s.variants.some(v => v.barber_level === activeLevel);
   });
 
-  // Группировка по категориям
   const groupedByCategory = filteredServices.reduce((acc, service) => {
     const catName = service.category_name || 'Другие услуги';
     if (!acc[catName]) acc[catName] = [];
@@ -70,7 +68,7 @@ const ServicesCatalog = ({ initialLevel = 'Рейнджер', limit = Infinity }
   return (
     <section className="services-catalog">
       <div className="services-catalog__header">
-        <h1 className="services-catalog__title">Наши услуги</h1>
+        <PageTitle title="Наши услуги" />
       </div>
       
       <ServicesFilterBar activeLevel={activeLevel} onLevelChange={setActiveLevel} />
