@@ -1,51 +1,89 @@
-@use '../../styles/variables' as vars;
+@use '../../styles/variables' as *;
+@use "sass:color";
 
 .service-qualifier {
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
   }
 
   &__card {
-    padding: 20px;
-    border: 1px solid vars.$color-border;
-    border-radius: 8px;
-    background: vars.$color-bg-secondary;
+    padding: 24px;
+    border: 1px solid $color-border;
+    border-radius: 0;
+    background: rgba($color-bg-secondary, 0.5);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: $transition-base;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: $color-accent;
+      transform: scaleY(0);
+      transition: $transition-base;
+    }
 
     &:hover:not(.is-active) {
-      opacity: 0.8;
+      background: rgba($color-bg-secondary, 0.8);
+      border-color: rgba($color-accent, 0.3);
     }
 
     &.is-active {
-      border-color: vars.$color-accent;
-      background: color.adjust(vars.$color-bg-secondary, $lightness: 5%);
+      border-color: $color-accent;
+      background: $color-bg-card; 
+      
+      &::before {
+        transform: scaleY(1); 
+      }
+
+      .service-qualifier__title {
+        color: $color-accent;
+      }
+
+      .service-qualifier__slogan {
+        color: $color-text;
+        opacity: 1;
+      }
     }
   }
 
   &__title {
-    font-family: vars.$font-heading;
-    margin: 0 0 8px 0;
+    font-family: $font-heading;
+    font-size: 1.3rem;
+    color: $color-text;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0 0 6px 0;
+    transition: $transition-base;
   }
 
   &__slogan {
-    font-family: vars.$font-body;
-    color: vars.$color-text-muted;
+    font-family: $font-body;
+    color: $color-text-muted;
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    line-height: 1.4;
+    opacity: 0.7;
+    transition: $transition-base;
   }
 }
 
 @media (max-width: 900px) {
   .service-qualifier {
     &__list {
-      gap: 12px;
+      gap: 10px;
     }
 
     &__card {
-      padding: 16px;
+      padding: 18px;
     }
   }
 }

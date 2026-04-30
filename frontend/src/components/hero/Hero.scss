@@ -1,12 +1,16 @@
-@use '../../styles/variables' as *;
+@use '../../styles/variables' as vars;
 @use "sass:color";
 
 .hero {
-  background: $color-bg;
-  padding: 4rem 0;
-  min-height: 800px;
+  background: vars.$color-surface;
+  padding: 1rem 0 0 0;
+  min-height: 850px;
+  display: flex;
+  align-items: center;
   overflow: hidden;
-  
+  position: relative;
+  min-height: 850px;
+
   &__container {
     max-width: 1400px;
     margin: 0 auto;
@@ -24,47 +28,53 @@
   }
 
   &__title {
-    font-family: $font-heading;
-    font-size: 3rem;
-    color: $color-text;
-    margin-bottom: 2rem;
-    line-height: 1.2;
-    max-width: 500px;
+    font-family: vars.$font-heading;
+    font-size: 4rem;
+    color: vars.$color-text-on-dark;
+    margin-bottom: 2.5rem;
+    line-height: 1.05;
+    max-width: 600px;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    
+    &::first-line {
+      color: vars.$color-accent-light;
+    }
   }
   
   &__info {
+    border-left: 2px solid vars.$color-accent-light;
+    padding-left: 2rem;
+    
     p {
-      color: $color-text;
-      margin-bottom: 0.75rem;
-      font-size: 1.1rem;
-      
-      &:not(:last-child) {
-        margin-bottom: 1rem;
-      }
+      color: vars.$color-text-on-dark;
+      opacity: 0.7;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+      letter-spacing: 1.5px;
+      font-weight: 500;
     }
   }
 
   &__cta {
-    margin-top: 2rem;
-    padding: 1rem 2.5rem;
-    background: $color-accent;
-    color: $color-bg;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
+    margin-top: 3.5rem;
+    padding: 1.25rem 3.5rem;
+    background: transparent;
+    color: vars.$color-accent-light;
+    border: 1px solid vars.$color-accent-light;
+    border-radius: vars.$border-radius-sharp;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba($color-accent, 0.3);
+    transition: vars.$transition-base;
     
     &:hover {
-      background: color.adjust($color-accent, $lightness: 8%);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba($color-accent, 0.4);
-    }
-    
-    &:active {
-      transform: translateY(0);
+      background: vars.$color-accent-light;
+      color: vars.$color-primary-dark;
+      box-shadow: 0 0 40px rgba(vars.$color-accent-light, 0.3);
+      transform: translateY(-5px);
     }
   }
 
@@ -77,33 +87,26 @@
     justify-content: center;
   }
 
-  &__flag-container {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__flag {
-    pointer-events: none;
-    width: 195%;
-    height: 140%;
-    object-fit: contain;
-    opacity: 0.7;
-    filter: saturate(0.85) brightness(0.9);
-  }
-
   &__model-container {
     position: relative;
     z-index: 3;
-    width: 370px;
-    height: 370px;
+    width: 450px;
+    height: 450px;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 0 80px 30px rgba($color-accent, 0.25);
-    background: $color-bg;
+    box-shadow: 0 0 120px rgba(vars.$color-accent-light, 0.1);
+    background: vars.$color-primary-dark;
+    border: 1px solid rgba(vars.$color-accent-light, 0.15);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      box-shadow: inset 0 0 80px rgba(0,0,0,0.6);
+      pointer-events: none;
+      z-index: 4;
+    }
   }
 
   &__model-photo {
@@ -112,142 +115,84 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    user-select: none;
-    -webkit-user-drag: none;
-    pointer-events: none;
-    
+    filter: grayscale(30%) brightness(0.8) contrast(1.1);
     opacity: 0;
-    transform: scale(1.05);
-    z-index: 1;
+    transform: scale(1.15);
+    transition: opacity 1.2s vars.$transition-base, transform 1.5s vars.$transition-base;
     
-    transition:
-      opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    &.prev {
-      opacity: 1;
-      transform: scale(1);
-      z-index: 2;
-    }
-
     &.active {
       opacity: 1;
       transform: scale(1);
       z-index: 3;
     }
+    &.prev {
+      z-index: 2;
+    }
   }
 
   &__controls {
     position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+    bottom: 20px;
     display: flex;
-    gap: 1.5rem;
+    gap: 2.5rem;
     align-items: center;
-    background: rgba($color-bg, 0.7);
-    padding: 0.8rem 1.5rem;
-    border-radius: 50px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba($color-accent, 0.1);
+    background: rgba(vars.$color-primary-dark, 0.3);
+    padding: 1.2rem 2.5rem;
+    border-radius: vars.$border-radius-sharp;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(vars.$color-accent-mid, 0.1);
     
     button {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba($color-accent, 0.95);
+      background: none;
       border: none;
-      color: $color-bg;
+      color: vars.$color-accent-light;
       font-size: 1.8rem;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: vars.$transition-base;
       display: flex;
       align-items: center;
-      justify-content: center;
+      line-height: 1;
       
       &:hover:not(:disabled) {
-        background: $color-accent;
-        transform: scale(1.1);
+        color: vars.$color-text-on-dark;
+        transform: scale(1.3);
       }
-      
-      &:disabled {
-        opacity: 0.3;
-        cursor: not-allowed;
-      }
+      &:disabled { opacity: 0.1; }
     }
     
     .hero__dots {
       display: flex;
-      gap: 0.8rem;
+      gap: 1.2rem;
       
       .dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: rgba($color-text, 0.4);
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        
-        &:hover:not(:disabled) {
-          background: rgba($color-text, 0.7);
-        }
+        width: 6px;
+        height: 6px;
+        border-radius: vars.$border-radius-sharp;
+        background: rgba(vars.$color-accent-mid, 0.2);
+        padding: 0;
+        transition: vars.$transition-base;
         
         &.active {
-          background: $color-accent;
-          transform: scale(1.4);
-        }
-        
-        &:disabled {
-          opacity: 0.3;
-          cursor: not-allowed;
+          background: vars.$color-accent-light;
+          transform: scale(1.8) rotate(45deg);
+          box-shadow: 0 0 15px vars.$color-accent-light;
         }
       }
     }
   }
 }
 
-@media (max-width: 968px) {
+@media (max-width: 1024px) {
   .hero {
-    padding: 3rem 0;
-    
     &__container {
       grid-template-columns: 1fr;
+      text-align: center;
       gap: 3rem;
-      padding: 0 1.5rem;
     }
-    
-    &__title {
-      font-size: 2.2rem;
-    }
-    
-    &__slider-wrapper {
-      height: 500px;
-    }
-    
-    &__model-container {
-      width: 320px;
-      height: 320px;
-    }
-    
-    &__flag {
-      width: 160%;
-      opacity: 0.6;
-    }
-    
-    &__controls {
-      bottom: 1.5rem;
-      
-      button {
-        width: 44px;
-        height: 44px;
-      }
-      
-      .hero__dots .dot {
-        width: 10px;
-        height: 10px;
-      }
-    }
+    &__title { margin: 0 auto 2.5rem; font-size: 3rem; }
+    &__info { border: none; padding: 0; }
+    &__model-container { width: 350px; height: 350px; }
+    &__controls { left: 50%; transform: translateX(-50%); }
+    &__cta { width: 100%; max-width: 320px; }
   }
 }

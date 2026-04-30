@@ -1,19 +1,19 @@
-@use '../../styles/variables' as *;
+@use '../../styles/variables' as vars;
 @use "sass:color";
 
-
 .header {
-  background: $color-bg;
+  background:vars.$color-surface;
+  backdrop-filter: blur(15px);
   width: 100%;
   position: sticky;
   top: 0;
   z-index: 1000;
-  border: none;
+  // border-bottom: 1px solid rgba(vars.$color-accent-mid, 0.1);
   
   &__container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 2rem 3rem;
+    padding: 1.25rem 3rem 0.5rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,45 +22,101 @@
   &__logo {
     .logo-placeholder {
       width: 120px;
-      height: 60px;
-      background: rgba($color-accent, 0.2);
-      border: 2px solid $color-accent;
-      border-radius: 8px;
+      height: 50px;
+      background: transparent;
+      border: 1px solid vars.$color-accent-light;
+      border-radius: vars.$border-radius-sharp;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $color-accent;
-      font-family: $font-heading;
+      color: vars.$color-accent-light;
+      font-family: vars.$font-heading;
       font-size: 0.9rem;
+      letter-spacing: 5px;
+      transition: vars.$transition-base;
+      box-shadow: inset 0 0 15px rgba(vars.$color-accent-light, 0.05);
+
+      &:hover {
+        background: rgba(vars.$color-accent-light, 0.1);
+        box-shadow: 0 0 25px rgba(vars.$color-accent-light, 0.2);
+        color: vars.$color-text-on-dark;
+      }
     }
   }
   
   &__nav {
+    display: flex;
+    align-items: center;
+
     a {
-      margin-left: 2.5rem;
-      color: $color-text;
+      margin-left: 3rem;
+      color: vars.$color-text-on-dark;
       text-decoration: none;
-      font-family: $font-body;
-      font-size: 0.95rem;
-      transition: color 0.3s ease;
+      font-family: vars.$font-body;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: vars.$transition-base;
+      position: relative;
+      opacity: 0.8;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        width: 0;
+        height: 1px;
+        background: vars.$color-accent-light;
+        transition: vars.$transition-base;
+        transform: translateX(-50%);
+      }
       
       &:hover {
-        color: $color-accent;
+        color: vars.$color-accent-light;
+        opacity: 1;
+        &::after {
+          width: 20px;
+        }
       }
     }
   }
 }
+
 .marquee {
-  background: $color-bg;
+  background: vars.$color-primary-dark;
   overflow: hidden;
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0.7rem 0;
   display: flex;
+  position: relative;
+  border-bottom: 1px solid rgba(vars.$color-accent-mid, 0.05);
+
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 150px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, vars.$color-primary-dark, transparent);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, vars.$color-primary-dark, transparent);
+  }
 
   &__track {
     display: flex;
     width: max-content;
-    animation: marquee-loop 10s linear infinite;
+    animation: marquee-loop 30s linear infinite;
   }
 
   &__group {
@@ -72,20 +128,23 @@
 
   &__text {
     font-size: 3.5rem;
-    font-style: italic;
-    color: $color-text;
-    font-weight: 600;
-    padding: 0 3rem;
+    font-family: vars.$font-heading;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(vars.$color-accent-mid, 0.12);
+    font-weight: 700;
+    padding: 0 5rem;
     white-space: nowrap;
+    transition: vars.$transition-base;
+    user-select: none;
+
+    &:hover {
+      -webkit-text-stroke: 1px rgba(vars.$color-accent-mid, 0.4);
+    }
   }
 }
 
 @keyframes marquee-loop {
-  from {
-    transform: translateX(0);
-  }
-  to {
-
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }

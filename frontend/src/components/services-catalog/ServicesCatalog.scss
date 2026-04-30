@@ -1,56 +1,92 @@
 @use '../../styles/variables' as vars;
 
 .services-catalog {
-  padding: 60px 0;
   width: 100%;
+  position: relative;
 
   &__header {
     width: 100%;
     text-align: center;
-    margin-bottom: 32px;
-  }
-
-  &__title {
-    font-family: vars.$font-heading;
-    font-size: 2.5rem;
-    color: vars.$color-text;
-    margin: 0;
+    margin-bottom: 40px;
   }
 
   &__content, 
   .services-filter-bar { 
-    max-width: 1200px;
+    max-width: 1300px; 
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
+  }
+
+  &__content {
+    min-height: 400px; 
+    transition: vars.$transition-base;
   }
 
   &__footer {
     display: flex;
     justify-content: center;
-    margin-top: 48px;
+    margin-top: 80px;
     padding-bottom: 40px;
   }
 
   &__view-all {
     display: inline-block;
-    padding: 14px 36px;
+    padding: 18px 45px;
     font-family: vars.$font-body;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: vars.$color-accent;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: vars.$color-text-on-light;
     background: transparent;
-    border: 2px solid vars.$color-accent;
-    border-radius: 6px;
+    border: 1px solid vars.$color-text-on-light;
+    border-radius: vars.$border-radius-sharp;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: vars.$transition-base;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 3px;
 
     &:hover {
-      background: vars.$color-accent;
-      color: vars.$color-bg;
+      background: vars.$color-text-on-light;
+      color: vars.$color-primary-light;
+      box-shadow: 0 10px 30px rgba(vars.$color-text-on-light, 0.1);
+      transform: translateY(-5px);
+    }
+
+    &:active {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(vars.$color-accent, 0.3);
+    }
+  }
+}
+
+.services-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 120px 20px;
+  background: rgba(vars.$color-accent-mid, 0.08);
+  border: 1px solid vars.$color-border-subtle;
+  border-radius: vars.$border-radius-sharp;
+
+  p {
+    color: vars.$color-text-muted;
+    font-family: vars.$font-body;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    font-style: italic;
+  }
+}
+
+@media (max-width: 1024px) {
+  .services-catalog {
+    padding: 40px 0 80px;
+    
+    &__content, 
+    .services-filter-bar { 
+      padding: 0 25px;
+    }
+    
+    &__view-all {
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
     }
   }
 }

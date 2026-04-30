@@ -6,7 +6,10 @@ const ServiceCategoryGroup = ({ category, services }) => {
 
   return (
     <div className="service-category-group">
-      <h3 className="service-category-group__title">{category}</h3>
+      <div className="service-category-group__title-container">
+        <h3 className="service-category-group__title">{category}</h3>
+      </div>
+      
       <div className="service-category-group__grid">
         {services.map((service) => (
           <ServiceCard key={service.id} service={service} />

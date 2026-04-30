@@ -1,8 +1,7 @@
 import './Hero.scss';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import useHairstyleSwitcher from '../../hooks/useHairstyleSwitcher';
 
-import flagBackground from '../../assets/images/hero/flag-background.png';
 import hairstyle1 from '../../assets/images/hero/hairstyle_1.jpg';
 import hairstyle2 from '../../assets/images/hero/hairstyle_2.jpg';
 import hairstyle3 from '../../assets/images/hero/hairstyle_3.jpg';
@@ -26,12 +25,14 @@ const Hero = () => {
   } = useHairstyleSwitcher(images, false);
 
   const [prevIndex, setPrevIndex] = useState(null);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setPrevIndex(currentIndex);
     }, 800);
     return () => clearTimeout(timer);
   }, [currentIndex]);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowLeft') handlePrev();
@@ -49,7 +50,7 @@ const Hero = () => {
           <div className="hero__info">
             <p className="hero__phone">(8422) 70-49-00</p>
             <p className="hero__address">Камышинская ул., 135</p>
-            <p className="hero__hours">10:00-21:00</p>
+            <p className="hero__hours">10:00-19:00</p>
           </div>
           <button className="hero__cta" onClick={() => window.location.href = '/booking'}>
             Записаться онлайн
@@ -57,10 +58,6 @@ const Hero = () => {
         </div>
 
         <div className="hero__slider-wrapper">
-          <div className="hero__flag-container">
-            <img src={flagBackground} alt="Van Blade flag" className="hero__flag" />
-          </div>
-          
           <div className="hero__model-container">
             {images.map((img, index) => (
               <img

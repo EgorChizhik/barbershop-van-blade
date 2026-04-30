@@ -1,83 +1,136 @@
-@use '../styles/variables' as *;
+@use '../styles/variables' as vars;
 @use "sass:color";
 
 .services-page {
-  background: $color-bg;
+  background-color: vars.$color-primary-light;
   min-height: 100vh;
+  position: relative;
+  transition: vars.$transition-base;
   
   &__header {
-    padding: 3rem 0 2rem;
+    padding: 6rem 0 4rem;
     text-align: center;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: vars.$color-text-on-light;
+      opacity: 0.1;
+    }
   }
   
   &__title {
-    font-family: $font-heading;
-    font-size: 3rem;
-    color: $color-text;
+    font-family: vars.$font-heading;
+    font-size: 4.5rem;
+    color: vars.$color-text-on-light;
+    text-transform: uppercase;
+    letter-spacing: 6px;
     margin: 0;
+    font-weight: 700;
+    
+    span {
+      color: vars.$color-accent-mid;
+    }
   }
   
   &__container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 3rem;
+    padding: 2rem 3rem 6rem;
   }
 }
 
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.5rem;
+  gap: 3.5rem;
 }
 
 .services-loading {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.5rem;
+  gap: 3.5rem;
 }
 
 .skeleton-card {
-  background: $color-bg-secondary;
-  border-radius: 12px;
-  height: 450px;
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background: vars.$color-primary-light;
+  border-radius: vars.$border-radius-sharp;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid vars.$color-border-subtle;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0,
+      rgba(vars.$color-accent-mid, 0.15) 20%,
+      rgba(vars.$color-accent-mid, 0.25) 60%,
+      transparent 100%
+    );
+    animation: shimmer 2s infinite;
+  }
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .services-empty {
   text-align: center;
-  padding: 5rem;
-  color: $color-text;
-  font-size: 1.2rem;
+  padding: 8rem 2rem;
+  color: vars.$color-text-muted;
+  font-family: vars.$font-heading;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
 }
 
 .services-error {
   text-align: center;
-  padding: 5rem;
-  color: #ff6b6b;
+  padding: 6rem 2rem;
+  color: #c53030;
+  background: rgba(197, 48, 48, 0.03);
+  border: 1px solid rgba(197, 48, 48, 0.1);
+  border-radius: vars.$border-radius-sharp;
+  margin: 4rem auto;
+  max-width: 600px;
   
   h2 {
-    margin-bottom: 1rem;
+    font-family: vars.$font-heading;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .btn-retry {
+    margin-top: 1rem;
   }
 }
 
 @media (max-width: 768px) {
   .services-page {
-    &__title {
-      font-size: 2rem;
-    }
-    
-    &__container {
-      padding: 2rem 1rem;
-    }
+    &__header { padding: 4rem 0 2rem; }
+    &__title { font-size: 2.8rem; letter-spacing: 2px; }
+    &__container { padding: 1rem 1.5rem 4rem; }
   }
   
-  .services-grid {
+  .services-grid, .services-loading {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2.5rem;
   }
 }
