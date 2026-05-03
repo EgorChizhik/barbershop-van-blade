@@ -33,6 +33,8 @@ const ServiceCard = ({ service }) => {
             </>
           )}
         </div>
+
+        <div className="service-card__divider"></div>
         
         <Link to={`/services/${service.slug}`} className="service-card__btn">
           Записаться
@@ -41,4 +43,5 @@ const ServiceCard = ({ service }) => {
     </article>
   );
 };
+
 export default ServiceCard;

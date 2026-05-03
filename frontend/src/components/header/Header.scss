@@ -1,15 +1,14 @@
-@use '../../styles/variables' as vars;
+@use "../../styles/variables" as vars;
 @use "sass:color";
 
 .header {
-  background:vars.$color-surface;
+  background: vars.$color-surface;
   backdrop-filter: blur(15px);
   width: 100%;
   position: sticky;
   top: 0;
   z-index: 1000;
-  // border-bottom: 1px solid rgba(vars.$color-accent-mid, 0.1);
-  
+
   &__container {
     max-width: 1400px;
     margin: 0 auto;
@@ -18,7 +17,7 @@
     justify-content: space-between;
     align-items: center;
   }
-  
+
   &__logo {
     .logo-placeholder {
       width: 120px;
@@ -43,42 +42,55 @@
       }
     }
   }
-  
+
   &__nav {
     display: flex;
     align-items: center;
 
     a {
       margin-left: 3rem;
-      color: vars.$color-text-on-dark;
+      color: #ffffff;
       text-decoration: none;
       font-family: vars.$font-body;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 2px;
-      transition: vars.$transition-base;
+      transition: all 0.6s ease;
       position: relative;
-      opacity: 0.8;
+      display: inline-block;
+      padding: 10px 0;
+      opacity: 0.9; 
 
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 50%;
-        width: 0;
-        height: 1px;
-        background: vars.$color-accent-light;
-        transition: vars.$transition-base;
-        transform: translateX(-50%);
-      }
-      
       &:hover {
         color: vars.$color-accent-light;
         opacity: 1;
-        &::after {
-          width: 20px;
-        }
+        letter-spacing: 4px;
+      }
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0; 
+        height: 1px;
+        background-color: vars.$color-accent-light;
+        transition: width 350ms ease-in-out;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      &::before {
+        top: 0;
+      }
+
+      &::after {
+        bottom: 0;
+      }
+
+      &:hover::before,
+      &:hover::after {
+        width: 80%;
       }
     }
   }
@@ -93,7 +105,8 @@
   position: relative;
   border-bottom: 1px solid rgba(vars.$color-accent-mid, 0.05);
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: "";
     position: absolute;
     top: 0;
@@ -105,7 +118,11 @@
 
   &::before {
     left: 0;
-    background: linear-gradient(to right, vars.$color-primary-dark, transparent);
+    background: linear-gradient(
+      to right,
+      vars.$color-primary-dark,
+      transparent
+    );
   }
 
   &::after {
@@ -145,6 +162,10 @@
 }
 
 @keyframes marquee-loop {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }

@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from "react"; // Добавил useRef
+import React, { useState, useEffect, useRef } from "react";
 import {
   motion,
   AnimatePresence,
   useScroll,
   useTransform,
-} from "framer-motion"; // Добавил хуки скролла
+} from "framer-motion";
 import PageTitle from "../components/PageTitle/PageTitle";
+import { FaCheckCircle } from "react-icons/fa";
 import "./About.scss";
 
 import skullImg from "../assets/images/about/skull_logo.png";
@@ -16,6 +17,9 @@ import slide3 from "../assets/images/about/slide3.jpg";
 import slide4 from "../assets/images/about/slide4.jpg";
 import slide5 from "../assets/images/about/slide5.jpg";
 import anchorImg from "../assets/images/about/anchor.png";
+import photoLeft from "../assets/images/about/photo_left.jpg";
+import photoRight from "../assets/images/about/photo_right.jpg";
+import dividerImg from "../assets/images/about/divider.png";
 
 const slides = [slide1, slide2, slide3, slide4, slide5];
 
@@ -25,7 +29,6 @@ const About = () => {
   const heroRef = useRef(null);
 
   const { scrollY } = useScroll();
-
 
   const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
 
@@ -40,14 +43,12 @@ const About = () => {
     <div className="about-page">
       <PageTitle title="О НАС" />
 
-
       <section className="about-hero" ref={heroRef}>
         <div className="container">
           <div className="about-hero__grid">
             <div className="about-hero__logo">
-              
               <motion.img
-                style={{ rotate }} 
+                style={{ rotate }}
                 src={skullImg}
                 alt="Van Blade Logo"
               />
@@ -120,28 +121,54 @@ const About = () => {
         </div>
       </section>
 
-      <section className="about-code-section">
+      <section className="about-features">
         <div className="container">
-          <div className="quote-grid">
-            <div className="quote-wrapper">
-              <div className="gold-frame">
-                <span className="big-quote-mark">“</span>
-                <div className="quote-text">
-                  <blockquote>
-                    Мы не просто стрижем бороды — мы куем характер. В каждом
-                    движении лезвия — верность традициям и уважение к вашей
-                    истории.
-                  </blockquote>
-                  <cite>— Van Blade</cite>
-                </div>
-                <span className="big-quote-mark-end">”</span>
+          <div className="features-grid">
+            <div className="features-col left-side">
+              <h2 className="features-title">
+                ВАША ГАВАНЬ <br /> В ОКЕАНЕ <br /> СТИЛЯ.
+              </h2>
+              <div className="image-wrapper main-img">
+                <img src={photoLeft} alt="Barber at work" />
               </div>
             </div>
 
-            <div className="visual-block">
-              <div className="image-container">
-                <img src={anchorImg} alt="Anchor" className="anchor-pic" />
-                <div className="gold-glow"></div>
+            <div className="features-col">
+              <div className="image-wrapper side-img">
+                <img src={photoRight} alt="Barbershop interior" />
+              </div>
+
+              <div className="features-info-card">
+                <div className="card-top">
+                  <h4 className="info-title">ПОЧЕМУ ВЫБИРАЮТ НАС?</h4>
+                  <p className="info-subtitle">
+                    Превосходство в деталях, верность традициям и безупречный
+                    сервис.
+                  </p>
+
+                  <ul className="features-list">
+                    <li>
+                      <FaCheckCircle className="check-icon" />
+                      <span>Мастера высшей категории (Капитаны)</span>
+                    </li>
+                    <li>
+                      <FaCheckCircle className="check-icon" />
+                      <span>Премиальная мужская косметика</span>
+                    </li>
+                    <li>
+                      <FaCheckCircle className="check-icon" />
+                      <span>Атмосфера закрытого мужского клуба</span>
+                    </li>
+                    <li>
+                      <FaCheckCircle className="check-icon" />
+                      <span>Индивидуальный подбор стиля</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="premium-divider-png">
+                  <img src={dividerImg} alt="decorative divider" />
+                </div>
               </div>
             </div>
           </div>

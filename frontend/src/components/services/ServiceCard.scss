@@ -2,99 +2,90 @@
 @use "sass:color";
 
 .service-card {
-  background: rgba(vars.$color-surface, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: vars.$border-radius-card;
-  border: 1px solid vars.$color-border-subtle;
+  background: transparent; 
+  border: none; 
   overflow: hidden;
   display: flex;
   flex-direction: column;
   transition: vars.$transition-base;
   position: relative;
-  
   width: 100%;
-  max-width: 300px;
+  max-width: 340px;
   margin: 0 auto;
 
   &:hover {
-    transform: translateY(-8px);
-    border-color: vars.$color-accent-light;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-    background: rgba(vars.$color-surface, 0.95);
+    transform: translateY(-5px);
+    .service-card__image-wrapper img {
+      transform: scale(1.05);
+      opacity: 1;
+    }
   }
 
   &__image-wrapper {
     width: 100%;
-    height: 200px;
+    height: 220px;
     overflow: hidden;
     position: relative;
-    background: vars.$color-primary-dark;
+    border-radius: vars.$border-radius-card;
     
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.8) 100%);
-    }
-
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: 0.9;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
   &__content {
-    padding: 1.5rem 1.2rem;
+    padding: 1.2rem 0; 
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
   }
 
   &__title {
     font-family: vars.$font-heading;
-    font-size: 1.25rem;
-    margin: 0;
-    color: vars.$color-accent-light;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    font-size: 1.5rem; 
+    margin: 0 0 0.4rem 0;
+    color: vars.$color-text-on-dark;
+    text-align: left;
+    text-transform: none;
+    letter-spacing: 0.5px;
   }
 
   &__subtitle {
-    font-size: 0.85rem;
-    color: vars.$color-text-on-dark;
-    opacity: 0.8;
-    margin: 0;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-height: 3em;
+    font-size: 0.9rem;
+    color: vars.$color-text-muted;
+    text-align: left;
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+    opacity: 0.9;
   }
 
   &__meta {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid vars.$color-border-subtle;
+    align-items: center;
+    margin-bottom: 0.5rem;
     
     .service-card__price {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: vars.$color-text-on-dark;
       font-family: vars.$font-heading;
     }
 
     .service-card__duration {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: vars.$color-text-muted;
-      text-transform: uppercase;
-      letter-spacing: 1px;
     }
+  }
+
+  &__divider {
+    width: 100%;
+    height: 1px;
+    background: vars.$color-border-subtle;
+    margin-bottom: 1.2rem;
   }
 
   &__btn {
@@ -103,56 +94,19 @@
     text-align: center;
     background: vars.$color-accent-light;
     color: vars.$color-primary-dark;
-    padding: 1rem;
+    padding: 0.9rem;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     border-radius: vars.$border-radius-sharp;
     transition: vars.$transition-fast;
-    margin-top: 1rem;
 
     &:hover {
-      background: transparent;
-      color: vars.$color-accent-light;
-      border: 1px solid vars.$color-accent-light;
-      box-shadow: 0 5px 15px rgba(vars.$color-accent-light, 0.4);
-    }
-  }
-
-  // === Контекстная адаптация для светлых секций ===
-  .section--light & {
-    background: rgba(vars.$color-primary-light, 0.9);
-    border-color: vars.$color-border-subtle;
-
-    &:hover {
-      border-color: vars.$color-accent-mid;
-      background: vars.$color-primary-light;
-    }
-
-    .service-card__title {
-      color: vars.$color-accent-mid;
-    }
-
-    .service-card__subtitle,
-    .service-card__price {
-      color: vars.$color-text-on-light;
-    }
-
-    .service-card__duration {
-      color: vars.$color-text-muted;
-    }
-
-    .service-card__btn {
-      background: vars.$color-text-on-light;
-      color: vars.$color-primary-light;
-
-      &:hover {
-        background: transparent;
-        color: vars.$color-text-on-light;
-        border-color: vars.$color-text-on-light;
-      }
+      background: vars.$color-text-on-dark;
+      color: vars.$color-primary-dark;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
   }
 }

@@ -125,7 +125,6 @@
   }
 }
 
-
 .about-atmosphere {
   margin-top: 0;
   padding: 100px 0;
@@ -218,85 +217,133 @@
   }
 }
 
-.about-code-section {
-  padding: 100px 0 120px;
-  background: linear-gradient(
-    180deg,
-    vars.$color-surface 0%,
-    vars.$color-primary-dark 100%
-  );
-  position: relative;
+.about-features {
+  padding: 100px 0;
+  background: vars.$color-primary-dark;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      vars.$color-accent-light 50%,
-      transparent 100%
-    );
-    opacity: 0.2;
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
-  .quote-grid {
+  .features-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 100px;
-    align-items: center;
-    z-index: 1;
+    gap: 40px;
+    align-items: stretch;
   }
 
-  .quote-wrapper {
-    position: relative;
-    max-width: 450px;
-    .gold-frame {
-      border: 1px solid vars.$color-accent-light;
-      padding: 70px 50px;
-      background: rgba(vars.$color-primary-dark, 0.6);
-      backdrop-filter: blur(10px);
-      border-radius: vars.$border-radius-sharp;
+  .features-col {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &.left-side {
+      justify-content: flex-end;
+
+      .features-title {
+        font-family: "Playfair Display", serif;
+        font-size: 3rem;
+        line-height: 1.1;
+        color: #fff;
+        text-transform: uppercase;
+
+
+        margin: 100px 0 auto 0;
+
+        padding-top: 0;
+      }
+
+      .main-img {
+        height: 650px;
+        margin-top: 40px;
+      }
     }
-    .quote-text blockquote {
-      font-family: vars.$font-heading;
-      font-size: 1.5rem;
-      color: vars.$color-text-on-dark;
-      text-transform: uppercase;
-      text-align: center;
+
+    &:not(.left-side) {
+      .side-img {
+        margin-top: 100px;
+        height: 350px;
+        margin-bottom: 30px;
+      }
+
+      .features-info-card {
+        flex-grow: 1;
+        background: vars.$color-primary-light;
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: vars.$color-primary-dark;
+
+        .info-title {
+          font-family: vars.$font-heading;
+          font-size: 1.8rem;
+          letter-spacing: 2px;
+          margin-bottom: 15px;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+
+        .info-subtitle {
+          font-size: 1rem;
+          line-height: 1.6;
+          color: rgba(vars.$color-primary-dark, 0.7);
+          margin-bottom: 30px;
+        }
+
+        .features-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+
+            span {
+              font-size: 1.1rem;
+              font-weight: 500;
+              letter-spacing: 0.5px;
+            }
+
+            .check-icon {
+              color: vars.$color-accent-mid;
+              font-size: 1.3rem;
+              flex-shrink: 0;
+            }
+          }
+        }
+
+        .premium-divider-png {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+
+          img {
+            max-width: 130px;
+            height: auto;
+            opacity: 0.9;
+          }
+        }
+      }
     }
   }
 
-  .visual-block .image-container {
-    height: 650px;
+  .image-wrapper {
+    width: 100%;
     overflow: hidden;
-    border-radius: vars.$border-radius-card;
-    position: relative;
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        vars.$color-primary-dark 0%,
-        transparent 15%,
-        transparent 85%,
-        vars.$color-primary-dark 100%
-      );
-      z-index: 3;
-    }
-    .anchor-pic {
+
+    img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      mix-blend-mode: lighten;
+      display: block;
     }
   }
 }
-
 @media (max-width: 1024px) {
   .about-hero {
     &__grid {
