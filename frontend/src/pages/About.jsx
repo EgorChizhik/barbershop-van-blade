@@ -8,6 +8,7 @@ import {
 import PageTitle from "../components/PageTitle/PageTitle";
 import { FaCheckCircle } from "react-icons/fa";
 import "./About.scss";
+import Team from "../components/team/Team";
 
 import skullImg from "../assets/images/about/skull_logo.png";
 import shipImg from "../assets/images/about/ship_lagoon.png";
@@ -16,7 +17,6 @@ import slide2 from "../assets/images/about/slide2.jpg";
 import slide3 from "../assets/images/about/slide3.jpg";
 import slide4 from "../assets/images/about/slide4.jpg";
 import slide5 from "../assets/images/about/slide5.jpg";
-import anchorImg from "../assets/images/about/anchor.png";
 import photoLeft from "../assets/images/about/photo_left.jpg";
 import photoRight from "../assets/images/about/photo_right.jpg";
 import dividerImg from "../assets/images/about/divider.png";
@@ -174,6 +174,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      <Team />
     </div>
   );
 };
