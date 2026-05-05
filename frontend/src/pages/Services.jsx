@@ -1,7 +1,14 @@
-import ServicesCatalog from '../components/services-catalog/ServicesCatalog';
-
+import ServicesCatalog from "../components/services-catalog/ServicesCatalog";
+import PageTitle from "../components/PageTitle/PageTitle";
 const Services = () => (
-  <ServicesCatalog initialLevel="Рейнджер" limit={Infinity} showViewAllBtn={false} />
+  <>
+    <PageTitle title="Наши услуги" />
+    <ServicesCatalog
+      initialLevel="Рейнджер"
+      limit={Infinity}
+      showViewAllBtn={false}
+    />
+  </>
 );
 
 export default Services;

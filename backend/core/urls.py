@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from services.views import CategoryViewSet, ServiceViewSet
 from barbers.views import BarberViewSet
 from bookings.views import AppointmentViewSet
+from gallery.views import WorkViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -12,6 +13,7 @@ router.register(r'categories', CategoryViewSet)
 router.register(r'services', ServiceViewSet)
 router.register(r'barbers', BarberViewSet)
 router.register(r'appointments', AppointmentViewSet)
+router.register(r'gallery', WorkViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

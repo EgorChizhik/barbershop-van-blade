@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import PageTitle from "../PageTitle/PageTitle";
+
 import { useServices } from '../../hooks/useServices';
 import ServicesFilterBar from '../services/ServicesFilterBar';
 import ServiceCategoryGroup from '../services/ServiceCategoryGroup';
@@ -68,7 +68,7 @@ const ServicesCatalog = ({ initialLevel = 'Рейнджер', limit = Infinity }
   return (
     <section className="services-catalog">
       <div className="services-catalog__header">
-        <PageTitle title="Наши услуги" />
+        
       </div>
       
       <ServicesFilterBar activeLevel={activeLevel} onLevelChange={setActiveLevel} />
