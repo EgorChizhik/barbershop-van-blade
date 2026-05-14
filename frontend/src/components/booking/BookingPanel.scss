@@ -1,0 +1,1213 @@
+@use "../../styles/variables" as vars;
+@use "sass:color";
+
+//  Оверлей
+
+.booking-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(vars.$color-primary-dark, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+//  Панель-шторка
+
+.booking-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 480px;
+  height: 100vh;
+  background: vars.$color-primary-dark;
+  z-index: 1001;
+  color: vars.$color-text-on-dark;
+  box-shadow: -15px 0 35px rgba(0, 0, 0, 0.5);
+  border-left: 1px solid vars.$color-border-subtle;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+
+    // Все степы занимают полную высоту body
+    & > div {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 20px;
+    left: -60px;
+    background: vars.$color-surface;
+    border: 1px solid vars.$color-border-subtle;
+    color: vars.$color-accent-light;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1002;
+    transition: vars.$transition-fast;
+
+    &:hover {
+      background: vars.$color-accent-light;
+      color: vars.$color-primary-dark;
+    }
+  }
+}
+.step-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: vars.$color-text-muted;
+  font-family: vars.$font-body;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: vars.$transition-fast;
+  white-space: nowrap;
+
+  &:hover {
+    color: vars.$color-accent-light;
+  }
+}
+.header-back-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: vars.$border-radius-sharp;
+  transition: vars.$transition-fast;
+  z-index: 10;
+  border: 1px solid rgba(vars.$color-border-strong, 0.4);
+  background: rgba(vars.$color-primary-dark, 0.5);
+  color: vars.$color-primary-light;
+  backdrop-filter: blur(4px);
+
+  &:hover {
+    background: rgba(vars.$color-accent-light, 0.2);
+    border-color: vars.$color-accent-light;
+    color: vars.$color-accent-light;
+  }
+}
+.header-cover {
+  position: relative;
+
+  .header-back-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+}
+.step-cover-nav {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: vars.$color-primary-dark;
+
+  .header-back-btn {
+    position: static;
+    background: rgba(vars.$color-accent-light, 0.08);
+  }
+}
+//  Step 1: Услуги
+
+.step-services {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  // Обложка + лого
+  &__header {
+    flex-shrink: 0;
+
+    .header-cover {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(vars.$color-primary-dark, 0.2) 0%,
+          vars.$color-primary-dark 100%
+        );
+      }
+
+      .header-logo {
+        height: 100px;
+        z-index: 2;
+        filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.6));
+      }
+    }
+  }
+  .step-cover-nav {
+    flex-shrink: 0;
+    height: 60px;
+    background: vars.$color-surface;
+    border-bottom: 1px solid vars.$color-border-subtle;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+
+    .header-back-btn {
+      position: static;
+      background: rgba(vars.$color-accent-light, 0.08);
+    }
+  }
+
+  .brand-header {
+    position: relative;
+  }
+  .header-contacts {
+    background: vars.$color-surface;
+    border-bottom: 1px solid vars.$color-border-subtle;
+
+    .contacts-trigger {
+      width: 100%;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: none;
+      border: none;
+      color: vars.$color-accent-light;
+      font-family: vars.$font-body;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    .contacts-content {
+      padding: 0 20px 20px;
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.9rem;
+        color: vars.$color-text-on-dark;
+        margin-bottom: 10px;
+        opacity: 0.8;
+
+        svg {
+          color: vars.$color-accent-light;
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+
+  &__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 30px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: vars.$color-accent-mid vars.$color-primary-dark;
+    -webkit-overflow-scrolling: touch;
+
+    .step-title {
+      font-family: vars.$font-heading;
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      color: vars.$color-primary-light;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 30px;
+
+      svg {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: vars.$color-accent-mid;
+      }
+
+      input {
+        width: 100%;
+        background: vars.$color-surface;
+        border: 1px solid vars.$color-border-subtle;
+        padding: 14px 15px 14px 45px;
+        color: vars.$color-text-on-dark;
+        border-radius: vars.$border-radius-sharp;
+        font-family: vars.$font-body;
+        transition: vars.$transition-fast;
+
+        &:focus {
+          outline: none;
+          border-color: vars.$color-accent-light;
+          box-shadow: 0 0 10px rgba(vars.$color-accent-light, 0.1);
+        }
+      }
+    }
+  }
+
+  // Категории услуг
+  .category-item {
+    margin-bottom: 15px;
+
+    &__header {
+      width: 100%;
+      padding: 15px;
+      background: vars.$color-surface;
+      border: 1px solid vars.$color-border-subtle;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-family: vars.$font-heading;
+      font-size: 1.1rem;
+      color: vars.$color-primary-light;
+      transition: vars.$transition-fast;
+
+      &:hover {
+        border-color: vars.$color-accent-mid;
+      }
+    }
+
+    &__services {
+      padding-top: 10px;
+    }
+  }
+
+  // Карточка услуги
+  .service-selection {
+    display: flex;
+    align-items: center;
+    padding: 18px;
+    background: rgba(vars.$color-surface, 0.4);
+    border: 1px solid vars.$color-border-subtle;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: vars.$transition-base;
+
+    &:hover {
+      background: vars.$color-surface;
+      border-color: vars.$color-accent-mid;
+    }
+
+    &.is-selected {
+      border-color: vars.$color-accent-light;
+      background: rgba(vars.$color-accent-light, 0.05);
+
+      .service-selection__checkbox {
+        background: vars.$color-accent-light;
+        border-color: vars.$color-accent-light;
+      }
+    }
+
+    // Фото услуги
+    &__image {
+      width: 60px;
+      height: 60px;
+      margin-right: 15px;
+      flex-shrink: 0;
+      border-radius: vars.$border-radius-card;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__info {
+      flex: 1;
+
+      h4 {
+        margin: 0 0 4px;
+        font-family: vars.$font-heading;
+        font-size: 1.1rem;
+      }
+
+      p {
+        margin: 0 0 10px;
+        font-size: 0.85rem;
+        color: vars.$color-text-muted;
+      }
+
+      .price-tag {
+        color: vars.$color-accent-light;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    &__checkbox {
+      width: 20px;
+      height: 20px;
+      border: 1px solid vars.$color-border-strong;
+      border-radius: vars.$border-radius-sharp;
+      flex-shrink: 0;
+      transition: vars.$transition-fast;
+    }
+  }
+
+  // Фиксированный футер с кнопкой
+  &__footer {
+    flex-shrink: 0;
+    padding: 25px 20px;
+    background: vars.$color-surface;
+    border-top: 1px solid vars.$color-border-subtle;
+    display: flex;
+    align-items: center;
+
+    .selected-count {
+      font-size: 0.9rem;
+      color: vars.$color-text-muted;
+      margin-right: auto;
+
+      strong {
+        color: vars.$color-accent-light;
+      }
+    }
+
+    .next-btn {
+      padding: 12px 35px;
+      background: vars.$color-accent-light;
+      color: vars.$color-primary-dark;
+      border: 1px solid transparent;
+      border-radius: vars.$border-radius-sharp;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: vars.$transition-base;
+      margin: 0 auto;
+      &:only-child {
+        margin: 0 auto;
+      }
+      padding: 12px 35px;
+      &:disabled {
+        background: vars.$color-accent-mid;
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background: transparent;
+        color: vars.$color-accent-light;
+        border-color: vars.$color-accent-light;
+        box-shadow: 0 0 15px rgba(vars.$color-accent-light, 0.2);
+      }
+    }
+  }
+}
+
+// Step 2: Барберы
+
+.step-barbers {
+  @extend .step-services;
+
+  .barber-level-group {
+    margin-bottom: 30px;
+
+    .level-badge {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: vars.$color-accent-mid;
+      margin-bottom: 15px;
+      padding-left: 5px;
+      border-left: 2px solid vars.$color-accent-light;
+    }
+  }
+
+  .barber-card {
+    background: vars.$color-surface;
+    border: 1px solid vars.$color-border-subtle;
+    padding: 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: vars.$transition-base;
+
+    &.is-selected {
+      border-color: vars.$color-accent-light;
+      background: rgba(vars.$color-accent-light, 0.05);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    &__main {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+
+      .barber-avatar {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid vars.$color-border-strong;
+        margin-right: 20px;
+        flex-shrink: 0;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .barber-info {
+        h4 {
+          margin: 0 0 4px;
+          font-family: vars.$font-heading;
+          font-size: 1.2rem;
+          color: vars.$color-primary-light;
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.8rem;
+          color: vars.$color-text-muted;
+        }
+      }
+    }
+
+    &__footer {
+      border-top: 1px solid color.change(vars.$color-accent-mid, $alpha: 0.3);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .total-label {
+        font-size: 0.85rem;
+        color: vars.$color-text-muted;
+      }
+
+      .total-price {
+        font-weight: 700;
+        color: vars.$color-accent-light;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+// Step 3: Дата и время
+
+.step-datetime {
+  color: vars.$color-text-on-dark;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__nav {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 20px 0;
+
+    .step-title {
+      margin: 0;
+    }
+  }
+
+  // Скроллируемая область
+  &__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: vars.$color-accent-mid vars.$color-primary-dark;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .step-title {
+    font-family: vars.$font-heading;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: vars.$color-primary-light;
+  }
+
+  .calendar-container {
+    background: rgba(vars.$color-text-on-dark, 0.03);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid vars.$color-border-subtle;
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .month-name {
+        font-family: vars.$font-heading;
+        font-size: 1.2rem;
+        text-transform: capitalize;
+        color: vars.$color-primary-light;
+      }
+
+      .calendar-nav {
+        display: flex;
+        gap: 10px;
+
+        button {
+          background: rgba(vars.$color-text-on-dark, 0.1);
+          border: none;
+          color: vars.$color-text-on-dark;
+          width: 32px;
+          height: 32px;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: vars.$transition-fast;
+
+          &:hover:not(:disabled) {
+            background: vars.$color-accent-light;
+            color: vars.$color-primary-dark;
+          }
+        }
+      }
+    }
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+
+    .weekday {
+      font-size: 0.8rem;
+      color: vars.$color-text-muted;
+      padding-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .calendar-day {
+      position: relative;
+      cursor: pointer;
+      border-radius: vars.$border-radius-sharp;
+      padding: 6px 2px;
+
+      &.not-month {
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      &.available {
+        color: vars.$color-text-on-dark;
+        font-weight: 600;
+        border: 1px solid vars.$color-border-subtle;
+      }
+
+      &.disabled {
+        color: rgba(vars.$color-text-on-dark, 0.15);
+        cursor: not-allowed;
+      }
+
+      &.selected {
+        background: vars.$color-accent-light;
+        color: vars.$color-primary-dark;
+        border-color: vars.$color-accent-light;
+      }
+
+      .day-number {
+        display: block;
+      }
+
+      .available-dot {
+        position: absolute;
+        bottom: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        background: vars.$color-accent-light;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+// Выбор времени
+.time-selection {
+  margin-top: 20px;
+
+  .time-group {
+    margin-bottom: 20px;
+
+    .period-title {
+      font-size: 0.85rem;
+      color: vars.$color-accent-light;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+
+      .time-btn {
+        background: rgba(vars.$color-text-on-dark, 0.05);
+        border: 1px solid vars.$color-border-subtle;
+        color: vars.$color-text-on-dark;
+        padding: 8px 0;
+        border-radius: vars.$border-radius-sharp;
+        cursor: pointer;
+        transition: vars.$transition-fast;
+
+        &:hover:not(.booked) {
+          border-color: vars.$color-accent-light;
+        }
+
+        &.active {
+          background: vars.$color-accent-light;
+          color: vars.$color-primary-dark;
+          border-color: vars.$color-accent-light;
+        }
+
+        &.booked {
+          opacity: 0.2;
+          cursor: not-allowed;
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+}
+
+// Заглушки для Step 3
+.no-slots-message,
+.no-date-selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  color: vars.$color-text-muted;
+
+  svg {
+    color: vars.$color-accent-light;
+    opacity: 0.7;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  small {
+    font-size: 0.8rem;
+    color: vars.$color-accent-mid;
+  }
+}
+
+// Step 4: Детали записи
+
+.step-details {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .brand-header {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 1.5rem 1.5rem 0;
+    position: relative;
+
+    .brand-logo-link {
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .mini-logo {
+      height: 80px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 0.5rem;
+      transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 8px rgba(vars.$color-accent-light, 0.2));
+      }
+    }
+
+    .contact-mini {
+      font-size: 0.8rem;
+      color: vars.$color-text-muted;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+  }
+
+  h2.step-title {
+    flex-shrink: 0;
+    font-family: vars.$font-heading;
+    font-size: 1.8rem;
+    color: vars.$color-primary-light;
+    margin: 1rem 1.5rem 0.5rem;
+  }
+
+  // Скроллируемая область
+  .step-content-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 25px;
+    min-height: 0;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: vars.$color-accent-mid;
+      border-radius: 3px;
+
+      &:hover {
+        background: vars.$color-accent-light;
+      }
+    }
+  }
+
+  // Карточки обзора
+  .review-card {
+    background: vars.$color-surface;
+    border: 1px solid vars.$color-border-subtle;
+    border-radius: vars.$border-radius-card;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+
+    .card-main {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .barber-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid vars.$color-primary-light;
+      flex-shrink: 0;
+    }
+
+    .barber-info {
+      flex: 1;
+    }
+
+    .barber-name {
+      display: block;
+      font-family: vars.$font-heading;
+      font-size: 1rem;
+      color: vars.$color-primary-light;
+    }
+
+    .barber-rank {
+      display: block;
+      font-size: 0.75rem;
+      color: vars.$color-accent-light;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .icon-box {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(vars.$color-accent-light, 0.1);
+      border-radius: vars.$border-radius-sharp;
+      flex-shrink: 0;
+
+      svg {
+        color: vars.$color-accent-light;
+        font-size: 1.2rem;
+      }
+    }
+
+    .datetime-info {
+      flex: 1;
+
+      .date-text {
+        font-size: 0.9rem;
+        color: vars.$color-text-on-dark;
+      }
+
+      .time-highlight {
+        color: vars.$color-accent-light;
+        font-weight: 600;
+      }
+    }
+
+    .edit-icon {
+      margin-left: auto;
+      background: transparent;
+      border: none;
+      color: vars.$color-text-muted;
+      cursor: pointer;
+      transition: vars.$transition-fast;
+      flex-shrink: 0;
+
+      &:hover {
+        color: vars.$color-primary-light;
+      }
+    }
+  }
+
+  // Блок услуг
+  .services-review {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      h3 {
+        font-size: 0.9rem;
+
+        span {
+          color: vars.$color-text-muted;
+          font-weight: normal;
+        }
+      }
+    }
+
+    .service-item {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+
+      .s-dots {
+        flex-grow: 1;
+        border-bottom: 1px dotted vars.$color-border-subtle;
+        margin: 0 10px;
+      }
+
+      .s-price {
+        white-space: nowrap;
+      }
+    }
+  }
+
+  // Форма клиента
+  .user-form {
+    margin-top: 1.5rem;
+
+    h3 {
+      font-family: vars.$font-heading;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .form-input {
+      width: 100%;
+      background: vars.$color-primary-dark;
+      border: 1px solid vars.$color-border-subtle;
+      color: vars.$color-text-on-dark;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: vars.$border-radius-sharp;
+      font-family: vars.$font-body;
+      transition: vars.$transition-fast;
+
+      &:focus {
+        border-color: vars.$color-primary-light;
+        outline: none;
+        box-shadow: 0 0 10px rgba(vars.$color-primary-light, 0.1);
+      }
+    }
+  }
+
+  // Финальный блок (согласие + итог + кнопка)
+  .final-actions {
+    padding-top: 1.5rem;
+    margin-top: auto;
+
+    .final-sum {
+      display: flex;
+      justify-content: space-between;
+      font-family: vars.$font-heading;
+      font-size: 1.3rem;
+      margin: 1rem 0;
+      color: vars.$color-primary-light;
+    }
+
+    .booking-submit-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: vars.$color-primary-light;
+      color: vars.$color-text-inverse;
+      border: none;
+      font-family: vars.$font-heading;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: vars.$transition-base;
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        filter: grayscale(1);
+      }
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .legal-text {
+      font-size: 0.7rem;
+      color: vars.$color-text-muted;
+      text-align: center;
+      margin-top: 1rem;
+      line-height: 1.4;
+
+      a {
+        color: vars.$color-accent-light;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+//  Модалка успеха
+
+.booking-success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+
+  .success-modal {
+    background: vars.$color-surface;
+    padding: 3rem;
+    border-radius: vars.$border-radius-card;
+    border: 1px solid vars.$color-primary-light;
+    text-align: center;
+    max-width: 400px;
+    position: relative;
+
+    h2 {
+      font-family: vars.$font-heading;
+      color: vars.$color-primary-light;
+      margin-bottom: 1rem;
+    }
+
+    .success-details {
+      margin: 2rem 0;
+      text-align: left;
+
+      p {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .confirm-btn {
+      width: 100%;
+      padding: 1rem;
+      background: vars.$color-primary-light;
+      color: vars.$color-text-inverse;
+      border: none;
+      cursor: pointer;
+      font-family: vars.$font-heading;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: vars.$transition-base;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: vars.$color-text-on-dark;
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: vars.$transition-fast;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+//  Поля формы с валидацией
+
+$color-error: #ff4d4d;
+
+.input-group {
+  position: relative;
+  margin-bottom: 15px;
+
+  .error-text {
+    position: absolute;
+    bottom: -14px;
+    left: 5px;
+    font-size: 10px;
+    color: $color-error;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: errorIn 0.2s ease-out forwards;
+  }
+
+  &.has-error .form-input {
+    border-color: $color-error !important;
+    box-shadow: 0 0 5px rgba($color-error, 0.2);
+  }
+}
+
+//  Чекбокс согласия
+
+.consent-label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid vars.$color-primary-light;
+    border-radius: 2px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 1px;
+
+    &:checked::after {
+      content: "✓";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: vars.$color-primary-light;
+      font-size: 14px;
+    }
+  }
+
+  a {
+    color: vars.$color-accent-light;
+    text-decoration: underline;
+
+    &:hover {
+      color: vars.$color-text-on-dark;
+    }
+  }
+}
+
+//  Итоговая строка
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem 0;
+  padding: 0 5px;
+  font-family: vars.$font-heading;
+  font-size: 1.3rem;
+  color: vars.$color-primary-light;
+
+  .total-price {
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+}
+
+//  Состояния загрузки
+
+.loading-container,
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 200px;
+  font-size: 0.95rem;
+  color: vars.$color-text-muted;
+  padding: 20px;
+  text-align: center;
+}
+
+.error-container {
+  color: $color-error;
+}
+
+//  Анимации
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes errorIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

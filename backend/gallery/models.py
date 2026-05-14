@@ -18,8 +18,9 @@ class Work(models.Model):
         ('square', 'Базовый квадрат (1x1)'),
         ('big', 'Большой квадрат (2x2)'),
         ('horizontal', 'Горизонтальный (2x1)'),
-        ('vertical', 'Вертикальный (1x2)'),
-        ('long', 'Длинный вертикальный (1x3)'),
+        ('portrait', 'Портрет 4:5'),
+        ('vertical', 'Высокий вертикальный (1x2)'),
+        ('long', 'Длинный (1x3)'),
     ]
 
     image = models.ImageField(
@@ -76,9 +77,10 @@ class Work(models.Model):
             ratios = {
                 'square': 1.0,
                 'big': 1.0,
-                'horizontal': 2.0,
-                'vertical': 0.5, # 1:2
-                'long': 0.333     # 1:3
+                'horizontal': 1.77, 
+                'portrait': 0.8,   
+                'vertical': 0.5,   
+                'long': 0.333,   
             }
             
             target_ratio = ratios.get(self.image_type, 1.0)
@@ -92,8 +94,7 @@ class Work(models.Model):
                     img = img.crop((left, 0, left + new_w, img_h))
                 else:
                     new_h = int(img_w / target_ratio)
-                    top = (img_h - new_h) // 2
-                    img = img.crop((0, top, img_w, top + new_h))
+                    img = img.crop((0, 0, img_w, new_h))
 
                 buffer = BytesIO()
                 img.save(buffer, format='JPEG', quality=88)

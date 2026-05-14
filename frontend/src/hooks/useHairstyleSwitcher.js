@@ -26,7 +26,7 @@ const useHairstyleSwitcher = (images, autoPlay = false) => {
     const startInterval = () => {
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
-      }, 5000);
+      }, 3000);
     };
 
     startInterval();

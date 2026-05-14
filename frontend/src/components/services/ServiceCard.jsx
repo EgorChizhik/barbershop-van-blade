@@ -3,7 +3,7 @@ import { BASE_URL } from '../../utils/api';
 import './ServiceCard.scss';
 
 const ServiceCard = ({ service }) => {
-  const imageUrl = service.image 
+  const imageUrl = service.image
     ? (service.image.startsWith('http') ? service.image : `${BASE_URL}/media/${service.image}`)
     : null;
 
@@ -18,28 +18,27 @@ const ServiceCard = ({ service }) => {
           <div className="service-card__placeholder">✂️</div>
         )}
       </div>
-      
-      <div className="service-card__content">
-        <h3 className="service-card__title">{service.name}</h3>
-        {service.subtitle && (
-          <p className="service-card__subtitle">{service.subtitle}</p>
-        )}
-        
-        <div className="service-card__meta">
-          {variant && (
-            <>
-              <span className="service-card__price">{Math.floor(variant.price)} ₽</span>
-              <span className="service-card__duration">{variant.duration_minutes} мин</span>
-            </>
-          )}
-        </div>
 
-        <div className="service-card__divider"></div>
-        
-        <Link to={`/services/${service.slug}`} className="service-card__btn">
-          Записаться
-        </Link>
+      <h3 className="service-card__title">{service.name}</h3>
+
+      <p className="service-card__subtitle">
+        {service.subtitle || ''}
+      </p>
+
+      <div className="service-card__meta">
+        {variant && (
+          <>
+            <span className="service-card__price">{Math.floor(variant.price)} ₽</span>
+            <span className="service-card__duration">{variant.duration_minutes} мин</span>
+          </>
+        )}
       </div>
+
+      <div className="service-card__divider"></div>
+
+      <Link to={`/services/${service.slug}`} className="service-card__btn">
+        Записаться
+      </Link>
     </article>
   );
 };

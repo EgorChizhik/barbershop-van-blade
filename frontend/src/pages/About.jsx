@@ -11,7 +11,7 @@ import "./About.scss";
 import Team from "../components/team/Team";
 
 import skullImg from "../assets/images/about/skull_logo.png";
-import shipImg from "../assets/images/about/ship_lagoon.png";
+import shipImg from "../assets/images/about/ship_lagoon.jpg";
 import slide1 from "../assets/images/about/slide1.jpg";
 import slide2 from "../assets/images/about/slide2.jpg";
 import slide3 from "../assets/images/about/slide3.jpg";
@@ -53,27 +53,34 @@ const About = () => {
                 alt="Van Blade Logo"
               />
             </div>
-
             <div className="about-hero__manifesto">
-              <h3 className="about-hero__subtitle">КОДЕКС ЭКИПАЖА</h3>
+              <h3 className="about-hero__subtitle">НАШ ПОДХОД</h3>
+
               <div className="about-hero__text-content">
                 <p>
-                  Van Blade — это не просто парикмахерская. Это тихая гавань для
-                  тех, кто знает цену своему времени и стилю. Мы собрали лучших
-                  мастеров, которых называем Рейнджерами, Шкиперами и
-                  Капитанами, чтобы каждый визит превращался в ритуал.
+                  Это место создано для тех, кто ценит время, порядок и высокий
+                  стандарт обслуживания. Здесь не объясняют, что такое хороший
+                  подход — его просто соблюдают на каждом этапе.
                 </p>
+
                 <p>
-                  Наш штурвал повернут в сторону вечных традиций мужского
-                  груминга, но наши паруса полны ветра современных трендов.
+                  Команда состоит из специалистов разного уровня подготовки — от
+                  уверенной базовой работы до максимально точного и
+                  профессионального исполнения. Это система, которая позволяет
+                  каждому выбрать свой уровень качества и внимания.
+                </p>
+
+                <p>
+                  Мы работаем собранно, ответственно и всегда с одной целью —
+                  чтобы клиент остался доволен результатом.
                 </p>
               </div>
             </div>
-
-            <div className="about-hero__ship">
-              <img src={shipImg} alt="" className="ship-background-element" />
-            </div>
           </div>
+        </div>
+
+        <div className="about-hero__ship">
+          <img src={shipImg} alt="" className="ship-background-element" />
         </div>
       </section>
 
@@ -104,17 +111,21 @@ const About = () => {
 
             <div className="about-atmosphere__content">
               <h2>Уникальное пространство</h2>
+
               <p>
-                Мы создали место, где каждая деталь интерьера рассказывает
-                историю. Здесь запах дорогого табака и кожи смешивается с гулом
-                профессиональных инструментов.
+                Здесь каждая деталь создаёт настроение спокойной уверенности.
+                Воздух наполнен лёгкими древесными нотами и ощущением сдержанной
+                силы, которое чувствуется сразу, без лишних слов.
               </p>
+
               <p>
-                В Van Blade мы ценим приватность и комфорт. Это не просто
-                стрижка — это время, проведенное в кругу своих.
+                Это пространство про тишину в нужный момент и внимание к
+                человеку. Здесь не спешат и не отвлекаются — здесь работают
+                точно, спокойно и с уважением к тому, кто в кресле.
               </p>
+
               <div className="about-atmosphere__accent-text">
-                Ваша гавань. Ваши правила.
+                Место, где всё происходит в своём ритме.
               </div>
             </div>
           </div>
@@ -126,7 +137,7 @@ const About = () => {
           <div className="features-grid">
             <div className="features-col left-side">
               <h2 className="features-title">
-                ВАША ГАВАНЬ <br /> В ОКЕАНЕ <br /> СТИЛЯ.
+                ДВИЖЕНИЕ <br /> В СТОРОНУ <br /> СТИЛЯ.
               </h2>
               <div className="image-wrapper main-img">
                 <img src={photoLeft} alt="Barber at work" />
@@ -140,28 +151,36 @@ const About = () => {
 
               <div className="features-info-card">
                 <div className="card-top">
-                  <h4 className="info-title">ПОЧЕМУ ВЫБИРАЮТ НАС?</h4>
+                  <h4 className="info-title">Почему выбирают нас?</h4>
+
                   <p className="info-subtitle">
-                    Превосходство в деталях, верность традициям и безупречный
-                    сервис.
+                    Не за обещания и формулировки, а за стабильный результат и
+                    понятный подход к работе.
                   </p>
 
                   <ul className="features-list">
                     <li>
                       <FaCheckCircle className="check-icon" />
-                      <span>Мастера высшей категории (Капитаны)</span>
+                      <span>Честная работа без навязывания лишних услуг</span>
                     </li>
+
                     <li>
                       <FaCheckCircle className="check-icon" />
-                      <span>Премиальная мужская косметика</span>
+                      <span>
+                        Понятная система уровней специалистов без случайности
+                      </span>
                     </li>
+
                     <li>
                       <FaCheckCircle className="check-icon" />
-                      <span>Атмосфера закрытого мужского клуба</span>
+                      <span>Точная работа с вниманием к деталям</span>
                     </li>
+
                     <li>
                       <FaCheckCircle className="check-icon" />
-                      <span>Индивидуальный подбор стиля</span>
+                      <span>
+                        Стабильный результат без необходимости исправлений
+                      </span>
                     </li>
                   </ul>
                 </div>

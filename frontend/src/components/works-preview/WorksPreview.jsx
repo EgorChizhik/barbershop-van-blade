@@ -64,7 +64,8 @@ const WorksPreview = () => {
           <div className="works-preview__header">
             <h2 className="works-preview__title">НАШИ РАБОТЫ</h2>
             <p className="works-preview__subtitle">
-              Взгляните на результат работы наших мастеров.
+              Мы не обсуждаем стиль — мы его создаём. И это отражается в работе
+              наших мастеров.
             </p>
           </div>
 

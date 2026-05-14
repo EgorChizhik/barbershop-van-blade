@@ -1,14 +1,16 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './Footer.scss';
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import "./Footer.scss";
+import logo from "../../assets/images/logo.png";
 
 const Footer = () => {
   useEffect(() => {
-    const container = document.getElementById('yandex-map-anchor');
-    
+    const container = document.getElementById("yandex-map-anchor");
+
     if (container && container.children.length === 0) {
-      const script = document.createElement('script');
-      script.src = "https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Aac3d2c50a1f204c1d003b82c07035dce4baccb28c365ecbd218a09e65fc828ad&width=100%25&height=600&lang=ru_RU&scroll=true";
+      const script = document.createElement("script");
+      script.src =
+        "https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Aac3d2c50a1f204c1d003b82c07035dce4baccb28c365ecbd218a09e65fc828ad&width=100%25&height=600&lang=ru_RU&scroll=true";
       script.type = "text/javascript";
       script.charset = "utf-8";
       script.async = true;
@@ -23,7 +25,8 @@ const Footer = () => {
         <div className="footer-marquee__track">
           {[...Array(8)].map((_, i) => (
             <span key={i} className="footer-marquee__text">
-              Добро пожаловать в мир Van Blade
+              VAN BLADE • ВЫСШАЯ КАТЕГОРИЯ МАСТЕРСТВА • КЛАССИЧЕСКАЯ ТЕХНИКА •
+              ЭСТЕТИКА И ПОРЯДОК •
             </span>
           ))}
         </div>
@@ -34,26 +37,38 @@ const Footer = () => {
 
         <div className="footer__floating-card">
           <div className="floating-card__brand">
-            <div className="floating-card__logo">LOGO</div>
+            <div className="floating-card__logo">
+              <Link to="/">
+                <img
+                  src={logo}
+                  alt="Van Blade Logo"
+                  className="footer-logo-img"
+                />
+              </Link>
+            </div>
             <p className="floating-card__desc">
-              Премиальный барберинг с морским характером. Мы создаем не просто прически, а историю вашего стиля.
+              <p className="floating-card__desc">
+                Премиальный барберинг с характером. Каждый визит — это
+                продуманная работа над внешностью и финальным впечатлением.
+              </p>
             </p>
           </div>
-          
+
           <div className="floating-card__contacts">
             <div className="contact-item">
-              <span className="contact-item__label">Адрес</span>
-              <p>Камышинская ул., 135, г. Ульяновск</p>
+              <span className="contact-item__label">ЛОКАЦИЯ</span>
+              <p>г. Ульяновск, ул. Рябикова, 61/37</p>
+              <p>Засвияжский район</p>
             </div>
             <div className="contact-item">
-              <span className="contact-item__label">Связь</span>
-              <p>+7 (999) 123-45-67</p>
-              <p>ahoy@vanblade.ru</p>
+              <span className="contact-item__label">СВЯЗЬ</span>
+              <p>+7 (8422) 41-22-14</p>
+              <p>info@vanblade.ru</p>
             </div>
             <div className="contact-item">
-              <span className="contact-item__label">График</span>
-              <p>ПН-ПТ: 10:00 — 19:00</p>
-              <p>СБ: Выходной / ВС: 10:00 — 19:00</p>
+              <span className="contact-item__label">ГРАФИК</span>
+              <p>Ежедневно</p>
+              <p>10:00 — 20:00</p>
             </div>
           </div>
         </div>
@@ -64,13 +79,12 @@ const Footer = () => {
           <nav className="footer__bottom-nav">
             <Link to="/services">Услуги</Link>
             <Link to="/about">О нас</Link>
-            <Link to="/reviews">Отзывы</Link>
             <Link to="/gallery">Работы</Link>
             <Link to="/contacts">Контакты</Link>
           </nav>
-          
+
           <div className="footer__divider"></div>
-          
+
           <div className="footer__copyright">
             © «Van Blade» {new Date().getFullYear()} г. Все права защищены.
           </div>

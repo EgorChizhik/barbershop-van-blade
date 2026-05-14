@@ -4,7 +4,7 @@ const Services = () => (
   <>
     <PageTitle title="Наши услуги" />
     <ServicesCatalog
-      initialLevel="Рейнджер"
+      initialLevel="Матрос"
       limit={Infinity}
       showViewAllBtn={false}
     />

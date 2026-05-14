@@ -178,7 +178,6 @@
 
   &__info {
     height: 100%;
-    padding: 60px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -209,7 +208,6 @@
     font-family: vars.$font-heading;
     font-size: 3rem;
     color: vars.$color-accent-light;
-    margin: 40px 0;
   }
 
   &__book-btn {

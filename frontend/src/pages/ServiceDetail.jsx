@@ -1,65 +1,82 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useServiceDetail } from '../hooks/useServiceDetail';
-import './ServiceDetail.scss';
+import React, { useState, useEffect } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { useServiceDetail } from "../hooks/useServiceDetail";
+import { useBooking } from "../context/BookingContext"; // проверь путь!
+import "./ServiceDetail.scss";
 
-import rangerImg from '../assets/images/detail_page/van_blade_ranger_bg.jpg';
-import skipperImg from '../assets/images/detail_page/van_blade_skipper_bg.jpg';
-import captainImg from '../assets/images/detail_page/van_blade_captain_bg.jpg';
+import sailorImg from "../assets/images/detail_page/van_blade_sailor_bg.jpg";
+import skipperImg from "../assets/images/detail_page/van_blade_skipper_bg.jpg";
+import captainImg from "../assets/images/detail_page/van_blade_captain_bg.jpg";
 
 const ServiceDetail = () => {
   const { slug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: service, isLoading, isError } = useServiceDetail(slug);
-  const [activeLevel, setActiveLevel] = useState('');
+  const [activeLevel, setActiveLevel] = useState("");
 
-const levelImages = {
-    'Рейнджер': rangerImg,
-    'Шкипер': skipperImg,
-    'Капитан': captainImg,
+  const levelImages = {
+    Матрос: sailorImg,
+    Шкипер: skipperImg,
+    Капитан: captainImg,
   };
 
   useEffect(() => {
     if (service?.variants?.length > 0) {
-      const urlLevel = searchParams.get('level');
-      const validLevel = service.variants.some(v => v.barber_level === urlLevel) 
-        ? urlLevel 
+      const urlLevel = searchParams.get("level");
+      const validLevel = service.variants.some(
+        (v) => v.barber_level === urlLevel,
+      )
+        ? urlLevel
         : service.variants[0].barber_level;
       setActiveLevel(validLevel);
     }
   }, [service, searchParams]);
 
   const scrollToServices = () => {
-    document.getElementById('qualifiers-grid').scrollIntoView({ behavior: 'smooth' });
+    document
+      .getElementById("qualifiers-grid")
+      .scrollIntoView({ behavior: "smooth" });
   };
 
   if (isLoading) return <div className="page-loader">⚓ Готовим палубу...</div>;
-  if (isError || !service) return <div className="page-error">Услуга не найдена.</div>;
-
+  if (isError || !service)
+    return <div className="page-error">Услуга не найдена.</div>;
+  const { openBooking } = useBooking();
   return (
     <div className="service-detail-page">
-      <section 
-        className="service-hero" 
+      <section
+        className="service-hero"
         style={{ backgroundImage: `url(${service.image})` }}
       >
         <div className="service-hero__overlay">
-          <motion.div 
+          <motion.div
             className="service-hero__container"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
           >
             <span className="service-hero__label">Услуга для вас</span>
             <h1 className="service-hero__title">Мы лучше знаем ваш стиль</h1>
-            
-            <motion.div 
+
+            <motion.div
               className="service-hero__arrow"
               animate={{ y: [0, 15, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               onClick={scrollToServices}
             >
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <path
+                  d="M7 13l5 5 5-5M7 6l5 5 5-5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </motion.div>
           </motion.div>
@@ -72,16 +89,21 @@ const levelImages = {
             const isActive = activeLevel === variant.barber_level;
 
             return (
-              <div key={variant.barber_level} className={`variant-card ${isActive ? 'is-active' : ''}`}>
+              <div
+                key={variant.barber_level}
+                className={`variant-card ${isActive ? "is-active" : ""}`}
+              >
                 <div className="variant-card__top">
-                  <h3 className="variant-card__level">{variant.barber_level}</h3>
+                  <h3 className="variant-card__level">
+                    {variant.barber_level}
+                  </h3>
                   <p className="variant-card__cat">{service.category_name}</p>
                 </div>
 
                 <div className="variant-card__main">
                   <AnimatePresence mode="wait">
                     {!isActive ? (
-                      <motion.div 
+                      <motion.div
                         key="preview"
                         className="variant-card__preview"
                         initial={{ opacity: 0 }}
@@ -89,15 +111,18 @@ const levelImages = {
                         exit={{ opacity: 0 }}
                       >
                         <div className="variant-card__image-container">
-                          <img 
-                            src={levelImages[variant.barber_level] || '/assets/images/default_bg.jpg'} 
-                            alt={variant.barber_level} 
-                            className="variant-card__image-bg" 
+                          <img
+                            src={
+                              levelImages[variant.barber_level] ||
+                              "/assets/images/default_bg.jpg"
+                            }
+                            alt={variant.barber_level}
+                            className="variant-card__image-bg"
                           />
                           <div className="variant-card__image-overlay"></div>
                         </div>
 
-                        <button 
+                        <button
                           className="variant-card__more-btn"
                           onClick={() => setActiveLevel(variant.barber_level)}
                         >
@@ -105,19 +130,33 @@ const levelImages = {
                         </button>
                       </motion.div>
                     ) : (
-                      <motion.div 
+                      <motion.div
                         key="info"
                         className="variant-card__info"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                       >
-                        <h4 className="variant-card__service-name">{service.name}</h4>
+                        <h4 className="variant-card__service-name">
+                          {service.name}
+                        </h4>
                         <p className="variant-card__description">
                           {variant.description || service.description}
                         </p>
-                        <div className="variant-card__price">{Math.floor(variant.price)} ₽</div>
-                        <button className="variant-card__book-btn">Записаться</button>
+                        <div className="variant-card__price">
+                          {Math.floor(variant.price)} ₽
+                        </div>
+                        <button
+                          className="variant-card__book-btn"
+                          onClick={() =>
+                            openBooking({
+                              service: service,
+                              variant: variant,
+                            })
+                          }
+                        >
+                          Записаться
+                        </button>
                       </motion.div>
                     )}
                   </AnimatePresence>

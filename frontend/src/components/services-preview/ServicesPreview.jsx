@@ -4,11 +4,11 @@ import ServiceCard from '../services/ServiceCard';
 import './ServicesPreview.scss';
 
 const ServicesPreview = () => {
-  const [activeLevel, setActiveLevel] = useState('Рейнджер');
+  const [activeLevel, setActiveLevel] = useState('Матрос');
   const {  services, isLoading } = useServices();
 
   const levels = [
-    { id: 'Рейнджер', title: 'Рейнджер', desc: 'Первый на абордаж. Базовые стрижки без промаха.' },
+    { id: 'Матрос', title: 'Матрос', desc: 'Первый на абордаж. Базовые стрижки без промаха.' },
     { id: 'Шкипер', title: 'Шкипер', desc: 'Уверенно ведёт к идеальному фейду.' },
     { id: 'Капитан', title: 'Капитан', desc: 'Опасное лезвие в надёжных руках.' },
   ];
@@ -42,7 +42,7 @@ const ServicesPreview = () => {
           <div 
             className="services-preview__line-active"
             style={{ 
-              left: activeLevel === 'Рейнджер' ? '0%' : activeLevel === 'Шкипер' ? '33.33%' : '66.66%',
+              left: activeLevel === 'Матрос' ? '0%' : activeLevel === 'Шкипер' ? '33.33%' : '66.66%',
               width: '33.33%'
             }}
           />

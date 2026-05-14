@@ -12,7 +12,7 @@ export const useServices = (barberLevel = null) => {
       const services = response.data;
       
       const processed = services.map(service => {
-        const defaultVariant = service.variants?.find(v => v.barber_level === 'Рейнджер') || service.variants?.[0];
+        const defaultVariant = service.variants?.find(v => v.barber_level === 'Матрос') || service.variants?.[0];
         return { ...service, defaultVariant: defaultVariant || null };
       });
       

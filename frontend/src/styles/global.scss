@@ -1,6 +1,6 @@
-@use 'variables' as vars;
+@use "variables" as vars;
+@use "fonts";
 @use "sass:color";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -8,23 +8,25 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
   overflow-x: hidden;
   background: vars.$color-primary-dark;
+  font-size: 18px;
 }
 
 body {
   background: vars.$color-primary-dark;
   color: vars.$color-text-on-dark;
   font-family: vars.$font-body;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+  line-height: 1.7;
   position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-
 
 .section--dark {
   background-color: vars.$color-primary-dark;
@@ -35,18 +37,33 @@ body {
   background-color: vars.$color-primary-light;
   color: vars.$color-text-on-light;
 
-  h1, h2, h3, .section-title {
+  h1,
+  h2,
+  h3,
+  .section-title {
     color: vars.$color-text-on-light;
+    font-family: vars.$font-heading;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.03em; 
   }
 }
 
 .section--gradient-down {
-  background: linear-gradient(180deg, vars.$color-primary-dark 0%, vars.$color-surface 100%);
+  background: linear-gradient(
+    180deg,
+    vars.$color-primary-dark 0%,
+    vars.$color-surface 100%
+  );
   color: vars.$color-text-on-dark;
 }
 
 .section--gradient-up {
-  background: linear-gradient(180deg, vars.$color-surface 0%, vars.$color-primary-light 100%);
+  background: linear-gradient(
+    180deg,
+    vars.$color-surface 0%,
+    vars.$color-primary-light 100%
+  );
   color: vars.$color-text-on-light;
 }
 

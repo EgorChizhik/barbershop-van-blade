@@ -83,11 +83,11 @@
 
   &__counter-step {
     position: absolute;
-    top: -60px; 
+    top: -60px;
     left: -80px;
     display: flex;
     align-items: baseline;
-    gap: 2rem; 
+    gap: 2rem;
     font-weight: 700;
     color: #ffffff;
     z-index: 20;
@@ -99,9 +99,9 @@
     }
 
     .arrows {
-      font-size: 1.4rem; 
+      font-size: 1.4rem;
       opacity: 0.6;
-      letter-spacing: 6px; 
+      letter-spacing: 6px;
     }
   }
 
@@ -124,7 +124,7 @@
     justify-content: center;
     align-items: center;
     user-select: none;
-    -webkit-touch-callout: none; 
+    -webkit-touch-callout: none;
     pointer-events: none;
 
     img {
@@ -182,7 +182,8 @@
   &__title {
     font-family: vars.$font-heading;
     font-size: 4.8rem;
-    line-height: 0.9;
+    line-height: 0.95;
+    letter-spacing: -1px;
     color: vars.$color-text-on-dark;
     text-transform: uppercase;
     margin-bottom: 3.5rem;
@@ -204,9 +205,15 @@
     color: vars.$color-text-on-dark;
 
     .sub {
-      font-size: 1rem;
-      opacity: 0.5;
-      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      line-height: 1.5;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.72);
+
+      span {
+        color: #fff;
+        font-weight: 500;
+      }
     }
     .main {
       font-size: 1.25rem;

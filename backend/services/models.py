@@ -53,7 +53,7 @@ class Service(models.Model):
 
 class ServiceVariant(models.Model):
     SERVICE_LEVELS = [
-        ('Рейнджер', 'Рейнджер'),
+        ('Матрос', 'Матрос'),
         ('Шкипер', 'Шкипер'),
         ('Капитан', 'Капитан'),
     ]

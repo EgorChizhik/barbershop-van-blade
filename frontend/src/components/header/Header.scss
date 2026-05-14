@@ -19,6 +19,19 @@
   }
 
   &__logo {
+    display: flex;
+    align-items: center;
+    .logo-img {
+      height: 100px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
     .logo-placeholder {
       width: 120px;
       height: 50px;

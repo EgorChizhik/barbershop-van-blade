@@ -2,8 +2,8 @@ import React from 'react';
 
 const ServiceQualifier = ({ variants, activeLevel, onLevelChange }) => {
   const qualifiers = {
-    ranger: {
-      title: 'Рейнджер',
+    sailor: {
+      title: 'Матрос',
       slogan: 'Первый на абордаж. Базовые стрижки без промаха.'
     },
     skipper: {

@@ -1,15 +1,16 @@
 import "./Hero.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import useHairstyleSwitcher from "../../hooks/useHairstyleSwitcher";
+import { useBooking } from "../../context/BookingContext";
 
-import hairstyle1 from "../../assets/images/hero/hairstyle_1.png";
-import hairstyle2 from "../../assets/images/hero/hairstyle_2.png";
-import hairstyle3 from "../../assets/images/hero/hairstyle_3.png";
-import hairstyle4 from "../../assets/images/hero/hairstyle_4.png";
-import hairstyle5 from "../../assets/images/hero/hairstyle_5.png";
-import hairstyle6 from "../../assets/images/hero/hairstyle_6.png";
-import hairstyle7 from "../../assets/images/hero/hairstyle_7.png";
+import hairstyle1 from "../../assets/images/hero/hairstyle_1.webp";
+import hairstyle2 from "../../assets/images/hero/hairstyle_2.webp";
+import hairstyle3 from "../../assets/images/hero/hairstyle_3.webp";
+import hairstyle4 from "../../assets/images/hero/hairstyle_4.webp";
+import hairstyle5 from "../../assets/images/hero/hairstyle_5.webp";
+import hairstyle6 from "../../assets/images/hero/hairstyle_6.webp";
+import hairstyle7 from "../../assets/images/hero/hairstyle_7.webp";
 
 import arrowLeft from "../../assets/images/hero/arrow_left.png";
 import arrowRight from "../../assets/images/hero/arrow_right.png";
@@ -25,19 +26,21 @@ const images = [
 ];
 
 const Hero = () => {
+  const { openBooking } = useBooking();
+
   const { currentIndex, handleNext, handlePrev, isLoaded } =
-    useHairstyleSwitcher(images, false);
+    useHairstyleSwitcher(images, true);
   const [direction, setDirection] = useState("next");
 
-  const onNext = () => {
+  const onNext = useCallback(() => {
     setDirection("next");
     handleNext();
-  };
+  }, [handleNext]);
 
-  const onPrev = () => {
+  const onPrev = useCallback(() => {
     setDirection("prev");
     handlePrev();
-  };
+  }, [handlePrev]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -49,7 +52,6 @@ const Hero = () => {
   }, [onPrev, onNext]);
 
   const formatNumber = (num) => String(num + 1).padStart(2, "0");
-
   const stepHeight = 45;
 
   return (
@@ -89,8 +91,7 @@ const Hero = () => {
       </div>
 
       <div className="hero__container">
-        <div className="hero__left-col-spacer">
-        </div>
+        <div className="hero__left-col-spacer"></div>
         <div className="hero__center-col">
           <div className="hero__visual-unit">
             <div className="hero__counter-step">
@@ -136,22 +137,25 @@ const Hero = () => {
 
         <div className="hero__right-col">
           <h1 className="hero__title">
-            Стильные
+            Искусство
             <br />
-            стрижки
+            мужского
             <br />
-            для мужчин
+            образа
           </h1>
           <div className="hero__contacts">
-            <p className="highlight">(8422) 70-49-00</p>
-            <p className="highlight">Камышинская ул., 135</p>
-            <p className="highlight">10:00 — 19:00</p>
+            <p className="highlight">(8422) 41-22-14</p>
+            <p className="highlight">Ульяновск · Рябикова, 61/37</p>
+            <p className="highlight">10:00 — 20:00</p>
           </div>
           <div className="hero__tagline">
-            <p className="sub">Вы думаете это обычная стрижка?</p>
-            <p className="main">МЫ НЕ ПРОСТО СТРИЖЕМ. МЫ УДИВЛЯЕМ</p>
+            <p className="sub">
+              Место, где стиль
+              <span> говорит раньше слов</span>
+            </p>
           </div>
-          <button className="hero__cta">
+
+          <button className="hero__cta" onClick={() => openBooking()}>
             <svg>
               <rect x="0" y="0" fill="none" width="100%" height="100%" />
             </svg>
