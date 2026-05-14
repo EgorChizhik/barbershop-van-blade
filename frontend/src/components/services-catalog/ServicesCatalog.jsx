@@ -6,7 +6,13 @@ import ServiceCategoryGroup from "../services/ServiceCategoryGroup";
 
 import "./ServicesCatalog.scss";
 
-const ServicesCatalog = ({ initialLevel = "Матрос", limit = Infinity, showViewAllBtn = false }) => {
+
+const ServicesCatalog = ({ 
+  initialLevel = "Матрос", 
+  limit = Infinity, 
+  showViewAllBtn = false, 
+  showHeader = false 
+}) => {
   const [activeLevel, setActiveLevel] = useState(initialLevel);
 
   const { data, isLoading, isError, error, isSuccess, isFetching } =
@@ -75,13 +81,17 @@ const ServicesCatalog = ({ initialLevel = "Матрос", limit = Infinity, show
 
   return (
     <section className="services-catalog">
-      <div className="services-catalog__header">
-        <h2 className="services-catalog__title">НАШИ УСЛУГИ</h2>
-        <p className="services-catalog__subtitle">
-          Каждая услуга — это не просто стрижка, а продуманный ритуал,
-          отражающий уровень мастерства барбера.
-        </p>
-      </div>
+      
+      {/* 2. Теперь заголовок выводится только если showHeader === true */}
+      {showHeader && (
+        <div className="services-catalog__header">
+          <h2 className="services-catalog__title">НАШИ УСЛУГИ</h2>
+          <p className="services-catalog__subtitle">
+            Каждая услуга — это не просто стрижка, а продуманный ритуал,
+            отражающий уровень мастерства барбера.
+          </p>
+        </div>
+      )}
 
       <ServicesFilterBar
         activeLevel={activeLevel}

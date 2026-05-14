@@ -7,7 +7,7 @@ import Team from "../components/team/Team";
 const Home = () => (
   <>
     <Hero />
-    <ServicesCatalog initialLevel="Матрос" limit={6} showViewAllBtn={true} />
+    <ServicesCatalog initialLevel="Матрос" limit={6} showViewAllBtn={true} showHeader={true} />
     <WorksPreview />
     <Team />
   </>
