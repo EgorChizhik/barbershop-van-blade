@@ -5837,6 +5837,97 @@
   }
 },
 {
+  "model": "admin.logentry",
+  "pk": 450,
+  "fields": {
+    "action_time": "2026-05-15T18:04:03.253Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "26",
+    "object_repr": "Детская стрижка",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0424\\u043e\\u0442\\u043e \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 451,
+  "fields": {
+    "action_time": "2026-05-15T18:04:12.432Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "24",
+    "object_repr": "Контурный переход",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0424\\u043e\\u0442\\u043e \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 452,
+  "fields": {
+    "action_time": "2026-05-15T18:05:38.669Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "23",
+    "object_repr": "Мужская стрижка",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0424\\u043e\\u0442\\u043e \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 453,
+  "fields": {
+    "action_time": "2026-05-15T18:05:44.312Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "27",
+    "object_repr": "Стрижка бороды и усов",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0424\\u043e\\u0442\\u043e \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 454,
+  "fields": {
+    "action_time": "2026-05-15T18:05:53.163Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "25",
+    "object_repr": "Стрижка машинкой",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0424\\u043e\\u0442\\u043e \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 455,
+  "fields": {
+    "action_time": "2026-05-15T18:12:19.903Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "29",
+    "object_repr": "Королевское бритье",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0424\\u043e\\u0442\\u043e \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 456,
+  "fields": {
+    "action_time": "2026-05-15T18:12:38.259Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "28",
+    "object_repr": "Моделирование бороды и усов",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0424\\u043e\\u0442\\u043e \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438\"]}}]"
+  }
+},
+{
   "model": "sessions.session",
   "pk": "04ew2rfjm1c2lfpgo6orsf1flwi3pmym",
   "fields": {
@@ -5901,7 +5992,7 @@
     "slug": "muzhskaya-strizhka",
     "subtitle": "Безупречная форма и персональный стиль для вашего образа.",
     "description": "Стрижка",
-    "image": "services/bd2a5d3b525440906c6ec1043755c370.jpg",
+    "image": "services/Мужская_стрижка.jpg",
     "is_active": true,
     "created_at": "2026-05-12T16:45:49.864Z"
   }
@@ -5916,7 +6007,7 @@
     "slug": "konturnyj-perehod",
     "subtitle": "Ювелирная работа с длиной волос для создания идеально плавного силуэта.",
     "description": "Контурный переход",
-    "image": "services/b2c177540b252aaa94fda354238c5a59.jpg",
+    "image": "services/Фейд.jpg",
     "is_active": true,
     "created_at": "2026-05-12T16:59:13.879Z"
   }
@@ -5931,7 +6022,7 @@
     "slug": "strizhka-mashinkoj",
     "subtitle": "Лаконичный выбор для тех, кто ценит максимальную практичность и короткую длину.",
     "description": "Стрижка машинкой",
-    "image": "services/dac8e707f971590835822a6f30fdf66d.jpg",
+    "image": "services/Стрижка_машинкой.png",
     "is_active": true,
     "created_at": "2026-05-12T17:03:09.084Z"
   }
@@ -5946,7 +6037,7 @@
     "slug": "detskaya-strizhka",
     "subtitle": "Закладываем основы стиля и мужских традиций с самого детства.",
     "description": "Детская стрижка",
-    "image": "services/2bfa5a52738ef87cc59f8262fedab4ab.jpg",
+    "image": "services/Детская_стрижка.png",
     "is_active": true,
     "created_at": "2026-05-12T17:11:50.745Z"
   }
@@ -5961,7 +6052,7 @@
     "slug": "strizhka-borody-i-usov",
     "subtitle": "Придаем вашей бороде четкую форму и опрятный вид без лишних компромиссов.",
     "description": "Стрижка бороды и усов",
-    "image": "services/5368da011515917a966738b72d79b40d.jpg",
+    "image": "services/Стрижка_бороды_и_усов.png",
     "is_active": true,
     "created_at": "2026-05-12T17:15:22.729Z"
   }
@@ -5976,7 +6067,7 @@
     "slug": "modelirovanie-borody-i-usov",
     "subtitle": "Создание персональной архитектуры вашей бороды с элементами классического бритья.",
     "description": "Моделирование бороды и усов",
-    "image": "services/XXL_height_1.webp",
+    "image": "services/Моделирование_бороды_и_усов.jpg",
     "is_active": true,
     "created_at": "2026-05-12T17:19:26.023Z"
   }
@@ -5991,7 +6082,7 @@
     "slug": "korolevskoe-brite",
     "subtitle": "Статусный ритуал для истинных ценителей гладкости и традиций классического бритья.",
     "description": "Королевское бритье",
-    "image": "services/37ff0b571ea56d40db24f6876fa9ea93.jpg",
+    "image": "services/Королевское_бритье.png",
     "is_active": true,
     "created_at": "2026-05-12T17:25:42.584Z"
   }
