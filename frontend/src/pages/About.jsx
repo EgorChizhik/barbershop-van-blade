@@ -15,7 +15,7 @@ import shipImg from "../assets/images/about/ship_lagoon.jpg";
 import slide1 from "../assets/images/about/slide1.jpg";
 import slide2 from "../assets/images/about/slide2.jpg";
 import slide3 from "../assets/images/about/slide3.jpg";
-import slide4 from "../assets/images/about/slide4.jpg";
+import slide4 from "../assets/images/about/slide4.png";
 import slide5 from "../assets/images/about/slide5.jpg";
 import photoLeft from "../assets/images/about/photo_left.jpg";
 import photoRight from "../assets/images/about/photo_right.jpg";

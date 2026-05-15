@@ -5,23 +5,34 @@ import Services from '../pages/Services';
 import ServiceDetail from '../pages/ServiceDetail';
 import About from '../pages/About';
 import Works from '../pages/Works';
-import LegalPage from '../pages/LegalPage';
+
+
+import LegalLayout from '../pages/legal/LegalLayout';
+import PrivacyPolicy from '../pages/legal/PrivacyPolicy';
+import PersonalData from '../pages/legal/PersonalData';
+import TermsOfService from '../pages/legal/TermsOfService';
+
+
 
 const router = createBrowserRouter([
   {
-    
     path: '/',
     element: <Layout />,
     children: [
-      
       { index: true, element: <Home /> },
       { path: 'services', element: <Services /> },
       { path: 'services/:slug', element: <ServiceDetail /> },
       { path: 'about', element: <About /> },
       { path: 'works', element: <Works /> },
-      { path: 'policy', element: <LegalPage type="policy" /> },
-      { path: 'terms', element: <LegalPage type="terms" /> },
-      { path: 'privacy', element: <LegalPage type="privacy" /> },
+      
+      {
+        element: <LegalLayout />,
+        children: [
+          { path: 'policy', element: <PersonalData /> },
+          { path: 'terms', element: <TermsOfService /> },
+          { path: 'privacy', element: <PrivacyPolicy /> },
+        ],
+      },
     ],
   },
 ]);
