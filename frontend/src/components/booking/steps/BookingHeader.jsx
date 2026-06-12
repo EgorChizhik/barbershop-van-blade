@@ -7,12 +7,13 @@ import {
   IoCallOutline,
   IoTimeOutline,
   IoArrowBack,
+  IoCloseOutline,
 } from "react-icons/io5";
 import logo from "../../../assets/images/logo.png";
 import cover from "../../../assets/images/booking/booking-header-bg.jpg";
 
 const BookingHeader = ({ showBack = false }) => {
-  const { showContacts, setShowContacts, prevStep } = useBooking();
+  const { showContacts, setShowContacts, prevStep, closeBooking } = useBooking();
 
   return (
     <>
@@ -27,6 +28,10 @@ const BookingHeader = ({ showBack = false }) => {
             </button>
           )}
           <img src={logo} alt="Van Blade" className="header-logo" />
+          
+          <button className="close-panel-btn" onClick={closeBooking}>
+            <IoCloseOutline size={28} />
+          </button>
         </div>
       </div>
 
@@ -46,7 +51,7 @@ const BookingHeader = ({ showBack = false }) => {
             </div>
             <div className="contact-item">
               <IoCallOutline />
-              <span>(8422) 41-22-14</span>
+              <span>+7 (917) 611-34-60</span>
             </div>
             <div className="contact-item">
               <IoTimeOutline />

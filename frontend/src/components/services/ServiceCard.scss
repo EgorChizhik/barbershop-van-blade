@@ -1,13 +1,15 @@
-@use '../../styles/variables' as vars;
+@use "../../styles/variables" as vars;
 @use "sass:color";
 
 .service-card {
   grid-row: span 6;
   display: grid;
   grid-template-rows: subgrid;
+  row-gap: 0;
 
   background: transparent;
   border: none;
+  padding: 0;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -15,26 +17,28 @@
 
   &:hover {
     transform: translateY(-5px);
-
     .service-card__image-wrapper img {
-      transform: scale(1.05);
+      transform: scale(1.04);
       opacity: 1;
     }
   }
 
+  &__body {
+    display: contents;
+  }
+
   &__image-wrapper {
+    grid-row: 1;
     width: 100%;
     height: 220px;
     overflow: hidden;
     border-radius: vars.$border-radius-card;
-    align-self: start;
-
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: 0.9;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.5s ease;
     }
   }
 
@@ -44,35 +48,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
     background: vars.$color-surface;
   }
 
   &__title {
+    grid-row: 2;
     font-family: vars.$font-heading;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
     padding-top: 1.2rem;
     margin: 0;
     color: vars.$color-text-on-dark;
     letter-spacing: 0.5px;
     line-height: 1.2;
-    align-self: end;
-
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    padding-bottom: 6px;
   }
 
   &__subtitle {
-    font-size: 0.9rem;
+    grid-row: 3;
+    font-size: clamp(0.82rem, 1.2vw, 0.9rem);
     color: vars.$color-text-muted;
     margin: 0;
     padding-top: 0.4rem;
     line-height: 1.5;
     opacity: 0.9;
-    align-self: start;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
@@ -80,19 +82,17 @@
   }
 
   &__meta {
+    grid-row: 4;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    align-self: end;
     padding-top: 0.5rem;
-
     .service-card__price {
-      font-size: 1.3rem;
+      font-size: clamp(1.15rem, 1.8vw, 1.3rem);
       font-weight: 700;
       color: vars.$color-text-on-dark;
       font-family: vars.$font-heading;
     }
-
     .service-card__duration {
       font-size: 0.85rem;
       color: vars.$color-text-muted;
@@ -100,34 +100,109 @@
   }
 
   &__divider {
+    grid-row: 5;
     width: 100%;
     height: 1px;
     background: vars.$color-border-subtle;
-    align-self: center;
     margin-top: 0.5rem;
   }
 
   &__btn {
-    display: block;
+    grid-row: 6;
+    display: flex;
     width: 100%;
     text-align: center;
+    align-items: center;
+    justify-content: center;
     background: vars.$color-accent-light;
     color: vars.$color-primary-dark;
     padding: 0.9rem;
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: clamp(0.78rem, 1vw, 0.85rem);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     border-radius: vars.$border-radius-sharp;
     transition: vars.$transition-fast;
-    align-self: start;
-    margin-bottom: 1.2rem;
+    margin-bottom: 40px;
 
     &:hover {
       background: vars.$color-text-on-dark;
-      color: vars.$color-primary-dark;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+
+@media (min-width: 451px) and (max-width: 768px) {
+  .service-card__subtitle {
+    min-height: 6.2em;
+  }
+}
+
+
+@media (max-width: 450px) {
+  .service-card__subtitle {
+    min-height: auto;
+  }
+
+  .service-card {
+    grid-row: auto;
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: 1fr auto;
+    column-gap: 14px;
+    row-gap: 12px;
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 6px;
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    &__image-wrapper {
+      grid-column: 1;
+      grid-row: 1;
+      width: 80px;
+      height: 80px;
+      border-radius: 4px;
+      align-self: start;
+    }
+
+    &__title {
+      padding-top: 0;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    &__subtitle {
+      padding-top: 2px;
+      font-size: 0.78rem;
+      line-height: 1.3;
+      -webkit-line-clamp: 4;
+    }
+
+    &__meta {
+      padding-top: 4px;
+      .service-card__price {
+        font-size: 1rem;
+      }
+      .service-card__duration {
+        font-size: 0.75rem;
+      }
+    }
+
+    &__divider {
+      display: none;
+    }
+
+    &__btn {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      padding: 10px;
+      font-size: 0.75rem;
+      margin-bottom: 0;
     }
   }
 }

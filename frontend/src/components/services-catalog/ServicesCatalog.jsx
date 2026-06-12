@@ -82,7 +82,6 @@ const ServicesCatalog = ({
   return (
     <section className="services-catalog">
       
-      {/* 2. Теперь заголовок выводится только если showHeader === true */}
       {showHeader && (
         <div className="services-catalog__header">
           <h2 className="services-catalog__title">НАШИ УСЛУГИ</h2>
@@ -117,7 +116,7 @@ const ServicesCatalog = ({
       {hasMore && showViewAllBtn && (
         <div className="services-catalog__footer">
           <Link to="/services" className="services-catalog__view-all">
-            Посмотреть все работы
+            Посмотреть все услуги
           </Link>
         </div>
       )}

@@ -4,6 +4,7 @@ import { useTimeSlots } from "../../../hooks/useTimeSlots";
 import {
   IoChevronBack, IoChevronForward,
   IoCalendarOutline, IoArrowBack,
+  IoCloseOutline,
 } from "react-icons/io5";
 import {
   format, addMonths, subMonths,
@@ -23,6 +24,7 @@ const BookingStep3 = () => {
     selectedDate, setSelectedDate,
     selectedTime, setSelectedTime,
     nextStep, prevStep,
+    closeBooking,
   } = useBooking();
 
   const { data: slots = [], isLoading, isError } = useTimeSlots(selectedBarber?.id);
@@ -84,6 +86,10 @@ const BookingStep3 = () => {
       <div className="step-cover-nav">
         <button className="header-back-btn" onClick={prevStep}>
           <IoArrowBack size={20} />
+        </button>
+        
+        <button className="close-panel-btn" onClick={closeBooking}>
+          <IoCloseOutline size={28} />
         </button>
       </div>
 

@@ -27,9 +27,7 @@ const images = [
 
 const Hero = () => {
   const { openBooking } = useBooking();
-
-  const { currentIndex, handleNext, handlePrev, isLoaded } =
-    useHairstyleSwitcher(images, true);
+  const { currentIndex, handleNext, handlePrev, isLoaded } = useHairstyleSwitcher(images, true);
   const [direction, setDirection] = useState("next");
 
   const onNext = useCallback(() => {
@@ -56,6 +54,7 @@ const Hero = () => {
 
   return (
     <section className="hero">
+      {/* Левый боковой индикатор */}
       <div className="hero__lines-indicator-wrapper">
         <div className="hero__lines-indicator">
           <motion.div
@@ -92,8 +91,20 @@ const Hero = () => {
 
       <div className="hero__container">
         <div className="hero__left-col-spacer"></div>
+
+        {/* Главный заголовок вынесен отдельно для свободного перемещения вверх */}
+        <h1 className="hero__title">
+          Искусство
+          <br />
+          мужского
+          <br />
+          образа
+        </h1>
+
+        {/* Центральная интерактивная зона слайдера */}
         <div className="hero__center-col">
           <div className="hero__visual-unit">
+            {/* Маленький счетчик  */}
             <div className="hero__counter-step">
               <span className="number">{formatNumber(currentIndex)}</span>
               <span className={`arrows ${direction}`}>
@@ -116,42 +127,27 @@ const Hero = () => {
               </AnimatePresence>
             </div>
 
+            {/* Ручные стрелки управления */}
             <div className="hero__nav-controls">
               <button onClick={onPrev} disabled={!isLoaded} className="nav-btn">
-                <img
-                  src={arrowLeft}
-                  alt="Предыдущая"
-                  className="nav-arrow-img"
-                />
+                <img src={arrowLeft} alt="Предыдущая" className="nav-arrow-img" />
               </button>
               <button onClick={onNext} disabled={!isLoaded} className="nav-btn">
-                <img
-                  src={arrowRight}
-                  alt="Следующая"
-                  className="nav-arrow-img"
-                />
+                <img src={arrowRight} alt="Следующая" className="nav-arrow-img" />
               </button>
             </div>
           </div>
         </div>
 
-        <div className="hero__right-col">
-          <h1 className="hero__title">
-            Искусство
-            <br />
-            мужского
-            <br />
-            образа
-          </h1>
+        {/* Блок контактов и кнопка действия */}
+        <div className="hero__info-block">
           <div className="hero__contacts">
-            <p className="highlight">(8422) 41-22-14</p>
             <p className="highlight">Ульяновск · Рябикова, 61/37</p>
             <p className="highlight">10:00 — 20:00</p>
           </div>
           <div className="hero__tagline">
             <p className="sub">
-              Место, где стиль
-              <span> говорит раньше слов</span>
+              Место, где стиль <span>говорит раньше слов</span>
             </p>
           </div>
 

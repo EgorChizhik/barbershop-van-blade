@@ -35,7 +35,7 @@
     flex-direction: column;
     min-height: 0;
 
-    // Все степы занимают полную высоту body
+    // Все шаги занимают полную высоту
     & > div {
       display: flex;
       flex-direction: column;
@@ -126,7 +126,7 @@
     background: rgba(vars.$color-accent-light, 0.08);
   }
 }
-//  Step 1: Услуги
+//  Шаг 1: Услуги
 
 .step-services {
   display: flex;
@@ -424,7 +424,7 @@
   }
 }
 
-// Step 2: Барберы
+// Шаг 2: Барберы
 
 .step-barbers {
   @extend .step-services;
@@ -515,7 +515,7 @@
   }
 }
 
-// Step 3: Дата и время
+// Шаг 3: Дата и время
 
 .step-datetime {
   color: vars.$color-text-on-dark;
@@ -708,7 +708,7 @@
   }
 }
 
-// Заглушки для Step 3
+// Заглушки для шага 3
 .no-slots-message,
 .no-date-selected {
   display: flex;
@@ -734,7 +734,7 @@
   }
 }
 
-// Step 4: Детали записи
+// Шаг 4: Детали записи
 
 .step-details {
   height: 100%;
@@ -1209,5 +1209,22 @@ $color-error: #ff4d4d;
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+.close-panel-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  position: absolute; 
+  right: 15px;
+  top: 15px;
+  z-index: 10;
+
+  @media (max-width: 1023px) {
+    display: flex;
   }
 }

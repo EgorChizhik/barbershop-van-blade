@@ -8,12 +8,16 @@ const WorksPreview = () => {
   const { data: works, isLoading } = useWorks();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const trackRef = useRef(null);
+  
+  const [dragOffset, setDragOffset] = useState(0);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
 
   const sliderWorks = works?.filter((w) => w.show_on_home).slice(0, 12) || [];
   const totalWorks = sliderWorks.length;
+
   const getVisibleSlides = () => {
-    if (windowWidth < 768) return 1;
+    if (windowWidth < 480) return 1;
     if (windowWidth < 1200) return 2;
     return 3;
   };
@@ -38,10 +42,42 @@ const WorksPreview = () => {
   const handlePrev = () =>
     currentIndex > 0 && setCurrentIndex((prev) => prev - 1);
 
+  const handleMouseDown = (e) => {
+    isDragging.current = true;
+    startX.current = e.pageX;
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging.current) return;
+    const currentX = e.pageX;
+    setDragOffset(currentX - startX.current);
+  };
+
+  const handleMouseUp = (e) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    
+    const diffX = startX.current - e.pageX;
+    if (diffX > 50) {
+      handleNext();
+    } else if (diffX < -50) {
+      handlePrev();
+    }
+    setDragOffset(0);
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging.current) {
+      isDragging.current = false;
+      setDragOffset(0);
+    }
+  };
+
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "";
     return imagePath.startsWith("http") ? imagePath : `${BASE_URL}${imagePath}`;
   };
+  
   const getSlideClass = (index) => {
     const isBeforeVisible = index < currentIndex;
     const isAfterVisible = index >= currentIndex + visibleSlides;
@@ -64,9 +100,9 @@ const WorksPreview = () => {
           <div className="works-preview__header">
             <h2 className="works-preview__title">НАШИ РАБОТЫ</h2>
             <p className="works-preview__subtitle">
-              Мы не обсуждаем стиль — мы его создаём. И это отражается в работе
-              наших мастеров.
-            </p>
+              Мы не обсуждаем стиль — мы его создаём. 
+            </p><p className="works-preview__subtitle"> И это отражается в работе
+              наших мастеров.</p>
           </div>
 
           <div className="works-preview__slider-wrapper">
@@ -86,11 +122,18 @@ const WorksPreview = () => {
               </svg>
             </button>
 
-            <div className="works-slider">
+            <div
+              className={`works-slider ${isDragging.current ? "is-dragging" : ""}`}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseLeave}
+            >
               <div
                 className="works-slider__track"
                 style={{
-                  transform: `translateX(-${currentIndex * (100 / visibleSlides)}%)`,
+                  transform: `translateX(calc(-${currentIndex * (100 / visibleSlides)}% + ${dragOffset}px))`,
+                  transition: dragOffset !== 0 ? "none" : "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
                 }}
               >
                 {sliderWorks.map((work, index) => (
@@ -104,6 +147,7 @@ const WorksPreview = () => {
                         src={getImageUrl(work.image)}
                         alt={work.title}
                         className="works-slide__image"
+                        draggable="false"
                       />
                       <div className="works-slide__overlay" />
                     </div>

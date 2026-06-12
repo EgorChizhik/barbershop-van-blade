@@ -1,105 +1,204 @@
+@use "sass:color";
 @use "../../styles/variables" as vars;
 
 .services-filter {
   background: transparent;
-  padding: 3rem 0;
+  padding: 1rem 0;
   width: 100%;
+  position: relative;
 
-  &__container {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+  
+  &__mobile-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: relative;
-    border-bottom: 1px solid vars.$color-border-subtle;
-  }
-
-  .filter-line {
-    position: absolute;
-    bottom: -1px;
-    height: 2px;
-    background: vars.$color-accent-light;
-    width: calc(100% / 3);
-    left: 0;
-    transition: vars.$transition-base;
-    z-index: 5;
-    box-shadow: 0 0 10px rgba(vars.$color-accent-light, 0.3);
-  }
-}
-
-.filter-item {
-  text-align: center;
-  cursor: pointer;
-  padding: 1.5rem 1rem;
-  transition: vars.$transition-base;
-  border-radius: vars.$border-radius-sharp;
-
-  &__title {
-    font-family: vars.$font-heading;
-    font-size: 1.2rem;
-    color: vars.$color-accent-light;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    transition: all 0.3s ease;
-  }
-
-  &__desc {
-    color: vars.$color-text-on-dark;
-    font-size: 0.85rem;
-    font-style: italic;
-    line-height: 1.5;
-    letter-spacing: 0.5px;
-    opacity: 0.7;
-    transition: all 0.3s ease;
     width: 100%;
-    padding: 0 10px;
-    margin: 0 auto;
-    font-weight: 300;
-    min-height: 50px;
-    word-break: normal;
-    white-space: normal;
   }
 
-  &:hover {
-    .filter-item__title {
-      opacity: 0.7;
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    padding: 0.7rem 1.2rem;
+    background: vars.$color-surface;
+    border: 1px solid vars.$color-border-strong;
+    border-radius: vars.$border-radius-sharp;
+    cursor: pointer;
+    min-width: 160px;
+    transition: vars.$transition-fast;
+    z-index: 110;
+
+    .trigger__title {
+      font-family: vars.$font-heading;
+      font-size: 1rem;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
-    .filter-item__desc {
+
+    .trigger__arrow {
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid vars.$color-accent-light;
+      border-bottom: 2px solid vars.$color-accent-light;
+      transform: translateY(-2px) rotate(45deg);
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &__ladder {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    margin-top: 2px;
+  }
+
+  .ladder-step {
+    background: color.adjust(vars.$color-surface, $lightness: 5%);
+    border: 1px solid rgba(vars.$color-border-subtle, 0.5);
+    border-top: none;
+    cursor: pointer;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transition: none;
+
+    &__title {
+      font-family: vars.$font-heading;
+      font-size: 0.9rem;
+      color: vars.$color-accent-light;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    // Пропорции ступенек 
+    &.step-1 { width: 160px; }
+    &.step-2 { width: 230px; }
+    &.step-3 { width: 300px; }
+
+    &.active {
+      background: color.adjust(vars.$color-surface, $lightness: 10%);
+      border-color: vars.$color-accent-light;
+      .ladder-step__title {
+        color: #ffffff;
+        font-weight: 600;
+      }
+    }
+
+    &:hover {
+      background: color.adjust(vars.$color-surface, $lightness: 8%);
+    }
+  }
+
+  // Анимация раскрытия
+  &.with-animation {
+    .ladder-step {
+      transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                  opacity 0.2s ease;
+    }
+    .step-1 { transition-delay: 0s; }
+    .step-2 { transition-delay: 0.1s; }
+    .step-3 { transition-delay: 0.2s; }
+  }
+
+  &.is-open {
+    .trigger {
+      border-color: vars.$color-accent-light;
+      .trigger__arrow {
+        transform: translateY(2px) rotate(-135deg);
+      }
+    }
+    .services-filter__ladder {
+      pointer-events: auto;
+    }
+    .ladder-step {
+      height: 48px;
       opacity: 1;
     }
   }
 
-  &.active {
-    .filter-item__title {
-      opacity: 1;
-    }
-    .filter-item__desc {
-      opacity: 1;
-      font-weight: 500;
-    }
+  &__desktop-container {
+    display: none;
   }
-}
 
-@media (max-width: 1024px) {
-  .services-filter {
-    &__container {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      padding: 0 25px;
-    }
+  @media (min-width: 450px) {
 
-    .filter-line {
+    &__mobile-zone {
       display: none;
     }
 
+    &__desktop-container {
+      display: grid;
+      position: relative;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 3vw, 40px);
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid vars.$color-border-subtle;
+    }
+
     .filter-item {
-      border: 1px solid vars.$color-border-subtle;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      cursor: pointer;
+
+      &__title {
+        font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+        opacity: 0.6;
+        margin-bottom: 1rem;
+        letter-spacing: 3px;
+        min-height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &__desc {
+        color: vars.$color-text-on-dark;
+        font-size: clamp(0.75rem, 1.1vw, 0.85rem);
+        font-style: italic;
+        line-height: 1.5;
+        opacity: 0.4;
+        max-width: 280px;
+        margin: 0 auto;
+        font-weight: 300;
+        transition: vars.$transition-fast;
+      }
 
       &.active {
-        background: rgba(vars.$color-accent-light, 0.1);
+        .filter-item__title {
+          opacity: 1;
+          color: #ffffff;
+        }
+        .filter-item__desc {
+          opacity: 0.8;
+        }
       }
+    }
+
+    .filter-line {
+      display: block;
+      position: absolute;
+      bottom: -1px;
+      height: 2px;
+      background: vars.$color-accent-light;
+      box-shadow: 0 0 15px rgba(vars.$color-accent-light, 0.5);
     }
   }
 }

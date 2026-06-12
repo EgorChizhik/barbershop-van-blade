@@ -14,22 +14,39 @@
 .team-title {
   text-align: center;
   font-family: vars.$font-heading;
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(1.8rem, 4.5vw + 0.5rem, 3.5rem);
   color: vars.$color-primary-light;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  line-height: 1.2;
+
+  @include vars.respond-to("md") {
+    margin-bottom: 20px;
+  }
 }
 
 .team-subheader {
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: clamp(
+    24px,
+    5vw,
+    50px
+  );
+  padding: 0 16px;
 
   .team-intro {
     max-width: 900px;
     text-align: center;
     color: vars.$color-text-on-dark;
-    line-height: 1.6;
-    font-size: 1.05rem;
+    font-size: clamp(0.9rem, 0.8vw + 0.65rem, 1.05rem);
+    line-height: 1.5;
+    opacity: 0.85;
+    margin-bottom: 20px;
+
+    @include vars.respond-to("md") {
+      line-height: 1.6;
+    }
   }
 }
 
@@ -69,12 +86,12 @@
   z-index: 3;
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
-
+  margin-bottom: clamp(10px, 3vw, 20px);
 
   img {
-    width: 110px;
+    width: clamp(70px, 8vw + 20px, 120px);
     height: auto;
+    transition: width 0.3s ease;
   }
 }
 

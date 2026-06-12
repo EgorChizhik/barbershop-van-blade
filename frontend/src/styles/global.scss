@@ -15,17 +15,44 @@ body {
   width: 100%;
   overflow-x: hidden;
   background: vars.$color-primary-dark;
-  font-size: 18px;
+
+  font-size: clamp(16px, 1.5vw + 11px, 18px);
 }
 
 body {
   background: vars.$color-primary-dark;
   color: vars.$color-text-on-dark;
   font-family: vars.$font-body;
-  line-height: 1.7;
+  line-height: 1.6;
   position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+// Глобальный адаптивный контейнер
+.container {
+  width: 100%;
+  max-width: vars.$container-max-width;
+  margin: 0 auto;
+  padding-left: vars.$container-padding-mobile;
+  padding-right: vars.$container-padding-mobile;
+
+  @include vars.respond-to('md') {
+    padding-left: vars.$container-padding-tablet;
+    padding-right: vars.$container-padding-tablet;
+  }
+
+  @include vars.respond-to('xl') {
+    padding-left: vars.$container-padding-desktop;
+    padding-right: vars.$container-padding-desktop;
+  }
+}
+
+// Оптимизация медиа (картинки, видео)
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .section--dark {
@@ -37,10 +64,7 @@ body {
   background-color: vars.$color-primary-light;
   color: vars.$color-text-on-light;
 
-  h1,
-  h2,
-  h3,
-  .section-title {
+  h1, h2, h3, .section-title {
     color: vars.$color-text-on-light;
     font-family: vars.$font-heading;
     font-weight: 700;
@@ -77,23 +101,22 @@ body {
   flex: 1;
 }
 
+// Скроллбар
 ::-webkit-scrollbar {
   width: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: vars.$color-primary-dark;
 }
-
 ::-webkit-scrollbar-thumb {
   background: vars.$color-accent-mid;
   border-radius: vars.$border-radius-sharp;
-
   &:hover {
     background: vars.$color-accent-light;
   }
 }
 
+// Кнопки
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
@@ -107,6 +130,7 @@ body {
   transition: vars.$transition-base;
   border: 1px solid transparent;
   cursor: pointer;
+  text-align: center;
 
   &:hover {
     background: transparent;
@@ -127,6 +151,7 @@ body {
   }
 }
 
+// Карточки
 .card {
   background: vars.$color-surface;
   border: 1px solid vars.$color-border-subtle;
@@ -149,9 +174,13 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 100px;
+  height: clamp(40px, 8vw, 100px); 
   background: inherit;
   clip-path: polygon(0 100%, 100% 100%, 100% 0);
-  margin-bottom: -99px;
+  margin-bottom: -1px;
   z-index: 2;
+}
+body.no-scroll {
+  overflow: hidden;
+  height: 100vh;
 }

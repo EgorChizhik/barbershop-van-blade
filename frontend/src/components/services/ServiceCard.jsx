@@ -19,19 +19,21 @@ const ServiceCard = ({ service }) => {
         )}
       </div>
 
-      <h3 className="service-card__title">{service.name}</h3>
+      <div className="service-card__body">
+        <h3 className="service-card__title">{service.name}</h3>
 
-      <p className="service-card__subtitle">
-        {service.subtitle || ''}
-      </p>
+        <p className="service-card__subtitle">
+          {service.subtitle || ''}
+        </p>
 
-      <div className="service-card__meta">
-        {variant && (
-          <>
-            <span className="service-card__price">{Math.floor(variant.price)} ₽</span>
-            <span className="service-card__duration">{variant.duration_minutes} мин</span>
-          </>
-        )}
+        <div className="service-card__meta">
+          {variant && (
+            <>
+              <span className="service-card__price">{Math.floor(variant.price)} ₽</span>
+              <span className="service-card__duration">{variant.duration_minutes} мин</span>
+            </>
+          )}
+        </div>
       </div>
 
       <div className="service-card__divider"></div>

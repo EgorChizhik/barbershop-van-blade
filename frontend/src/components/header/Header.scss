@@ -5,75 +5,249 @@
   background: vars.$color-surface;
   backdrop-filter: blur(15px);
   width: 100%;
-  position: sticky;
+  position: absolute;
   top: 0;
+  left: 0;
   z-index: 1000;
+  transition:
+    transform 0.3s ease-in-out,
+    background-color 0.3s ease;
+
+  // Состояние скролла вниз
+  &--hidden {
+    position: fixed;
+    transform: translateY(-100%);
+    transition: none;
+  }
+
+  // Выезд шапки ТОЛЬКО при скролле обратно вверх
+  &--smart-visible {
+    position: fixed;
+    transform: translateY(0);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  // Полное отключение мобильной логики скролла на ПК
+  @include vars.respond-to("md") {
+    position: sticky;
+    top: 0;
+    left: auto;
+    transform: none !important;
+    box-shadow: none;
+    transition: none;
+  }
 
   &__container {
-    max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
-    padding: 1.25rem 3rem 0.5rem 3rem;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include vars.respond-to("md") {
+      max-width: 1400px;
+      padding: 1.25rem 2rem 0.5rem 2rem;
+    }
+
+    @include vars.respond-to("lg") {
+      padding: 0.5rem 3rem 0rem 3rem;
+    }
   }
 
   &__logo {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+    z-index: 1001;
+
     .logo-img {
-      height: 100px;
+      height: 55px;
       width: auto;
       object-fit: contain;
       display: block;
       transition: transform 0.3s ease;
 
+      @include vars.respond-to("md") {
+        height: 75px;
+      }
+
+      @include vars.respond-to("lg") {
+        height: 100px;
+      }
+
       &:hover {
         transform: scale(1.05);
       }
     }
-    .logo-placeholder {
-      width: 120px;
-      height: 50px;
-      background: transparent;
-      border: 1px solid vars.$color-accent-light;
-      border-radius: vars.$border-radius-sharp;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: vars.$color-accent-light;
-      font-family: vars.$font-heading;
-      font-size: 0.9rem;
-      letter-spacing: 5px;
-      transition: vars.$transition-base;
-      box-shadow: inset 0 0 15px rgba(vars.$color-accent-light, 0.05);
+  }
 
-      &:hover {
-        background: rgba(vars.$color-accent-light, 0.1);
-        box-shadow: 0 0 25px rgba(vars.$color-accent-light, 0.2);
-        color: vars.$color-text-on-dark;
+  &__phone-centered {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: vars.$font-body;
+    font-size: clamp(0.85rem, 3.5vw, 1rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    z-index: 1001;
+    transition: none !important;
+
+    @include vars.respond-to("md") {
+      display: none;
+    }
+  }
+
+  &__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 28px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+
+    @include vars.respond-to("md") {
+      display: none;
+    }
+
+    .burger-line {
+      display: block;
+      height: 2px;
+      background-color: #ffffff;
+      transition: vars.$transition-base;
+      transform-origin: right center;
+    }
+
+    .line-1 {
+      width: 70%;
+    }
+    .line-2 {
+      width: 45%;
+    }
+    .line-3 {
+      width: 100%;
+    }
+
+    &--active {
+      align-items: center;
+      .line-1 {
+        transform: rotate(-45deg);
+        width: 100%;
+      }
+      .line-2 {
+        opacity: 0;
+        width: 0;
+      }
+      .line-3 {
+        transform: rotate(45deg);
+        width: 100%;
       }
     }
   }
 
   &__nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(vars.$color-primary-dark, 0.96);
+    backdrop-filter: blur(20px);
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.4s ease,
+      visibility 0.4s ease;
+
+    &-mobile-top,
+    &-mobile-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    &-mobile-logo {
+      display: block;
+      .mobile-logo-img {
+        height: 80px;
+        width: auto;
+        opacity: 1;
+      }
+    }
+
+    &--open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @include vars.respond-to("md") {
+      position: static;
+      top: auto;
+      left: auto;
+      width: auto;
+      height: auto;
+      background: transparent;
+      backdrop-filter: none;
+      flex-direction: row;
+      gap: 0;
+      opacity: 1;
+      visibility: visible;
+      transition: none;
+
+      &-mobile-top,
+      &-mobile-bottom {
+        display: contents;
+      }
+
+      &-mobile-logo {
+        display: none;
+      }
+    }
 
     a {
-      margin-left: 3rem;
       color: #ffffff;
       text-decoration: none;
       font-family: vars.$font-body;
-      font-size: 0.85rem;
+      font-size: 1.2rem;
       font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       transition: all 0.6s ease;
       position: relative;
       display: inline-block;
-      padding: 10px 0;
-      opacity: 0.9; 
+      padding: 6px 0;
+      opacity: 0.9;
+      white-space: nowrap;
+
+      @include vars.respond-to("md") {
+        margin-left: 1.2rem;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        padding: 10px 0;
+      }
+
+      @include vars.respond-to("950px") {
+        margin-left: 2rem;
+        font-size: 0.8rem;
+        letter-spacing: 1.5px;
+      }
+
+      @include vars.respond-to("lg") {
+        margin-left: 3rem;
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+      }
 
       &:hover {
         color: vars.$color-accent-light;
@@ -85,7 +259,7 @@
       &::after {
         content: "";
         position: absolute;
-        width: 0; 
+        width: 0;
         height: 1px;
         background-color: vars.$color-accent-light;
         transition: width 350ms ease-in-out;
@@ -96,7 +270,6 @@
       &::before {
         top: 0;
       }
-
       &::after {
         bottom: 0;
       }
@@ -106,6 +279,44 @@
         width: 80%;
       }
     }
+
+
+    .header__phone {
+      display: none;
+
+      @include vars.respond-to("md") {
+        display: inline-block;
+        margin-left: 1.2rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        white-space: nowrap;
+        border: none;
+        background: transparent;
+        color: #ffffff;
+        transition: color 0.25s ease;
+      }
+
+      @include vars.respond-to("950px") {
+        margin-left: 2rem;
+      }
+
+      @include vars.respond-to("lg") {
+        margin-left: 3rem;
+        font-size: 1rem;
+      }
+
+      &::before,
+      &::after {
+        display: none !important;
+      }
+
+      &:hover {
+        color: vars.$color-accent-light;
+        background: transparent !important;
+        letter-spacing: 1px !important; 
+      }
+    }
   }
 }
 
@@ -113,17 +324,21 @@
   background: vars.$color-primary-dark;
   overflow: hidden;
   width: 100%;
-  padding: 0.7rem 0;
+  padding: 0.5rem 0;
   display: flex;
   position: relative;
   border-bottom: 1px solid rgba(vars.$color-accent-mid, 0.05);
+
+  @include vars.respond-to("md") {
+    padding: 0.7rem 0;
+  }
 
   &::before,
   &::after {
     content: "";
     position: absolute;
     top: 0;
-    width: 150px;
+    width: clamp(50px, 10vw, 150px);
     height: 100%;
     z-index: 2;
     pointer-events: none;
@@ -157,13 +372,13 @@
   }
 
   &__text {
-    font-size: 3.5rem;
+    font-size: clamp(1.8rem, 6vw, 3.5rem);
     font-family: vars.$font-heading;
     text-transform: uppercase;
     color: transparent;
     -webkit-text-stroke: 1px rgba(vars.$color-accent-mid, 0.12);
     font-weight: 700;
-    padding: 0 5rem;
+    padding: 0 clamp(1.5rem, 5vw, 5rem);
     white-space: nowrap;
     transition: vars.$transition-base;
     user-select: none;

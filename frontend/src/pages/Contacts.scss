@@ -1,0 +1,467 @@
+@use "../styles/variables" as vars;
+
+.contacts-page {
+  background-color: vars.$color-primary-dark;
+  padding-bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  &__map {
+    width: 100%;
+
+    height: 320px;
+
+    background-color: vars.$color-surface;
+
+    border-top: 1px solid vars.$color-border-subtle;
+
+    position: relative;
+
+    overflow: hidden;
+
+    iframe {
+      width: 100% !important;
+      height: 100% !important;
+      border: none;
+    }
+  }
+}
+
+
+.contacts-section {
+  position: relative;
+
+  padding:
+    clamp(2.5rem, 6vw, 5rem)
+    0
+    clamp(3rem, 7vw, 6rem);
+
+  overflow: hidden;
+
+  &__inner {
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding-inline: clamp(16px, 4vw, 40px);
+  }
+}
+
+
+
+.contacts-grid {
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 1rem;
+
+  align-items: stretch;
+}
+
+
+.contact-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 1.5rem 1.2rem;
+
+  background-color: vars.$color-surface;
+
+  border: 1px solid vars.$color-border-subtle;
+
+  border-radius: vars.$border-radius-card;
+
+  overflow: hidden;
+
+  transition: vars.$transition-base;
+
+  min-width: 0;
+
+  &:hover {
+    border-color: rgba(vars.$color-accent-light, 0.45);
+
+    box-shadow:
+      0 0 0 1px rgba(vars.$color-accent-light, 0.08),
+      0 20px 60px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(vars.$color-accent-light, 0.06);
+  }
+
+  &--featured {
+    background: linear-gradient(
+      160deg,
+      vars.$color-surface 60%,
+      rgba(vars.$color-accent-mid, 0.18) 100%
+    );
+
+    border-color: rgba(vars.$color-accent-light, 0.2);
+  }
+
+  &__accent-bar {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 2px;
+
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      vars.$color-accent-light 35%,
+      vars.$color-accent-mid 65%,
+      transparent 100%
+    );
+
+    opacity: 0.55;
+
+    transition: opacity 0.4s;
+
+    .contact-card--featured & {
+      opacity: 0.8;
+    }
+
+    .contact-card:hover & {
+      opacity: 1;
+    }
+  }
+
+  &__numeral {
+    position: absolute;
+
+    top: 1rem;
+    right: 1rem;
+
+    font-family: vars.$font-heading;
+
+    font-size: 0.68rem;
+
+    letter-spacing: 0.18em;
+
+    color: vars.$color-border-subtle;
+
+    user-select: none;
+  }
+
+  &__icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: clamp(48px, 7vw, 64px);
+    height: clamp(48px, 7vw, 64px);
+
+    margin-bottom: clamp(0.9rem, 2vw, 1.5rem);
+
+    color: vars.$color-accent-light;
+
+    opacity: 0.65;
+
+    transition:
+      opacity 0.4s,
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    .contact-card:hover & {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .contact-icon {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__title {
+    font-family: vars.$font-heading;
+
+    font-size: clamp(1rem, 2vw, 1.35rem);
+
+    font-weight: 600;
+
+    color: vars.$color-primary-light;
+
+    letter-spacing: 0.05em;
+
+    margin-bottom: clamp(0.9rem, 2vw, 1.5rem);
+
+    line-height: 1.1;
+  }
+
+  &__body {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 1rem;
+
+    flex: 1;
+
+    align-items: start;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.35rem;
+
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: 0.68rem;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+    color: vars.$color-text-muted;
+
+    line-height: 1.5;
+  }
+
+  &__sep {
+    display: none;
+  }
+
+  &__phone,
+  &__email {
+    color: vars.$color-text-on-dark;
+
+    text-decoration: none;
+
+    transition: vars.$transition-fast;
+
+    word-break: break-word;
+
+    &:hover {
+      color: vars.$color-accent-light;
+    }
+  }
+
+  &__phone {
+    font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+
+    line-height: 1.45;
+  }
+
+  &__email {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+  }
+
+  &__address {
+    font-family: vars.$font-heading;
+
+    font-size: clamp(1rem, 2.4vw, 1.55rem);
+
+    font-weight: 600;
+
+    color: vars.$color-primary-light;
+
+    line-height: 1.2;
+  }
+
+  &__city {
+    font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+
+    color: vars.$color-text-muted;
+
+    line-height: 1.5;
+  }
+
+  &__schedule-day {
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+
+    color: vars.$color-text-on-dark;
+  }
+
+  &__schedule-time {
+    font-family: vars.$font-heading;
+
+    font-size: clamp(1.2rem, 3vw, 1.85rem);
+
+    font-weight: 600;
+
+    color: vars.$color-accent-light;
+
+    line-height: 1.1;
+  }
+
+  &__hint {
+    font-size: clamp(0.8rem, 1.4vw, 0.9rem);
+
+    color: vars.$color-text-muted;
+
+    font-style: italic;
+
+    line-height: 1.5;
+  }
+}
+
+.contact-phones {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.25rem;
+}
+
+
+
+@media (max-width: 399px) {
+  .contact-card {
+    &__body {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+
+
+.contacts-footer {
+  padding:
+    clamp(2rem, 6vw, 4rem)
+    0
+    clamp(1.25rem, 4vw, 2rem);
+
+  background: vars.$color-primary-dark;
+
+  border-top: 1px solid vars.$color-border-subtle;
+
+  &__container {
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding-inline: clamp(16px, 4vw, 40px);
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 1rem;
+
+    margin-bottom: 2rem;
+
+    a {
+      color: vars.$color-text-on-dark;
+
+      text-decoration: none;
+
+      font-size: clamp(0.72rem, 1.5vw, 0.85rem);
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.18em;
+
+      transition: vars.$transition-base;
+
+      &:hover {
+        color: vars.$color-accent-light;
+      }
+    }
+  }
+
+  &__divider {
+    height: 1px;
+
+    background: vars.$color-border-subtle;
+
+    width: 100%;
+
+    margin-bottom: 1.25rem;
+  }
+
+  &__copyright {
+    text-align: center;
+
+    font-size: clamp(0.72rem, 1.2vw, 0.8rem);
+
+    color: vars.$color-text-muted;
+
+    line-height: 1.5;
+  }
+}
+
+
+
+@include vars.respond-to(650px) {
+  .contacts-grid {
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1rem;
+  }
+
+  .contact-card {
+    padding: 1.8rem 1.3rem;
+
+    &__body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contacts-page {
+    &__map {
+      height: 420px;
+    }
+  }
+
+  .contacts-footer {
+    &__nav {
+      flex-direction: row;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 2rem;
+    }
+  }
+}
+
+
+
+@include vars.respond-to("lg") {
+  .contacts-grid {
+    gap: 1.5rem;
+  }
+
+  .contact-card {
+    padding: 2.5rem 2rem;
+  }
+
+  .contacts-page {
+    &__map {
+      height: 560px;
+    }
+  }
+}
+
+
+
+@include vars.respond-to("xl") {
+  .contacts-grid {
+    gap: 1.75rem;
+  }
+
+  .contacts-page {
+    &__map {
+      height: 640px;
+    }
+  }
+}
+
+@include vars.respond-to("xxl") {
+  .contacts-page {
+    &__map {
+      height: 680px;
+    }
+  }
+}

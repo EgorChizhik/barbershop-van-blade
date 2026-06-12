@@ -18,12 +18,16 @@
     &__track {
       display: flex;
       width: max-content;
-      animation: marquee-fast 20s linear infinite;
+      animation: marquee-fast 50s linear infinite;
+
+      @include vars.respond-to('md') {
+        animation: marquee-fast 40s linear infinite;
+      }
     }
 
     &__text {
       font-family: vars.$font-heading;
-      font-size: 2.5rem;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
       text-transform: uppercase;
       font-weight: 700;
       color: transparent;
@@ -35,94 +39,265 @@
 
   &__map-section {
     position: relative;
-    height: 600px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
+    
+    // На мобильных выстраиваем карту и карточку друг под друга через Grid
+    display: grid;
+    grid-template-columns: 1fr;
+    background: vars.$color-primary-dark;
+
+    @include vars.respond-to('lg') {
+      display: flex;
+      align-items: center;
+      height: 600px;
+    }
   }
 
   &__map-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 600px;
     width: 100%;
-    height: 100%;
+    height: 350px; // Комфортная высота карты на мобильных девайсах
     background: vars.$color-surface;
-    z-index: 1;
+    order: 2; // Карта на мобильных падает строго под инфо-блок
+
+    @include vars.respond-to('lg') {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 1;
+      order: unset;
+    }
   }
 
-  &__floating-card {
-    position: relative;
-    z-index: 10;
-    margin-left: 10%;
+&__floating-card {
     background: rgba(vars.$color-primary-dark, 0.95);
     backdrop-filter: blur(10px);
-    border: 1px solid vars.$color-accent-mid;
-    padding: 3rem;
-    max-width: 700px;
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 3rem;
-    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.5);
+    border: none;
+    box-shadow: none; // Никаких теней на мобильных и планшетах
+    width: 100%;
+    order: 1;
+    
+    // Чистая мобильная верстка: строго по центру
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2.5rem;
+    padding: 3rem 1.5rem;
+
+    // Планшетный премиум-адаптив (крупные элементы и сетка)
+    @include vars.respond-to('md') {
+      padding: 4rem 3rem;
+      max-width: 85%;
+      margin: 0 auto;
+      gap: 3.5rem;
+    }
+
+    // Возврат в десктопную структуру поверх карты
+    @include vars.respond-to('lg') {
+      position: relative;
+      z-index: 10;
+      margin: 0 0 0 10%;
+      max-width: 700px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 3rem;
+      order: unset;
+      text-align: left;
+      align-items: stretch;
+      border: 1px solid vars.$color-accent-mid;
+      box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.5); // Тень только на ПК
+    }
+
+    .floating-card__brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      @include vars.respond-to('lg') {
+        align-items: flex-start;
+      }
+    }
 
     .floating-card__logo {
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      @include vars.respond-to('lg') {
+        justify-content: flex-start;
+      }
     }
+
     .footer-logo-img {
-      height: 90px;
+      height: 75px;
       width: auto;
       object-fit: contain;
       display: block;
       transition: transform 0.3s ease;
 
+      @include vars.respond-to('md') {
+        height: 110px;
+      }
+
+      @include vars.respond-to('lg') {
+        height: 90px;
+      }
+
       &:hover {
         transform: scale(1.05);
       }
     }
+
     .floating-card__desc {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: vars.$color-accent-light;
       line-height: 1.8;
+      margin: 0;
+      max-width: 450px;
+
+      @include vars.respond-to('md') {
+        font-size: 1.1rem;
+        max-width: 90%;
+      }
+
+      @include vars.respond-to('lg') {
+        font-size: 0.9rem;
+      }
+    }
+
+    .floating-card__contacts {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      width: 100%;
+
+      // Двухколоночная сетка для планшетов
+      @include vars.respond-to('md') {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem 2rem;
+        align-items: start;
+      }
+
+      @include vars.respond-to('lg') {
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: none;
+        align-items: flex-start;
+        gap: 0;
+      }
     }
 
     .contact-item {
-      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      // Легкие разделители на мобильных, теперь тоже аккуратно отцентрированные
+      @media (max-width: 767px) {
+        border-bottom: 1px solid rgba(vars.$color-accent-mid, 0.15);
+        padding-bottom: 1.5rem;
+
+        &:last-child {
+          border-bottom: none;
+          padding-bottom: 0;
+        }
+      }
+
+      @include vars.respond-to('md') {
+        &:nth-child(3) {
+          grid-column: span 2;
+        }
+      }
+
+      @include vars.respond-to('lg') {
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        grid-column: unset !important;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
 
       &__label {
         display: block;
         font-family: vars.$font-heading;
         color: vars.$color-accent-light;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 2px;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.6rem;
+
+        @include vars.respond-to('md') {
+          font-size: 0.9rem;
+          letter-spacing: 3px;
+        }
+
+        @include vars.respond-to('lg') {
+          font-size: 0.75rem;
+          letter-spacing: 2px;
+        }
       }
 
       p {
-        font-size: 0.95rem;
-        margin-bottom: 0.2rem;
+        font-size: 1rem;
+        margin: 0 0 0.3rem 0;
+        color: rgba(#ffffff, 0.9);
+
+        @include vars.respond-to('md') {
+          font-size: 1.15rem;
+        }
+
+        @include vars.respond-to('lg') {
+          font-size: 0.95rem;
+          margin: 0 0 0.2rem 0;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
   }
 
   &__bottom {
-    padding: 4rem 0 2rem;
+    padding: 3rem 0 2rem;
     background: vars.$color-primary-dark;
+
+    @include vars.respond-to('md') {
+      padding: 4rem 0 2rem;
+    }
 
     &-container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0 3rem;
+      padding: 0 1.5rem;
+
+      @include vars.respond-to('md') {
+        padding: 0 3rem;
+      }
     }
 
     &-nav {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr; // Ровно два столбца на мобильных по требованию
+      gap: 1.5rem 1rem;
+      justify-items: center;
+      margin-bottom: 2.5rem;
+
+      @include vars.respond-to('md') {
+        display: flex;
+        grid-template-columns: none;
+        justify-content: space-between;
+        margin-bottom: 3rem;
+      }
 
       a {
         color: vars.$color-text-on-dark;
@@ -131,6 +306,7 @@
         text-transform: uppercase;
         letter-spacing: 3px;
         transition: vars.$transition-base;
+        white-space: nowrap;
 
         &:hover {
           color: vars.$color-accent-light;
@@ -155,10 +331,6 @@
 }
 
 @keyframes marquee-fast {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-33.33%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.33%); }
 }

@@ -2,15 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../utils/api';
 
 export const useServices = (barberLevel = null) => {
-  const queryParams = barberLevel ? `?barber_level=${encodeURIComponent(barberLevel)}` : '';
-
+  
   return useQuery({
-    queryKey: ['services', barberLevel],
+    queryKey: ['services', barberLevel], 
     queryFn: async () => {
-      console.log('useServices: Query executing with key:', ['services', barberLevel]);
-      const response = await api.get(`services/${queryParams}`);
-      const services = response.data;
+      console.log('useServices: Query executing for level:', barberLevel);
       
+      const response = await api.get('services/', {
+        params: barberLevel ? { barber_level: barberLevel } : {}
+      });
+      
+      const services = response.data;
+
       const processed = services.map(service => {
         const defaultVariant = service.variants?.find(v => v.barber_level === 'Матрос') || service.variants?.[0];
         return { ...service, defaultVariant: defaultVariant || null };
@@ -19,8 +22,8 @@ export const useServices = (barberLevel = null) => {
       console.log('useServices: Returning', processed.length, 'processed services');
       return processed;
     },
-    staleTime: 0,
-    gcTime: 0,
-    refetchOnWindowFocus: true,
+    staleTime: 3 * 60 * 1000, 
+    gcTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 };

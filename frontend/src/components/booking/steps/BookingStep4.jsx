@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import React, { useMemo, useState } from "react";
 import { useBooking } from "../../../context/BookingContext";
 import {
@@ -77,10 +77,19 @@ const BookingStep4 = () => {
         Number(s.duration_minutes || s.variants?.[0]?.duration_minutes || 0),
       0,
     );
-    const totalPrice = selectedServices.reduce(
-      (acc, s) => acc + Number(s.price || s.variants?.[0]?.price || 0),
-      0,
-    );
+
+    const totalPrice = selectedServices.reduce((acc, s) => {
+      const variant = s.variants?.find(
+        (v) => v.barber_level === selectedBarber?.level,
+      );
+      if (variant) return acc + Number(variant.price);
+
+      if (s.variants?.length > 0) {
+        const prices = s.variants.map((v) => Number(v.price));
+        return acc + Math.min(...prices);
+      }
+      return acc + Number(s.price || 0);
+    }, 0);
 
     const h = Math.floor(totalMinutes / 60);
     const m = totalMinutes % 60;
@@ -101,7 +110,7 @@ const BookingStep4 = () => {
       timeRange,
       count: selectedServices.length,
     };
-  }, [selectedServices, selectedTime]);
+  }, [selectedServices, selectedTime, selectedBarber]);
 
   const isFormValid =
     !errors.name &&
@@ -168,12 +177,16 @@ const BookingStep4 = () => {
         <button className="header-back-btn" onClick={() => setCurrentStep(3)}>
           <IoArrowBack size={20} />
         </button>
+        
+        <button className="close-panel-btn" onClick={closeBooking}>
+          <IoCloseOutline size={28} />
+        </button>
 
-        <Link>
+        <Link to="/">
           <img src={logo} alt="Van Blade" className="mini-logo" />
         </Link>
         <div className="contact-mini">
-          ул. Рябикова, 61/37 | (8422) 41-22-14
+          ул. Рябикова, 61/37 | +7 (917) 611-34-60
         </div>
       </div>
 
@@ -231,8 +244,15 @@ const BookingStep4 = () => {
           </div>
           <div className="services-list">
             {selectedServices.map((service) => {
+              const variant = service.variants?.find(
+                (v) => v.barber_level === selectedBarber?.level,
+              );
               const displayPrice =
-                service.price || service.variants?.[0]?.price || 0;
+                variant?.price ??
+                service.variants?.[0]?.price ??
+                service.price ??
+                0;
+
               return (
                 <div key={service.id} className="service-item">
                   <span className="s-name">{service.name}</span>

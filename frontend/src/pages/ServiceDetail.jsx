@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useServiceDetail } from "../hooks/useServiceDetail";
-import { useBooking } from "../context/BookingContext"; // проверь путь!
+import { useBooking } from "../context/BookingContext";
 import "./ServiceDetail.scss";
 
 import sailorImg from "../assets/images/detail_page/van_blade_sailor_bg.jpg";
@@ -14,6 +14,8 @@ const ServiceDetail = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: service, isLoading, isError } = useServiceDetail(slug);
   const [activeLevel, setActiveLevel] = useState("");
+
+  const { openBooking } = useBooking();
 
   const levelImages = {
     Матрос: sailorImg,
@@ -42,7 +44,7 @@ const ServiceDetail = () => {
   if (isLoading) return <div className="page-loader">⚓ Готовим палубу...</div>;
   if (isError || !service)
     return <div className="page-error">Услуга не найдена.</div>;
-  const { openBooking } = useBooking();
+
   return (
     <div className="service-detail-page">
       <section
@@ -80,6 +82,23 @@ const ServiceDetail = () => {
               </svg>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* МОБИЛЬНЫЕ ТАБЫ (Отображаются только до 1024px) */}
+      <section className="mobile-tabs-section">
+        <div className="mobile-tabs-container">
+          <div className="mobile-tabs">
+            {service.variants.map((variant) => (
+              <button
+                key={`tab-${variant.barber_level}`}
+                className={`mobile-tab ${activeLevel === variant.barber_level ? "is-active" : ""}`}
+                onClick={() => setActiveLevel(variant.barber_level)}
+              >
+                {variant.barber_level}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -140,9 +159,14 @@ const ServiceDetail = () => {
                         <h4 className="variant-card__service-name">
                           {service.name}
                         </h4>
-                        <p className="variant-card__description">
-                          {variant.description || service.description}
-                        </p>
+
+                        {/* ОБЕРТКА ДЛЯ БЕЗОПАСНОГО СКРОЛЛА */}
+                        <div className="variant-card__desc-wrap">
+                          <p className="variant-card__description">
+                            {variant.description || service.description}
+                          </p>
+                        </div>
+
                         <div className="variant-card__price">
                           {Math.floor(variant.price)} ₽
                         </div>

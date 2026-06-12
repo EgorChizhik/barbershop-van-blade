@@ -5,14 +5,12 @@ import Services from '../pages/Services';
 import ServiceDetail from '../pages/ServiceDetail';
 import About from '../pages/About';
 import Works from '../pages/Works';
-
+import Contacts from '../pages/Contacts';
 
 import LegalLayout from '../pages/legal/LegalLayout';
 import PrivacyPolicy from '../pages/legal/PrivacyPolicy';
 import PersonalData from '../pages/legal/PersonalData';
 import TermsOfService from '../pages/legal/TermsOfService';
-
-
 
 const router = createBrowserRouter([
   {
@@ -24,7 +22,7 @@ const router = createBrowserRouter([
       { path: 'services/:slug', element: <ServiceDetail /> },
       { path: 'about', element: <About /> },
       { path: 'works', element: <Works /> },
-      
+      { path: 'contacts', element: <Contacts /> },
       {
         element: <LegalLayout />,
         children: [

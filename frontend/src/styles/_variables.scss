@@ -1,4 +1,34 @@
 @use "sass:color";
+@use "sass:map";
+
+
+$breakpoints: (
+  "sm": 576px,   // Большие смартфоны / ландшафт
+  "md": 768px,   // Планшеты (Основная смена сетки)
+  "lg": 1024px,  // Ноутбуки / Большие планшеты
+  "xl": 1280px,  // Стандартные ПК (Ограничение контейнера)
+  "xxl": 1536px  // Большие Full HD мониторы
+);
+
+// Максимальная ширина контента
+$container-max-width: 1240px;
+
+$container-padding-mobile: 16px;
+$container-padding-tablet: 24px;
+$container-padding-desktop: 32px;
+
+@mixin respond-to($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
 
 // Основные цвета
 $color-primary-dark: #0F1A2B;
