@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView  # <-- Добавили импорт для отображения React
+from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 from services.views import CategoryViewSet, ServiceViewSet
 from barbers.views import BarberViewSet, BarberTimeSlotListView
@@ -23,9 +23,14 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/barbers/<int:barber_id>/slots/', BarberTimeSlotListView.as_view(), name='barber-slots'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
-if not settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns += static('/assets/', document_root=settings.STATIC_ROOT / 'assets' if (settings.STATIC_ROOT / 'assets').exists() else settings.STATIC_ROOT)
 
 admin.site.index_title = "Управление системой «Van Blade»"
