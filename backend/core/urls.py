@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from services.views import CategoryViewSet, ServiceViewSet
-from barbers.views import BarberViewSet, BarberTimeSlotListView # <--- 1. ДОБАВЬ ИМПОРТ ТУТ
+from barbers.views import BarberViewSet, BarberTimeSlotListView
 from bookings.views import AppointmentViewSet
 from gallery.views import WorkViewSet
 from django.conf import settings
@@ -21,3 +21,6 @@ urlpatterns = [
     path('api/barbers/<int:barber_id>/slots/', BarberTimeSlotListView.as_view(), name='barber-slots'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+admin.site.index_title = "Управление системой «Van Blade»"

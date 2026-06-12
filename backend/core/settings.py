@@ -1,34 +1,42 @@
 from pathlib import Path
 from decouple import config
+from django.templatetags.static import static
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ───────────────────────────────────────────────────────────────────────
+# ENVIRONMENT CONFIGURATION (Очищено от дубликатов для защиты диплома)
+# ───────────────────────────────────────────────────────────────────────
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a0v$1hfc1x2_vy2plkkex4b3&5!74yom7yf%k#m*s039jh3wbt'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
-
+# ───────────────────────────────────────────────────────────────────────
+# APPLICATION DEFINITION
+# ───────────────────────────────────────────────────────────────────────
 INSTALLED_APPS = [
+    # Модернизация админки (Обязательно на самом верху, до django.contrib.admin)
+    'unfold',
+    
+    # Стандартные приложения Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Сторонние библиотеки
     'corsheaders',
     'rest_framework',
 
-    'users', 'services', 'barbers', 'bookings','gallery',
+    # Локальные приложения вашего барбершопа
+    'users', 
+    'services', 
+    'barbers', 
+    'bookings',
+    'gallery',
 ]
 
 MIDDLEWARE = [
@@ -42,20 +50,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-from decouple import config
-
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:5174",
     "http://127.0.0.1:5173",
     "http://127.0.0.1:5174",
 ]
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 ROOT_URLCONF = 'core.urls'
 
@@ -77,19 +77,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-
-
-from decouple import config
-
-
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
-
+# ───────────────────────────────────────────────────────────────────────
+# DATABASE SYSTEM (PostgreSQL Standard)
+# ───────────────────────────────────────────────────────────────────────
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -102,9 +92,7 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-
+# PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -120,10 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
+# INTERNATIONALIZATION
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
@@ -134,18 +119,52 @@ LANGUAGES = [
     ('ru', 'Русский'),
 ]
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# STATIC & MEDIA STORAGE
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# ADDITIONAL APPLICATION SETTINGS
 AUTH_USER_MODEL = 'users.CustomUser'
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
+}
+UNFOLD = {
+    "COLORS": {
+        "base": {
+            "50":  "rgb(209, 207, 201)",
+            "100": "rgb(189, 196, 212)", 
+            "200": "rgb(155, 170, 190)",
+            "300": "rgb(120, 140, 165)",
+            "400": "rgb(100, 120, 148)",
+            "500": "rgb(82, 103, 125)", 
+            "600": "rgb(62, 82, 108)",
+            "700": "rgb(45, 65, 92)",
+            "800": "rgb(28, 46, 74)",
+            "900": "rgb(20, 32, 55)",
+            "950": "rgb(15, 26, 43)",
+        },
+        "primary": {
+            "50":  "rgb(240, 242, 246)",
+            "100": "rgb(220, 226, 236)",
+            "200": "rgb(200, 210, 224)",
+            "300": "rgb(189, 196, 212)",
+            "400": "rgb(160, 173, 192)",
+            "500": "rgb(130, 148, 168)",
+            "600": "rgb(100, 120, 145)",
+            "700": "rgb(82, 103, 125)",
+            "800": "rgb(62, 82, 108)",
+            "900": "rgb(40, 58, 84)",
+            "950": "rgb(28, 46, 74)",
+        },
+    },
+    "STYLES": [
+        lambda request: static("css/admin_custom.css"),
+    ],
 }

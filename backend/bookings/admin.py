@@ -1,10 +1,11 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import Appointment
 from barbers.models import TimeSlot
 
 
 @admin.register(Appointment)
-class AppointmentAdmin(admin.ModelAdmin):
+class AppointmentAdmin(ModelAdmin):
     list_display = ('client_name', 'barber', 'date', 'time_slot', 'total_price', 'status')
     list_filter = ('status', 'date')
     date_hierarchy = 'date'

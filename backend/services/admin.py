@@ -1,16 +1,17 @@
-from django.contrib import admin
 from django import forms
+from django.contrib import admin
+from unfold.admin import ModelAdmin, TabularInline
 from .models import Category, Service, ServiceVariant
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(ModelAdmin):
     list_display = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name',)
 
 
-class ServiceVariantInline(admin.TabularInline):
+class ServiceVariantInline(TabularInline):
     model = ServiceVariant
     extra = 3
     fields = ('barber_level', 'price', 'duration_minutes')
@@ -24,7 +25,7 @@ class ServiceAdminForm(forms.ModelForm):
 
 
 @admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
+class ServiceAdmin(ModelAdmin):
     form = ServiceAdminForm
     list_display = ('name', 'category', 'is_active')
     list_filter = ('is_active', 'category')
@@ -48,7 +49,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 
 @admin.register(ServiceVariant)
-class ServiceVariantAdmin(admin.ModelAdmin):
+class ServiceVariantAdmin(ModelAdmin):
     list_display = ('service', 'barber_level', 'price', 'duration_minutes')
     list_filter = ('barber_level', 'service')
     search_fields = ('service__name',)

@@ -1,0 +1,27 @@
+/* светлая тема */
+html:not(.dark) input,
+html:not(.dark) textarea,
+html:not(.dark) select {
+    background-color: #ffffff !important;
+    color: #1f2937 !important;
+    border-color: #9ca3af !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+    color: #9ca3af !important;
+}
+
+/* тёмная тема */
+html.dark input,
+html.dark textarea,
+html.dark select {
+    background-color: #243554 !important;
+    color: #d8dce6 !important;
+    border-color: #3d5475 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+    color: #6b7f96 !important;
+}
