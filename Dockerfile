@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем зависимости Python (копируем из корня, как в прошлый удачный раз)
+# Устанавливаем зависимости Python
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install gunicorn
@@ -36,6 +36,7 @@ COPY --from=frontend-builder /app/frontend/dist ./frontend_dist
 # Задаем временные переменные, чтобы Django разрешил выполнить collectstatic без реального подключения к БД
 ENV SECRET_KEY=temporary_key_for_build_only
 ENV DEBUG=False
+ENV ALLOWED_HOSTS=localhost,127.0.0.1,onrender.com
 ENV DATABASE_NAME=dummy
 ENV DATABASE_USER=dummy
 ENV DATABASE_PASSWORD=dummy
