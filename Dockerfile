@@ -21,16 +21,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем зависимости Python
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Устанавливаем зависимости Python (requirements.txt лежит в папке backend)
+COPY backend/requirements.txt ./backend/
+RUN pip install --no-cache-dir -r ./backend/requirements.txt
 RUN pip install gunicorn
 
 # Копируем все файлы проекта в контейнер
 COPY . .
 
 # Забираем из первого (нодового) этапа собранный React (папку dist) 
-# и кладем её туда, где её ждет твой settings.py (в папку frontend_dist)
+# и кладем её в корень /app/frontend_dist
 COPY --from=frontend-builder /app/frontend/dist ./frontend_dist
 
 # Задаем временные переменные, чтобы Django разрешил выполнить collectstatic без реального подключения к БД
@@ -42,10 +42,13 @@ ENV DATABASE_PASSWORD=dummy
 ENV DATABASE_HOST=localhost
 ENV DATABASE_PORT=5432
 
+# ПЕРЕХОДИМ В ПАПКУ БЭКЕНДА (где лежит manage.py)
+WORKDIR /app/backend
+
 # Собираем всю статику (и админку, и css, и файлы React) в одну папку staticfiles для WhiteNoise
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-# Запуск production-сервера
-CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Запуск production-сервера (миграции + запуск gunicorn из папки backend)
+CMD python manage.py migrate && gunicorn core.wsgi:application --bind 0.0.0.0:8000
