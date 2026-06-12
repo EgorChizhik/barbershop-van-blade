@@ -125,18 +125,17 @@ LANGUAGES = [
 # ───────────────────────────────────────────────────────────────────────
 STATIC_URL = '/static/'
 
-# Собираем в список все папки, где может лежать статика проекта и скомпилированный React
 STATICFILES_DIRS = []
 if (BASE_DIR / 'static').exists():
     STATICFILES_DIRS.append(BASE_DIR / 'static')
 
-# Интегрируем собранные Vite ассеты фронтенда (CSS, JS, картинки) в статику Django
+# Включаем ВСЮ папку frontend_dist, чтобы сохранить структуру подпапок (включая assets и favicon)
 if (BASE_DIR / 'frontend_dist').exists():
-    STATICFILES_DIRS.append(BASE_DIR / 'frontend_dist' / 'assets')
+    STATICFILES_DIRS.append(BASE_DIR / 'frontend_dist')
 elif (BASE_DIR / '../frontend_dist').exists():
-    STATICFILES_DIRS.append(BASE_DIR / '../frontend_dist' / 'assets')
+    STATICFILES_DIRS.append(BASE_DIR / '../frontend_dist')
 
-# Главная директория сборки статики (РАСКОММЕНТИРОВАНО И НАСТРОЕНО)
+# Главная директория сборки статики
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Поддержка эффективного сжатия WhiteNoise
