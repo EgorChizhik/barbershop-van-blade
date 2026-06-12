@@ -51,5 +51,8 @@ RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-# Запуск production-сервера (миграции + запуск gunicorn)
-CMD python manage.py migrate && gunicorn core.wsgi:application --bind 0.0.0.0:8000
+# Даем контейнеру разрешение на чтение и запуск нашего скрипта
+RUN chmod +x init.sh
+
+# Говорим Docker запускать именно этот скрипт при старте сайта
+CMD ["./init.sh"]
