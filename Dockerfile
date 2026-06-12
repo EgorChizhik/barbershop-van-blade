@@ -4,7 +4,7 @@ WORKDIR /app/frontend
 
 # Копируем только файлы зависимостей фронта, чтобы ускорить сборку
 COPY frontend/package*.json ./
-RUN npm ci
+RUN npm install
 
 # Копируем весь исходный код фронтенда
 COPY frontend/ ./
