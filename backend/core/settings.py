@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # <-- Обязательно для раздачи статики на Render
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,7 +63,8 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # Указываем Django искать главный index.html от React в папке frontend_dist
+        'DIRS': [BASE_DIR / 'frontend_dist'] if (BASE_DIR / 'frontend_dist').exists() else [BASE_DIR / '../frontend_dist'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,7 +93,6 @@ DATABASES = {
     }
 }
 
-
 # PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -119,10 +120,27 @@ LANGUAGES = [
     ('ru', 'Русский'),
 ]
 
-# STATIC & MEDIA STORAGE
+# ───────────────────────────────────────────────────────────────────────
+# STATIC & MEDIA STORAGE (Production Ready)
+# ───────────────────────────────────────────────────────────────────────
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Собираем в список все папки, где может лежать статика проекта и скомпилированный React
+STATICFILES_DIRS = []
+if (BASE_DIR / 'static').exists():
+    STATICFILES_DIRS.append(BASE_DIR / 'static')
+
+# Интегрируем собранные Vite ассеты фронтенда (CSS, JS, картинки) в статику Django
+if (BASE_DIR / 'frontend_dist').exists():
+    STATICFILES_DIRS.append(BASE_DIR / 'frontend_dist' / 'assets')
+elif (BASE_DIR / '../frontend_dist').exists():
+    STATICFILES_DIRS.append(BASE_DIR / '../frontend_dist' / 'assets')
+
+# Главная директория сборки статики (РАСКОММЕНТИРОВАНО И НАСТРОЕНО)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Поддержка эффективного сжатия WhiteNoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -135,6 +153,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
 }
+
 UNFOLD = {
     "COLORS": {
         "base": {
