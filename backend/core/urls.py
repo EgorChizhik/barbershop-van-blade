@@ -18,19 +18,21 @@ router.register(r'appointments', AppointmentViewSet)
 router.register(r'gallery', WorkViewSet)
 
 urlpatterns = [
-    # Главная страница React
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
 
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/barbers/<int:barber_id>/slots/', BarberTimeSlotListView.as_view(), name='barber-slots'),
 
-    # ПРИНУДИТЕЛЬНАЯ РАЗДАЧА СТАТИКИ ФРОНТЕНДА ДЛЯ PRODUCTION (Решает проблему MIME-типов и 404)
     re_path(r'^assets/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT / 'assets'}),
     re_path(r'^favicon\.svg$', serve, {'document_root': settings.STATIC_ROOT, 'path': 'favicon.svg'}),
 ]
 
-# Раздача медиа-файлов
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# NEW: всё остальное отдаём React'у — пусть React Router разбирается сам
+urlpatterns += [
+    re_path(r'^(?!api/|admin/|assets/|media/|favicon\.svg).*$', TemplateView.as_view(template_name='index.html')),
+]
 
 admin.site.index_title = "Управление системой «Van Blade»"
