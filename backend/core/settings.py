@@ -2,24 +2,19 @@ from pathlib import Path
 from decouple import config
 from django.templatetags.static import static
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ───────────────────────────────────────────────────────────────────────
-# ENVIRONMENT CONFIGURATION (Очищено от дубликатов для защиты диплома)
-# ───────────────────────────────────────────────────────────────────────
+# НАСТРОЙКИ ОКРУЖЕНИЯ
+
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
-# ───────────────────────────────────────────────────────────────────────
-# APPLICATION DEFINITION
-# ───────────────────────────────────────────────────────────────────────
+
 INSTALLED_APPS = [
-    # Модернизация админки (Обязательно на самом верху, до django.contrib.admin)
     'unfold',
     
-    # Стандартные приложения Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -27,11 +22,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # Сторонние библиотеки
     'corsheaders',
     'rest_framework',
 
-    # Локальные приложения вашего барбершопа
     'users', 
     'services', 
     'barbers', 
@@ -42,7 +35,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # <-- Обязательно для раздачи статики на Render
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -51,6 +44,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Настройка доступов для локальной разработки
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:5174",
@@ -60,10 +54,10 @@ CORS_ALLOWED_ORIGINS = [
 
 ROOT_URLCONF = 'core.urls'
 
+# ШАБЛОНЫ
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # Указываем Django искать главный index.html от React в папке frontend_dist
         'DIRS': [BASE_DIR / 'frontend_dist'] if (BASE_DIR / 'frontend_dist').exists() else [BASE_DIR / '../frontend_dist'],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -79,9 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# ───────────────────────────────────────────────────────────────────────
-# DATABASE SYSTEM (PostgreSQL Standard)
-# ───────────────────────────────────────────────────────────────────────
+# БАЗА ДАННЫХ
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -93,23 +85,14 @@ DATABASES = {
     }
 }
 
-# PASSWORD VALIDATION
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# INTERNATIONALIZATION
+# Язык и время
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
@@ -120,25 +103,22 @@ LANGUAGES = [
     ('ru', 'Русский'),
 ]
 
-# ───────────────────────────────────────────────────────────────────────
-# STATIC & MEDIA STORAGE (Production Ready)
-# ───────────────────────────────────────────────────────────────────────
+# СТАТИКА И МЕДИА (STATIC & MEDIA)
+
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = []
 if (BASE_DIR / 'static').exists():
     STATICFILES_DIRS.append(BASE_DIR / 'static')
 
-# Включаем ВСЮ папку frontend_dist, чтобы сохранить структуру подпапок (включая assets и favicon)
 if (BASE_DIR / 'frontend_dist').exists():
     STATICFILES_DIRS.append(BASE_DIR / 'frontend_dist')
 elif (BASE_DIR / '../frontend_dist').exists():
     STATICFILES_DIRS.append(BASE_DIR / '../frontend_dist')
 
-# Главная директория сборки статики
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Поддержка эффективного сжатия WhiteNoise
+# Сжатие и кэширование статики через WhiteNoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
@@ -146,9 +126,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ADDITIONAL APPLICATION SETTINGS
+# Кастомная модель пользователя
 AUTH_USER_MODEL = 'users.CustomUser'
 
+# Настройки API 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
 }
