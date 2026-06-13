@@ -23,15 +23,12 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/barbers/<int:barber_id>/slots/', BarberTimeSlotListView.as_view(), name='barber-slots'),
 
-    # Раздача фронтенд-статики
     re_path(r'^assets/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT / 'assets'}),
     re_path(r'^favicon\.svg$', serve, {'document_root': settings.STATIC_ROOT, 'path': 'favicon.svg'}),
     
-    # ХАРДКОРНАЯ РАЗДАЧА МЕДИА ДЛЯ ПРОДАКШЕНА (Игнорирует DEBUG=False)
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
-# Всё остальное отдаём React'у — пусть React Router разбирается сам
 urlpatterns += [
     re_path(r'^(?!api/|admin/|assets/|media/|favicon\.svg).*$', TemplateView.as_view(template_name='index.html')),
 ]

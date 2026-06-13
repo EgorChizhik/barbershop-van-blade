@@ -16,7 +16,7 @@ import {
 import { ru } from "date-fns/locale";
 
 const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-const TODAY = startOfDay(new Date(2026, 4, 7));
+const TODAY = startOfDay(new Date());
 
 const BookingStep3 = () => {
   const {
@@ -28,7 +28,7 @@ const BookingStep3 = () => {
   } = useBooking();
 
   const { data: slots = [], isLoading, isError } = useTimeSlots(selectedBarber?.id);
-  const [viewDate, setViewDate] = useState(new Date(2026, 4, 7));
+  const [viewDate, setViewDate] = useState(new Date());
 
   const availableDates = useMemo(
     () => [...new Set(slots.map((slot) => slot.date))],
