@@ -1,14 +1,13 @@
 from django.contrib import admin
-from django.urls import path, include, re_path  # <-- Добавили re_path
+from django.urls import path, include, re_path
 from django.views.generic import TemplateView
-from django.views.static import serve  # <-- Добавили системный serve для продакшн-раздачи
+from django.views.static import serve
 from rest_framework.routers import DefaultRouter
 from services.views import CategoryViewSet, ServiceViewSet
 from barbers.views import BarberViewSet, BarberTimeSlotListView
 from bookings.views import AppointmentViewSet
 from gallery.views import WorkViewSet
 from django.conf import settings
-from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)
@@ -24,13 +23,15 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/barbers/<int:barber_id>/slots/', BarberTimeSlotListView.as_view(), name='barber-slots'),
 
+    # Раздача фронтенд-статики
     re_path(r'^assets/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT / 'assets'}),
     re_path(r'^favicon\.svg$', serve, {'document_root': settings.STATIC_ROOT, 'path': 'favicon.svg'}),
+    
+    # ХАРДКОРНАЯ РАЗДАЧА МЕДИА ДЛЯ ПРОДАКШЕНА (Игнорирует DEBUG=False)
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# NEW: всё остальное отдаём React'у — пусть React Router разбирается сам
+# Всё остальное отдаём React'у — пусть React Router разбирается сам
 urlpatterns += [
     re_path(r'^(?!api/|admin/|assets/|media/|favicon\.svg).*$', TemplateView.as_view(template_name='index.html')),
 ]
