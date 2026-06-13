@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from decouple import config
 from django.templatetags.static import static
@@ -6,12 +7,13 @@ from django.templatetags.static import static
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # НАСТРОЙКИ ОКРУЖЕНИЯ
-
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
+
+# Парсинг ALLOWED_HOSTS из строки через запятую
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
-
+# ПРИЛОЖЕНИЯ
 INSTALLED_APPS = [
     'unfold',
     
@@ -32,6 +34,7 @@ INSTALLED_APPS = [
     'gallery',
 ]
 
+# МИДЛВАР (CorsMiddleware строго на первом месте!)
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -44,13 +47,39 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Настройка доступов для локальной разработки
+# НАСТРОЙКИ ДОСТУПОВ (CORS & CSRF)
+
+# Базовые локальные адреса для CORS
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:5174",
     "http://127.0.0.1:5173",
     "http://127.0.0.1:5174",
 ]
+
+# Динамически добавляем CORS домены из панели Render, если они заданы
+cors_env = config('CORS_ALLOWED_ORIGINS', default='')
+if cors_env:
+    extra_origins = [s.strip() for s in cors_env.split(',') if s.strip()]
+    for origin in extra_origins:
+        if origin not in CORS_ALLOWED_ORIGINS:
+            CORS_ALLOWED_ORIGINS.append(origin)
+
+# Базовые локальные адреса для CSRF
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+]
+
+# Автоматически генерируем CSRF_TRUSTED_ORIGINS на основе ALLOWED_HOSTS для продакшена
+for host in ALLOWED_HOSTS:
+    if host and host != '*' and host not in ['localhost', '127.0.0.1']:
+        # Добавляем варианты как с https, так и с http на всякий случай
+        secure_origin = f"https://{host}"
+        if secure_origin not in CSRF_TRUSTED_ORIGINS:
+            CSRF_TRUSTED_ORIGINS.append(secure_origin)
 
 ROOT_URLCONF = 'core.urls'
 
@@ -104,7 +133,6 @@ LANGUAGES = [
 ]
 
 # СТАТИКА И МЕДИА (STATIC & MEDIA)
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = []
@@ -134,6 +162,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']
 }
 
+# Интерфейс Unfold
 UNFOLD = {
     "COLORS": {
         "base": {
