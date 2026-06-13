@@ -1,4 +1,4 @@
-import api from "../../../../utils/api.js";
+import api from "../../../utils/api.js";
 import { Link } from "react-router-dom";
 import React, { useMemo, useState } from "react";
 import { useBooking } from "../../../context/BookingContext";
