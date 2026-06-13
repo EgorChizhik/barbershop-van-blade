@@ -46,6 +46,12 @@ ENV DATABASE_PORT=5432
 # ПЕРЕХОДИМ В ПАПКУ БЭКЕНДА (чтобы Django увидел manage.py)
 WORKDIR /app/backend
 
+# --- ВРЕМЕННАЯ ДИАГНОСТИКА (после проверки удалить) ---
+RUN echo "=== Всего файлов в media: ===" && find media -type f | wc -l
+RUN echo "=== Поиск нужного файла: ===" && find media -iname "ChatGPT_Image_11*" || echo "НЕ НАЙДЕНО"
+RUN echo "=== Содержимое media/services: ===" && ls media/services | wc -l
+# --- КОНЕЦ ДИАГНОСТИКИ ---
+    
 # Собираем всю статику (и админку, и css, и файлы React) в одну папку staticfiles для WhiteNoise
 RUN python manage.py collectstatic --noinput
 
