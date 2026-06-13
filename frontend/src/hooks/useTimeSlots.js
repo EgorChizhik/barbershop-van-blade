@@ -8,7 +8,7 @@ export const useTimeSlots = (barberId) => {
       if (!barberId) return [];
       
 
-      const { data } = await api.get(`/barbers/${barberId}/slots/`);
+      const { data } = await api.get(`barbers/${barberId}/slots/`);
       return data;
     },
     enabled: !!barberId,
