@@ -1,3 +1,4 @@
+import api from "../../../api";
 import { Link } from "react-router-dom";
 import React, { useMemo, useState } from "react";
 import { useBooking } from "../../../context/BookingContext";
@@ -10,8 +11,6 @@ import {
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import logo from "../../../assets/images/logo.png";
-
-const API_URL = import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000";
 
 const BookingStep4 = () => {
   const {
@@ -121,23 +120,24 @@ const BookingStep4 = () => {
 
   const handleBooking = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/appointments/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          barber: selectedBarber.id,
-          services: selectedServices.map((s) => s.id),
-          date: format(selectedDate, "yyyy-MM-dd"),
-          time_slot: selectedTime,
-          client_name: formData.name,
-          phone: formData.phone,
-          comment: formData.comment,
-          total_price: stats.totalPrice,
-        }),
+      const response = await api.post("appointments/", {
+        barber: selectedBarber.id,
+        services: selectedServices.map((s) => s.id),
+        date: format(selectedDate, "yyyy-MM-dd"),
+        time_slot: selectedTime,
+        client_name: formData.name,
+        phone: formData.phone,
+        comment: formData.comment,
+        total_price: stats.totalPrice,
       });
-      if (response.ok) setIsSuccess(true);
-      else alert("Ошибка при сохранении записи");
-    } catch {
+
+      if (response.status === 200 || response.status === 201) {
+        setIsSuccess(true);
+      } else {
+        alert("Ошибка при сохранении записи");
+      }
+    } catch (error) {
+      console.error(error);
       alert("Сервер недоступен");
     }
   };
@@ -177,7 +177,7 @@ const BookingStep4 = () => {
         <button className="header-back-btn" onClick={() => setCurrentStep(3)}>
           <IoArrowBack size={20} />
         </button>
-        
+
         <button className="close-panel-btn" onClick={closeBooking}>
           <IoCloseOutline size={28} />
         </button>
