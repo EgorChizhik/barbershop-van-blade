@@ -1,7 +1,6 @@
-import os
 from pathlib import Path
+import sys
 from decouple import config
-from django.templatetags.static import static
 
 # Директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,7 +9,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-# Парсинг ALLOWED_HOSTS из строки через запятую
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # ПРИЛОЖЕНИЯ
@@ -34,7 +32,6 @@ INSTALLED_APPS = [
     'gallery',
 ]
 
-# МИДЛВАР (CorsMiddleware строго на первом месте!)
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -47,9 +44,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# НАСТРОЙКИ ДОСТУПОВ (CORS & CSRF)
-
-# Базовые локальные адреса для CORS
+# НАСТРОЙКИ ДОСТУПОВ
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:5174",
@@ -57,7 +52,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5174",
 ]
 
-# Динамически добавляем CORS домены из панели Render, если они заданы
 cors_env = config('CORS_ALLOWED_ORIGINS', default='')
 if cors_env:
     extra_origins = [s.strip() for s in cors_env.split(',') if s.strip()]
@@ -73,13 +67,10 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:5174",
 ]
 
-# Автоматически генерируем CSRF_TRUSTED_ORIGINS на основе ALLOWED_HOSTS для продакшена
 for host in ALLOWED_HOSTS:
     if host and host != '*' and host not in ['localhost', '127.0.0.1']:
-        # Добавляем варианты как с https, так и с http на всякий случай
-        secure_origin = f"https://{host}"
-        if secure_origin not in CSRF_TRUSTED_ORIGINS:
-            CSRF_TRUSTED_ORIGINS.append(secure_origin)
+        CSRF_TRUSTED_ORIGINS.append(f"https://{host}")
+        CSRF_TRUSTED_ORIGINS.append(f"http://{host}")
 
 ROOT_URLCONF = 'core.urls'
 
@@ -125,14 +116,13 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
     ('ru', 'Русский'),
 ]
 
-# СТАТИКА И МЕДИА (STATIC & MEDIA)
+# СТАТИКА И МЕДИА 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = []
@@ -146,8 +136,15 @@ elif (BASE_DIR / '../frontend_dist').exists():
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Сжатие и кэширование статики через WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Настройка файловых хранилищ
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -198,6 +195,6 @@ UNFOLD = {
         },
     },
     "STYLES": [
-        lambda request: static("css/admin_custom.css"),
+        "css/admin_custom.css",
     ],
 }
